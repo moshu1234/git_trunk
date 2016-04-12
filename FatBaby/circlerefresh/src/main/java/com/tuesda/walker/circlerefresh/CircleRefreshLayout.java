@@ -48,34 +48,38 @@ public class CircleRefreshLayout extends FrameLayout {
 
     public CircleRefreshLayout(Context context) {
         this(context, null, 0);
+//        Log.e("============", "circle refresh layout init");
     }
 
     public CircleRefreshLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+//        Log.e("============", "circle refresh layout init 1");
     }
 
     public CircleRefreshLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+//        Log.e("============", "circle refresh layout init 2");
         init(context, attrs, defStyleAttr);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-
+//        Log.e("============","circle refresh layout init 3 = "+getChildCount());
         if (getChildCount() > 1) {
             throw new RuntimeException("you can only attach one child");
         }
         setAttrs(attrs);
         mPullHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, context.getResources().getDisplayMetrics());
         mHeaderHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, context.getResources().getDisplayMetrics());
-
+//        Log.e("============","Runnable 1");
         this.post(new Runnable() {
             @Override
             public void run() {
+//                Log.e("============", "run");
                 mChildView = getChildAt(0);
                 addHeaderView();
             }
         });
-
+//        Log.e("============", "Runnable 2");
     }
 
     private void setAttrs(AttributeSet attrs) {
@@ -89,7 +93,10 @@ public class CircleRefreshLayout extends FrameLayout {
     }
 
     private void addHeaderView() {
+//        Log.e("============","addHeaderView");
         mHeader = new AnimationView(getContext());
+//        if(mHeader==null)
+//            Log.e("=============","mHeader new fail");
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
         params.gravity = Gravity.TOP;
         mHeader.setLayoutParams(params);
@@ -131,7 +138,8 @@ public class CircleRefreshLayout extends FrameLayout {
             }
         });
         mUpTopAnimator.setDuration(BACK_TOP_DUR);
-
+        if(mHeader==null)
+//            Log.e("=============","mHeader is null");
         mHeader.setOnViewAniDone(new AnimationView.OnViewAniDone() {
             @Override
             public void viewAniDone() {

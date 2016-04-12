@@ -499,6 +499,9 @@ public class AnimationView extends View {
     private OnViewAniDone onViewAniDone;
 
     public void setOnViewAniDone(OnViewAniDone onViewAniDone) {
+
+        if(onViewAniDone==null)
+            Log.e("=============","onViewAniDone is null");
         this.onViewAniDone = onViewAniDone;
     }
 

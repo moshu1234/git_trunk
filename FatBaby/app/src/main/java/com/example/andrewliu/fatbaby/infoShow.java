@@ -1,5 +1,6 @@
 package com.example.andrewliu.fatbaby;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,6 +16,8 @@ import com.example.andrewliu.fatbaby.SlidMenu.MainTab02;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab03;
 import com.example.andrewliu.fatbaby.SlidMenu.MenuLeftFragment;
 import com.example.andrewliu.fatbaby.SlidMenu.MenuRightFragment;
+import com.example.andrewliu.fatbaby.SlidMenu.StepCounterService;
+import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
 import com.example.andrewliu.fatbaby.progressbar.CircleProgressBar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -28,7 +31,7 @@ public class infoShow extends SlidingFragmentActivity {
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
-
+    private StepDetector detector;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,10 @@ public class infoShow extends SlidingFragmentActivity {
         initRightMenu();
         // 初始化ViewPager
         initViewPager();  //
-
-
-
+        Log.e("aaaaaa", "start step counter service");
+//        detector = new StepDetector(this);
+        Intent service = new Intent(this, StepCounterService.class);
+        startService(service);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -74,7 +78,7 @@ public class infoShow extends SlidingFragmentActivity {
             }
         };
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(1);
+//        mViewPager.setCurrentItem(1);
     }
 
     private void initRightMenu()
@@ -112,5 +116,12 @@ public class infoShow extends SlidingFragmentActivity {
     public void showRightMenu(View view)
     {
         getSlidingMenu().showSecondaryMenu();
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        Log.e("aaaaaa","stop step service");
+        Intent service = new Intent(this, StepCounterService.class);
+        stopService(service);
     }
 }

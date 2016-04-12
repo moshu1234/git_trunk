@@ -81,7 +81,7 @@ public class BodyProgress extends View {
         paint.setAntiAlias(true);  //消除锯齿
         canvas.drawCircle(centre, centre, radius, paint); //画出圆环
 
-        Log.e("log", centre + "");
+//        Log.e("log", centre + "");
 
         /**
          * 画进度百分比
@@ -117,10 +117,10 @@ public class BodyProgress extends View {
         switch (style) {
             case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
-                Log.e("-----------------b", "color="+initColor);
+//                Log.e("-----------------b", "color="+initColor);
                 if(progress !=0) {
                     for(i=0;i<=progress;i++){
-                        Log.e("-----------------a","progress="+i);
+//                        Log.e("-----------------a","progress="+i);
                         initColor += diffColor;
                         paint.setColor(initColor);
                         canvas.drawArc(oval, 360*i/max, 360 * 5 / max, false, paint);//每5度颜色递增
