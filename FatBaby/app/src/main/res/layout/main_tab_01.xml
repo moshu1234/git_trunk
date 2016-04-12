@@ -11,11 +11,19 @@
 		layout="@layout/body_cicle"
 		android:id="@+id/today"
 		android:layout_width="300dp"
-		android:layout_height="430dp"
-		android:layout_marginLeft="25dp"
+		android:layout_height="300dp"
+		android:layout_marginLeft="0dp"
 		android:layout_below="@+id/dayhead"
-		android:layout_alignParentStart="true">
+		android:layout_centerHorizontal="true">
 	</include>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="今天一共走了100步"
+		android:id="@+id/totalSteps"
+		android:layout_centerHorizontal="true"
+		android:layout_below="@+id/today" />
 	<!--<include-->
 		<!--layout="@layout/bottom_tab"-->
 		<!--android:id="@+id/buttom_tab"-->

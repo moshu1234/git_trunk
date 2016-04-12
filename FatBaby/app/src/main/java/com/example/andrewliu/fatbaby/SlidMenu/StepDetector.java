@@ -5,6 +5,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 public class StepDetector implements SensorEventListener {
@@ -98,6 +100,8 @@ public class StepDetector implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // TODO Auto-generated method stub
     }
-
+    public int getCurrentSetp(){
+        return CURRENT_SETP;
+    }
 }
 

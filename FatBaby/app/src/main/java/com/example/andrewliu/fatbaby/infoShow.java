@@ -2,6 +2,7 @@ package com.example.andrewliu.fatbaby;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.os.Handler;
+import android.widget.TextView;
 
 import com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab01;
@@ -24,10 +27,11 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogRecord;
 
 public class infoShow extends SlidingFragmentActivity {
 
-
+    private Thread thread;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
@@ -45,6 +49,35 @@ public class infoShow extends SlidingFragmentActivity {
 //        detector = new StepDetector(this);
         Intent service = new Intent(this, StepCounterService.class);
         startService(service);
+        if (thread == null) {
+
+            thread = new Thread() {// ���߳����ڼ���ǰ����ı仯
+
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    super.run();
+                    int temp = 0;
+                    while (true) {
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        Log.e("aaaaaaaaaaa","flag="+StepCounterService.FLAG);
+                        if (StepCounterService.FLAG) {
+                            Message msg = new Message();
+                            if (temp != StepDetector.CURRENT_SETP) {
+                                temp = StepDetector.CURRENT_SETP;
+                            }
+                            handler.sendMessage(msg);
+                        }
+                    }
+                }
+            };
+            thread.start();
+        }
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -124,4 +157,13 @@ public class infoShow extends SlidingFragmentActivity {
         Intent service = new Intent(this, StepCounterService.class);
         stopService(service);
     }
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.e("aaaaaaaaaa","what="+msg.what);
+            TextView textView = (TextView)findViewById(R.id.totalSteps);
+            textView.setText("今天走了" + StepDetector.CURRENT_SETP + "步");
+            super.handleMessage(msg);
+        }
+    };
 }
