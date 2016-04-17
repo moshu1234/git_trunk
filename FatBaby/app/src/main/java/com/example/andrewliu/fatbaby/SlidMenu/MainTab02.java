@@ -1,7 +1,10 @@
 package com.example.andrewliu.fatbaby.SlidMenu;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.andrewliu.fatbaby.DataBase.FoodCalorieDBHandle;
 import com.example.andrewliu.fatbaby.R;
 import com.tuesda.walker.circlerefresh.CircleRefreshLayout;
 
@@ -21,6 +27,7 @@ public class MainTab02 extends Fragment
 	private View messageLayout;
 	private CircleRefreshLayout mRefreshLayout;
 	private Button mStop;
+	private FoodCalorieDBHandle foodCalorieDBHandle;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,6 +35,7 @@ public class MainTab02 extends Fragment
 	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
+
 		messageLayout = inflater.inflate(R.layout.main_tab_02, container, false);
 
 		mRefreshLayout = (CircleRefreshLayout) messageLayout.findViewById(R.id.refresh_tab02);
@@ -56,6 +64,8 @@ public class MainTab02 extends Fragment
 		mStop.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				EditText editText = (EditText)messageLayout.findViewById(R.id.foodDBtext);
+				foodCalorieDBHandle.findByName(editText.getText().toString());
 				mRefreshLayout.finishRefreshing();
 			}
 		});
@@ -71,6 +81,14 @@ public class MainTab02 extends Fragment
 						// do something when refresh complete
 					}
 				});
+		//init DB
+		foodCalorieDBHandle = new FoodCalorieDBHandle(getContext());
+//		foodCalorieDBHandle.add("apple",100,100,1,"slack");
+//		foodCalorieDBHandle.add("banana",110,110,1,"slack");
+//		foodCalorieDBHandle.add("hamberger",120,130,1,"main course");
+//		foodCalorieDBHandle.add("pork",150,200,1,"main course");
+//		foodCalorieDBHandle.add("beaf",200,300,1,"main course");
+		foodCalorieDBHandle.setFoodHandler(mt2Handler);
 		return messageLayout;
 	}
 	@Override
@@ -94,4 +112,12 @@ public class MainTab02 extends Fragment
 
 		return super.onOptionsItemSelected(item);
 	}
+	public Handler mt2Handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			Log.e("mmmmmmmmmmmmmmmmmmm"," "+msg.obj);
+			mList.
+		}
+	};
 }

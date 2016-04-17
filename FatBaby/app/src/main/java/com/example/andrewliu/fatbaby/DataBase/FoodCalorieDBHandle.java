@@ -2,6 +2,7 @@ package com.example.andrewliu.fatbaby.DataBase;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Handler;
 import android.widget.Toast;
 
 /**
@@ -34,12 +35,18 @@ public class FoodCalorieDBHandle {
         mFoodDB.update(foodname, calorie, weight, count, type);
     }
     public void findByName(String foodname){
-
+        if(foodname.equals("")){
+            return;
+        }
+        mFoodDB.find(foodname);
     }
     public void findByCalorie(Integer calorie){
 
     }
     public void findByType(String type){
 
+    }
+    public void setFoodHandler(Handler handler){
+        mFoodDB.setHandler(handler);
     }
 }

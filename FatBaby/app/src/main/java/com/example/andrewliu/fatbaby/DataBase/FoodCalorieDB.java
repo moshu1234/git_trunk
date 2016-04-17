@@ -5,6 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+
+import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
 
 /**
  * Created by Administrator on 2016/4/13 0013.
@@ -17,6 +22,7 @@ public class FoodCalorieDB extends SQLiteOpenHelper{
     private final static String DB_NAME ="foodCalorie.db";//数据库名
     private final static int VERSION = 1;//版本号
     private final static String TABLE_NAME = "foodCalorie";
+    private Handler DBhandler;
     public FoodCalorieDB(Context context, String name, SQLiteDatabase.CursorFactory factory,int version) {
         super(context, name, factory, version);
     }
@@ -25,16 +31,16 @@ public class FoodCalorieDB extends SQLiteOpenHelper{
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE"
-                + TABLE_NAME
-                + "("
-                + "id integer primary key,"
-                + "foodname varchar,"
-                + "calorie integer,"
-                + "weight integer,"
-                + "count integer,"
-                + "type varchar"
-                +")"
+        db.execSQL("create table "
+                        + TABLE_NAME
+                        + "("
+                        + "id integer primary key autoincrement,"
+                        + "foodname varchar,"
+                        + "calorie integer,"
+                        + "weight integer,"
+                        + "count integer,"
+                        + "type varchar"
+                        + ")"
         );
     }
     @Override
@@ -87,5 +93,32 @@ public class FoodCalorieDB extends SQLiteOpenHelper{
             cv.put("type", type);
         }
         db.update(TABLE_NAME, cv, where, whereValue);
+    }
+    public void find(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //get cursor
+        Cursor cursor = db.query (TABLE_NAME,null,null,null,null,null,null);
+        //判断游标是否为空
+        if(cursor.moveToFirst()) {
+            //遍历游标
+            Log.e("fffffffffffffff","count="+cursor.getCount());
+            while (cursor.moveToNext()){
+                //获得ID
+                int id = cursor.getInt(0);
+                //获得用户名
+                String findName=cursor.getString(1);
+                Log.e("fffffffffffff","findName="+findName);
+                if(name.equals(findName)){
+                    Log.e("aaaaaaaaaaaaa","we've find the food "+name);
+                    Message msg = new Message();
+                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getString(5);
+                    DBhandler.sendMessage(msg);
+                }
+            }
+            cursor.close();
+        }
+    }
+    public void setHandler(Handler handler){
+        DBhandler = handler;
     }
 }
