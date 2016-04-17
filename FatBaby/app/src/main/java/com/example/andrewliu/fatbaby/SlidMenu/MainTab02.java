@@ -117,7 +117,6 @@ public class MainTab02 extends Fragment
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			Log.e("mmmmmmmmmmmmmmmmmmm"," "+msg.obj);
-			mList.
 		}
 	};
 }
