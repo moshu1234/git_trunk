@@ -65,7 +65,7 @@ public class infoShow extends SlidingFragmentActivity {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-                        Log.e("aaaaaaaaaaa","flag="+StepCounterService.FLAG);
+//                        Log.e("aaaaaaaaaaa","flag="+StepCounterService.FLAG);
                         if (StepCounterService.FLAG) {
                             Message msg = new Message();
                             if (temp != StepDetector.CURRENT_SETP) {
@@ -160,9 +160,11 @@ public class infoShow extends SlidingFragmentActivity {
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Log.e("aaaaaaaaaa","what="+msg.what);
+//            Log.e("aaaaaaaaaa","what="+msg.what);
             TextView textView = (TextView)findViewById(R.id.totalSteps);
-            textView.setText("今天走了" + StepDetector.CURRENT_SETP + "步");
+            if(textView != null){
+                textView.setText("今天走了" + StepDetector.CURRENT_SETP + "步");
+            }
             super.handleMessage(msg);
         }
     };
