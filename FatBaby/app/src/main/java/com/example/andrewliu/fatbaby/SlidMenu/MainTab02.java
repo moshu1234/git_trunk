@@ -21,6 +21,11 @@ import com.example.andrewliu.fatbaby.DataBase.FoodCalorieDBHandle;
 import com.example.andrewliu.fatbaby.R;
 import com.tuesda.walker.circlerefresh.CircleRefreshLayout;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainTab02 extends Fragment
 {
 	private ListView mList;
@@ -88,6 +93,7 @@ public class MainTab02 extends Fragment
 //		foodCalorieDBHandle.add("hamberger",120,130,1,"main course");
 //		foodCalorieDBHandle.add("pork",150,200,1,"main course");
 //		foodCalorieDBHandle.add("beaf",200,300,1,"main course");
+		fileRead();
 		foodCalorieDBHandle.setFoodHandler(mt2Handler);
 		return messageLayout;
 	}
@@ -119,4 +125,43 @@ public class MainTab02 extends Fragment
 			Log.e("mmmmmmmmmmmmmmmmmmm"," "+msg.obj);
 		}
 	};
+
+	public void fileRead(){
+		foodCalorieDBHandle.deleteDB(getContext());
+		try {
+			InputStreamReader inputReader = new InputStreamReader( getResources().openRawResource(R.raw.food));
+			BufferedReader bufReader = new BufferedReader(inputReader);
+			String line="";
+			while((line = bufReader.readLine()) != null) {
+//				Log.e("aaaaaa","aaaaaaaaa"+line);
+				String [] temp = null;
+				line = line.trim();
+				temp = line.split("\\s+");
+//				for(String each:temp) {
+//					Log.e("-----",""+each);
+//				}
+				if(temp.length != 3){
+					continue;
+				}
+				Log.e("==========",temp[0]+"-"+temp[1]+"-"+temp[2]);
+				Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|\\d+");
+				Matcher m2 = p.matcher(temp[2]);
+				Matcher m3 = p.matcher(temp[1]);
+				Integer cal=0,wei=0;
+				if(m3.find()) {
+					cal = Integer.parseInt(m3.group());
+				}
+				if(m2.find()) {
+					wei = Integer.parseInt(m2.group());
+				}
+//				while ( m.find() ) {
+//					System.out.println( m.group() );
+//				}
+//				Log.e("aaaaaaaa",temp[0]+"-"+cal+"-"+ wei);
+				foodCalorieDBHandle.add(temp[0], cal, wei, 1, "主食");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -121,4 +121,7 @@ public class FoodCalorieDB extends SQLiteOpenHelper{
     public void setHandler(Handler handler){
         DBhandler = handler;
     }
+    public boolean deleteDatabase(Context context) {
+        return context.deleteDatabase(DB_NAME);
+    }
 }

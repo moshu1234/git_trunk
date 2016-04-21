@@ -27,7 +27,9 @@ public class FoodCalorieDBHandle {
         }
         mFoodDB.delete(foodname);
     }
-
+    public void deleteDB(Context context){
+        mFoodDB.deleteDatabase(context);
+    }
     public void update(String foodname,Integer calorie, Integer weight, Integer count, String type){
         if (foodname.equals("")&&calorie.equals(0) && weight.equals(0)&&count.equals(0)&&type.equals("")){
             return;

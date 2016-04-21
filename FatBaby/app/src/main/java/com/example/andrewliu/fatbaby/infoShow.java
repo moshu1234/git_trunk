@@ -25,6 +25,8 @@ import com.example.andrewliu.fatbaby.progressbar.CircleProgressBar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.LogRecord;
@@ -168,4 +170,5 @@ public class infoShow extends SlidingFragmentActivity {
             super.handleMessage(msg);
         }
     };
+
 }
