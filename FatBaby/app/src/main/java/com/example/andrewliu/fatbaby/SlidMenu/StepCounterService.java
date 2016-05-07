@@ -33,7 +33,6 @@ public class StepCounterService extends Service {
         super.onCreate();
 
         FLAG = true;
-        Log.e("aaaaa","new step detector");
         detector = new StepDetector(this);
 
         mSensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);

@@ -93,7 +93,7 @@ public class MainTab02 extends Fragment
 //		foodCalorieDBHandle.add("hamberger",120,130,1,"main course");
 //		foodCalorieDBHandle.add("pork",150,200,1,"main course");
 //		foodCalorieDBHandle.add("beaf",200,300,1,"main course");
-		fileRead();
+//		fileRead();
 		foodCalorieDBHandle.setFoodHandler(mt2Handler);
 		return messageLayout;
 	}

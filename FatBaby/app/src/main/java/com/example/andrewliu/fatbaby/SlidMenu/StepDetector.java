@@ -29,7 +29,6 @@ public class StepDetector implements SensorEventListener {
     public StepDetector(Context context) {
         // TODO Auto-generated constructor stub
         super();
-        Log.e("aaaaaaaa","step detect start");
         int h = 480;
         mYOffset = h * 0.5f;
         mScale[0] = -(h * 0.5f * (1.0f / (SensorManager.STANDARD_GRAVITY * 2)));
@@ -77,8 +76,7 @@ public class StepDetector implements SensorEventListener {
                             if (isAlmostAsLargeAsPrevious && isPreviousLargeEnough && isNotContra) {
                                 end = System.currentTimeMillis();
                                 if (end - start > 500) {
-                                    Log.i("StepDetector", "CURRENT_SETP:"
-                                            + CURRENT_SETP);
+//                                    Log.i("StepDetector", "CURRENT_SETP:" + CURRENT_SETP);
                                     CURRENT_SETP++;
                                     mLastMatch = extType;
                                     start = end;

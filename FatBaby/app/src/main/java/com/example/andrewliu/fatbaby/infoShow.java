@@ -124,7 +124,8 @@ public class infoShow extends SlidingFragmentActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.id_left_menu_frame, leftMenuFragment).commit();
         SlidingMenu menu = getSlidingMenu();
-        menu.setMode(SlidingMenu.LEFT_RIGHT);
+//        menu.setMode(SlidingMenu.LEFT_RIGHT);
+        menu.setMode(SlidingMenu.LEFT);
         // 设置触摸屏幕的模式
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         menu.setShadowWidthRes(R.dimen.shadow_width);
@@ -137,10 +138,11 @@ public class infoShow extends SlidingFragmentActivity {
         // menu.setBehindScrollScale(1.0f);
         menu.setSecondaryShadowDrawable(R.drawable.shadow);
         //设置右边（二级）侧滑菜单
-        menu.setSecondaryMenu(R.layout.right_menu_frame);
-        Fragment rightMenuFragment = new MenuRightFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.id_right_menu_frame, rightMenuFragment).commit();
+//        menu.setSecondaryMenu(R.layout.right_menu_frame);
+//        Fragment rightMenuFragment = new MenuRightFragment();
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.id_right_menu_frame, rightMenuFragment).commit();
+//        getSlidingMenu().hideSecondaryMenu();
     }
 
     public void showLeftMenu(View view)
@@ -148,9 +150,14 @@ public class infoShow extends SlidingFragmentActivity {
         getSlidingMenu().showMenu();
     }
 
+    /*add by Andrew.Liu, don't show secondary menu*/
+//    public void showRightMenu(View view)
+//    {
+//        getSlidingMenu().showSecondaryMenu();
+//    }
     public void showRightMenu(View view)
     {
-        getSlidingMenu().showSecondaryMenu();
+//        getSlidingMenu().hideSecondaryMenu();
     }
 
     public void onDestroy(){
