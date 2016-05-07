@@ -138,7 +138,7 @@ public class infoShow extends SlidingFragmentActivity {
         // menu.setBehindScrollScale(1.0f);
         menu.setSecondaryShadowDrawable(R.drawable.shadow);
         //设置右边（二级）侧滑菜单
-//        menu.setSecondaryMenu(R.layout.right_menu_frame);
+        menu.setSecondaryMenu(R.layout.right_menu_frame);
 //        Fragment rightMenuFragment = new MenuRightFragment();
 //        getSupportFragmentManager().beginTransaction()
 //                .replace(R.id.id_right_menu_frame, rightMenuFragment).commit();
