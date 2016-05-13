@@ -18,6 +18,8 @@ public class MainTab01 extends Fragment
 	private View view;
 	CircleProgressBar pb1,pb2,pb3,pb4,pb5;
 	BodyProgress mBodyProgress;
+	private int running, fitness;
+	private int weight;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -46,5 +48,14 @@ public class MainTab01 extends Fragment
 
 		mBodyProgress=(BodyProgress)view.findViewById(R.id.bodyProgress);
 		setBodyProgress(mBodyProgress,60,"加油哦");
+	}
+	public int running_calorie(int miles){
+		return 0;
+	}
+	public int fitness_calorie(){
+		return 0;
+	}
+	public int food_calorie(){
+		return 0;
 	}
 }
