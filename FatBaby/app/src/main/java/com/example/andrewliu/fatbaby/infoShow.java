@@ -1,17 +1,33 @@
 package com.example.andrewliu.fatbaby;
 
+import android.app.FragmentManager;
+import android.app.SearchManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab01;
@@ -29,22 +45,77 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.LogRecord;
 
-public class infoShow extends SlidingFragmentActivity {
+public class infoShow extends AppCompatActivity {
 
     private Thread thread;
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private StepDetector detector;
+    private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
+    private ListView mDrawerList;
+    private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    private ActionBar actionBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_show);
+        actionBar = getSupportActionBar();
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+        //show action bar icon
+//        actionBar.setDisplayShowHomeEnabled(true);
+//        actionBar.setLogo(R.drawable.left);
+//        actionBar.setDisplayUseLogoEnabled(true);
+
+
+        mTitle = mDrawerTitle = getTitle();
+        mPlanetTitles = getResources().getStringArray(R.array.left_setting);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.info_show);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // set a custom shadow that overlays the main content when the drawer opens
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        // set up the drawer's list view with items and click listener
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mPlanetTitles));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
+        // ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                actionBar.setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                actionBar.setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
 
         // 初始化SlideMenu
-        initRightMenu();
+//        initRightMenu();
         // 初始化ViewPager
         initViewPager();  //
         Log.e("aaaaaa", "start step counter service");
@@ -81,11 +152,6 @@ public class infoShow extends SlidingFragmentActivity {
             thread.start();
         }
     }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
     private void initViewPager()
     {
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
@@ -116,49 +182,6 @@ public class infoShow extends SlidingFragmentActivity {
 //        mViewPager.setCurrentItem(1);
     }
 
-    private void initRightMenu()
-    {
-
-        Fragment leftMenuFragment = new MenuLeftFragment();
-        setBehindContentView(R.layout.left_menu_frame);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.id_left_menu_frame, leftMenuFragment).commit();
-        SlidingMenu menu = getSlidingMenu();
-//        menu.setMode(SlidingMenu.LEFT_RIGHT);
-        menu.setMode(SlidingMenu.LEFT);
-        // 设置触摸屏幕的模式
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-        menu.setShadowDrawable(R.drawable.shadow);
-        // 设置滑动菜单视图的宽度
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-//		menu.setBehindWidth()
-        // 设置渐入渐出效果的值
-        menu.setFadeDegree(0.35f);
-        // menu.setBehindScrollScale(1.0f);
-        menu.setSecondaryShadowDrawable(R.drawable.shadow);
-        //设置右边（二级）侧滑菜单
-        menu.setSecondaryMenu(R.layout.right_menu_frame);
-//        Fragment rightMenuFragment = new MenuRightFragment();
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.id_right_menu_frame, rightMenuFragment).commit();
-//        getSlidingMenu().hideSecondaryMenu();
-    }
-
-    public void showLeftMenu(View view)
-    {
-        getSlidingMenu().showMenu();
-    }
-
-    /*add by Andrew.Liu, don't show secondary menu*/
-//    public void showRightMenu(View view)
-//    {
-//        getSlidingMenu().showSecondaryMenu();
-//    }
-    public void showRightMenu(View view)
-    {
-//        getSlidingMenu().hideSecondaryMenu();
-    }
 
     public void onDestroy(){
         super.onDestroy();
@@ -178,4 +201,127 @@ public class infoShow extends SlidingFragmentActivity {
         }
     };
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        switch (item.getItemId()) {
+            case R.id.user_p:
+                Toast.makeText(this, "用户", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.write_p:
+                Toast.makeText(this, "发布", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.favo_p:
+                Toast.makeText(this, "收藏", Toast.LENGTH_SHORT).show();
+                return true;
+            case android.R.id.home:
+                Toast.makeText(this, "open drawer", Toast.LENGTH_SHORT).show();
+//                if(false){
+//                    mDrawerLayout.closeDrawer(mDrawerLayout);
+//                }
+//                else{
+//                    mDrawerLayout.openDrawer(mDrawerLayout);
+//                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.user_p).setVisible(!drawerOpen);
+        menu.findItem(R.id.favo_p).setVisible(!drawerOpen);
+        menu.findItem(R.id.write_p).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    /* The click listner for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int position) {
+        // update the main content by replacing fragments
+        android.app.Fragment fragment = new PlanetFragment();
+        Bundle args = new Bundle();
+        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+        fragment.setArguments(args);
+
+        FragmentManager fragmentManager = getFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mPlanetTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        actionBar.setTitle(mTitle);
+    }
+
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    /**
+     * Fragment that appears in the "content_frame", shows a planet
+     */
+    public static class PlanetFragment extends android.app.Fragment {
+        public static final String ARG_PLANET_NUMBER = "planet_number";
+
+        public PlanetFragment() {
+            // Empty constructor required for fragment subclasses
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+//            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
+//            int i = getArguments().getInt(ARG_PLANET_NUMBER);
+//            String planet = getResources().getStringArray(R.array.planets_array)[i];
+//
+//            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
+//                    "drawable", getActivity().getPackageName());
+//            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
+//            getActivity().setTitle(planet);
+//            return rootView;
+            return null;
+        }
+    }
 }

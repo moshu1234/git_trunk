@@ -5,4 +5,17 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_buttom_tab_view">ButtomTabView</string>
+    <string-array name="left_setting">
+        <item>信息</item>
+        <item>钱包</item>
+        <item>收藏</item>
+        <item>相册</item>
+        <item>宠物</item>
+        <item>食谱</item>
+        <item>天气</item>
+        <item>设置</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
 </resources>

@@ -5,10 +5,6 @@
     <!-- 电源管理权限 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/niu"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -19,7 +15,8 @@
         </activity>
         <activity
             android:name=".infoShow"
-            android:theme="@style/AppTheme" />
+            android:logo="@drawable/left"
+            android:label="Fighting"/>
         <service android:name=".SlidMenu.StepCounterService" />
     </application>
 
