@@ -65,10 +65,33 @@ public class BodyProgress extends View {
         mTypedArray.recycle();
     }
 
-
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas){
+        int x=10;
+        int w=30;
+        int i=0;
+        int left,top,right,bottom;
+        int day[]={60,59,58,55,57,62};
         super.onDraw(canvas);
+        paint.setStyle(Paint.Style.FILL);
+//        canvas.drawRect(25,0,30+25,180,paint);
+//        int day[]=null;
+//        day=new int[6];
+        for( i=0;i<6;i++){
+            left=x+40*i;
+            top=180-day[i]*2;
+            right=left+w;
+            bottom=180;
+            Log.e("aaaaa",left+" "+top+" "+right+" "+bottom);
+            paint.setColor(roundProgressColor);
+            canvas.drawRect(left,top,right,bottom,paint);
+            paint.setColor(textColor);
+            canvas.drawText(String.valueOf(day[i]),left,top-10,paint);
+        }
+    }
+
+    protected void onDraw1(Canvas canvas) {
+//        super.onDraw(canvas);
 
         /**
          * 画最外层的大圆环

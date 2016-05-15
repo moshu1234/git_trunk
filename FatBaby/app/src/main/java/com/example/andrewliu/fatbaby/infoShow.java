@@ -156,11 +156,11 @@ public class infoShow extends AppCompatActivity {
     {
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
         MainTab01 tab01 = new MainTab01();
-        MainTab02 tab02 = new MainTab02();
-        MainTab03 tab03 = new MainTab03();
+//        MainTab02 tab02 = new MainTab02();
+//        MainTab03 tab03 = new MainTab03();
         mFragments.add(tab01);
-        mFragments.add(tab02);
-        mFragments.add(tab03);
+//        mFragments.add(tab02);
+//        mFragments.add(tab03);
         /**
          * 初始化Adapter
          */

@@ -6,15 +6,7 @@
 	<include
 		layout="@layout/dayhead"
 		android:id="@+id/dayhead"></include>
-	<!--<include-->
-		<!--layout="@layout/body_cicle"-->
-		<!--android:id="@+id/today"-->
-		<!--android:layout_width="300dp"-->
-		<!--android:layout_height="300dp"-->
-		<!--android:layout_marginLeft="0dp"-->
-		<!--android:layout_below="@+id/dayhead"-->
-		<!--android:layout_centerHorizontal="true">-->
-	<!--</include>-->
+
 	<TextView
 		android:id="@+id/weight_tv"
 		android:layout_width="wrap_content"
@@ -38,13 +30,29 @@
 		android:id="@+id/totalSteps"
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="100dp" />
+	<include
+		layout="@layout/weight_tab"
+		android:id="@+id/weight_display"
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:layout_marginTop="250dp"
+		android:layout_marginLeft="30dp">
+	</include>
 
+	<!--<include-->
+		<!--layout="@layout/body_cicle"-->
+		<!--android:id="@+id/today"-->
+		<!--android:layout_width="match_parent"-->
+		<!--android:layout_height="100dp"-->
+		<!--android:layout_centerHorizontal="true"-->
+		<!--android:layout_marginTop="250dp">-->
+	<!--</include>-->
 	<ImageButton
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/start_sport"
 		android:src="@drawable/gmp"
-		android:layout_marginTop="300dp"
+		android:layout_marginTop="350dp"
 		android:layout_centerHorizontal="true" />
 
 	<!--<include-->

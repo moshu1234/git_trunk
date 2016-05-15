@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress;
 import com.example.andrewliu.fatbaby.DataBase.FitnessInfoDB;
@@ -33,6 +35,7 @@ public class MainTab01 extends Fragment
 		initProgress(view);
 		init_userinfo(getContext());
 		init_fitnessinfo(getContext());
+		init_weight_tab();
 		return view;
 	}
 	public void setProgressBarProgress(CircleProgressBar pb,int progress,String text){
@@ -53,7 +56,7 @@ public class MainTab01 extends Fragment
 		pb5 = (CircleProgressBar)view.findViewById(R.id.roundProgressBar5);
 		setProgressBarProgress(pb5,70,"day 5");
 
-//		mBodyProgress=(BodyProgress)view.findViewById(R.id.bodyProgress);
+		mBodyProgress=(BodyProgress)view.findViewById(R.id.bodyProgress);
 //		setBodyProgress(mBodyProgress,60,"加油哦");
 	}
 	public void init_userinfo(Context context){
@@ -62,13 +65,56 @@ public class MainTab01 extends Fragment
 	public void init_fitnessinfo(Context context){
 		fitnessInfoDB = new FitnessInfoDB(context);
 	}
-	public int running_calorie(int miles){
-		return 0;
+	public void init_weight_tab(){
+		int weight[]={60,0,62,80,90,10,78,90};
+		int i=0;
+		for(i=0;i<weight.length;i++){
+			set_weight_display(weight[i],i);
+		}
 	}
-	public int fitness_calorie(){
-		return 0;
-	}
-	public int food_calorie(){
-		return 0;
+	public void set_weight_display(int weight,int i){
+		ImageView iv;
+		TextView tv;
+		switch (i){
+			case 1:
+				iv = (ImageView)view.findViewById(R.id.day1_i);
+				tv = (TextView)view.findViewById(R.id.day1_t);
+				break;
+			case 2:
+				iv = (ImageView)view.findViewById(R.id.day2_i);
+				tv = (TextView)view.findViewById(R.id.day2_t);
+				break;
+			case 3:
+				iv = (ImageView)view.findViewById(R.id.day3_i);
+				tv = (TextView)view.findViewById(R.id.day3_t);
+				break;
+			case 4:
+				iv = (ImageView)view.findViewById(R.id.day4_i);
+				tv = (TextView)view.findViewById(R.id.day4_t);
+				break;
+			case 5:
+				iv = (ImageView)view.findViewById(R.id.day5_i);
+				tv = (TextView)view.findViewById(R.id.day5_t);
+				break;
+			case 6:
+				iv = (ImageView)view.findViewById(R.id.day6_i);
+				tv = (TextView)view.findViewById(R.id.day6_t);
+				break;
+			case 7:
+				iv = (ImageView)view.findViewById(R.id.day7_i);
+				tv = (TextView)view.findViewById(R.id.day7_t);
+				break;
+			default:
+				iv = (ImageView)view.findViewById(R.id.day7_i);
+				tv = (TextView)view.findViewById(R.id.day7_t);
+				break;
+		}
+		//set image height
+		ViewGroup.LayoutParams para;
+		para = iv.getLayoutParams();
+		para.height=weight;
+		iv.setLayoutParams(para);
+
+		tv.setText(String.valueOf(weight));
 	}
 }
