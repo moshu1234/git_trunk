@@ -6,23 +6,47 @@
 	<include
 		layout="@layout/dayhead"
 		android:id="@+id/dayhead"></include>
-	<include
-		layout="@layout/body_cicle"
-		android:id="@+id/today"
-		android:layout_width="300dp"
-		android:layout_height="300dp"
-		android:layout_marginLeft="0dp"
-		android:layout_below="@+id/dayhead"
-		android:layout_centerHorizontal="true">
-	</include>
-
+	<!--<include-->
+		<!--layout="@layout/body_cicle"-->
+		<!--android:id="@+id/today"-->
+		<!--android:layout_width="300dp"-->
+		<!--android:layout_height="300dp"-->
+		<!--android:layout_marginLeft="0dp"-->
+		<!--android:layout_below="@+id/dayhead"-->
+		<!--android:layout_centerHorizontal="true">-->
+	<!--</include>-->
+	<TextView
+		android:id="@+id/weight_tv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="体重"
+		android:layout_marginTop="200dp"
+		android:layout_marginLeft="50dp"
+		android:textSize="20sp"/>
+	<TextView
+		android:id="@+id/weight_ct"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="60kg"
+		android:layout_marginTop="200dp"
+		android:layout_marginLeft="100dp"
+		android:textSize="20sp"/>
 	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="今天一共走了100步"
 		android:id="@+id/totalSteps"
 		android:layout_centerHorizontal="true"
-		android:layout_below="@+id/today" />
+		android:layout_marginTop="100dp" />
+
+	<ImageButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/start_sport"
+		android:src="@drawable/gmp"
+		android:layout_marginTop="300dp"
+		android:layout_centerHorizontal="true" />
+
 	<!--<include-->
 		<!--layout="@layout/bottom_tab"-->
 		<!--android:id="@+id/buttom_tab"-->

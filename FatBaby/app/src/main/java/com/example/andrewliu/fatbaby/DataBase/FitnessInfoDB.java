@@ -89,7 +89,7 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
                 String findName=cursor.getString(1);
 
                 if(date.equals(findName)){
-                    Log.e("aaaaaaaaaaaaa","we've find the user "+date);
+                    Log.e("aaaaaaaaaaaaa","we've find the fitness data "+date);
                     Message msg = new Message();
                     msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6);
                     fitnessDBhandler.sendMessage(msg);
@@ -101,53 +101,45 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
     public boolean deleteDatabase(Context context) {
         return context.deleteDatabase(FITNESS_DB_NAME);
     }
-    //修改操作
-    public void update_fitness_date( String date)
-    {
+    //update info, if the content according to the key is integer, we need to convert integer to string first
+    public void update_fitness(String date,String key, String content){
         SQLiteDatabase db = this.getWritableDatabase();
         String where = "date" + " = ?";
         String[] whereValue = { date };
+        boolean integer_flag = false;
+        switch (key){
+            case "date":
+                integer_flag = false;
+                break;
+            case "progress":
+                integer_flag = true;
+                break;
+            case "running":
+                integer_flag = true;
+                break;
+            case "fitness":
+                integer_flag = true;
+                break;
+            case "profession":
+                integer_flag = false;
+                break;
+            case "weight":
+                integer_flag = true;
+                break;
+            case "tommrow":
+                integer_flag = true;
+                break;
+            default:
+                integer_flag = true;
+                break;
+        }
 
         ContentValues cv = new ContentValues();
-        if (!date.equals("")) {
-            cv.put("date", date);
+        if(integer_flag){
+            cv.put(key, Integer.valueOf(content));
         }
-        else {
-            return;
-        }
-        db.update(FITNESS_TABLE_NAME, cv, where, whereValue);
-    }
-    public void update_fitness_progress( String date,Integer progress)
-    {
-        update_info(date,"progress", progress);
-    }
-    public void update_fitness_running( String date,Integer running)
-    {
-        update_info(date,"running", running);
-    }
-    public void update_fitness_fitness( String date,Integer fitness)
-    {
-        update_info(date,"fitness", fitness);
-    }
-    public void update_fitness_weight( String date,Integer weight)
-    {
-        update_info(date,"weight", weight);
-    }
-    public void update_fitness_tommrow( String date,Integer tommrow)
-    {
-        update_info(date,"tommrow", tommrow);
-    }
-    private void update_info(String username, String contentname, Integer content){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String where = "username" + " = ?";
-        String[] whereValue = { username };
-
-        ContentValues cv = new ContentValues();
-        if (!content.equals(0)) {
-            cv.put(contentname, content);
-        }
-        else {
-            return;
+        else{
+            cv.put(key, content);
         }
         db.update(FITNESS_TABLE_NAME, cv, where, whereValue);
     }

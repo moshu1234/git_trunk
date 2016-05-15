@@ -9,6 +9,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by liut1 on 5/13/16.
  */
@@ -17,6 +20,7 @@ public class UserInfoDB extends SQLiteOpenHelper {
     private final static int USER_VERSION = 1;//版本号
     private final static String USER_TABLE_NAME = "userInfo";
     private Handler userDBhandler;
+    private Map map;
     public UserInfoDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -99,60 +103,46 @@ public class UserInfoDB extends SQLiteOpenHelper {
     public boolean deleteDatabase(Context context) {
         return context.deleteDatabase(USER_DB_NAME);
     }
-    //修改操作
-    public void update_userinfo_name( String username)
-    {
-        update_info(username,"username", username);
-    }
-    public void update_userinfo_age( String username,Integer age)
-    {
-        update_info(username,"age", age);
-    }
-    public void update_userinfo_gender( String username,String gender)
-    {
-        update_info(username,"gender", gender);
-    }
-    public void update_userinfo_height( String username,Integer height)
-    {
-        update_info(username,"height", height);
-    }
-    public void update_userinfo_profession( String username,String profession)
-    {
-        update_info(username,"profession", profession);
-    }
-    public void update_userinfo_hobby( String username,String hobby)
-    {
-        update_info(username,"hobby", hobby);
-    }
-    public void update_userinfo_sportTime( String username,Integer sportTime)
-    {
-        update_info(username,"sportTime", sportTime);
-    }
-    private void update_info(String username, String contentname, Integer content){
+
+    //update info, if the content according to the key is integer, we need to convert integer to string first
+    public void update_userinfo(String username,String key, String content){
         SQLiteDatabase db = this.getWritableDatabase();
         String where = "username" + " = ?";
         String[] whereValue = { username };
+        boolean integer_flag = false;
+        switch (key){
+            case "username":
+                integer_flag = false;
+                break;
+            case "age":
+                integer_flag = true;
+                break;
+            case "gender":
+                integer_flag = false;
+                break;
+            case "height":
+                integer_flag = true;
+                break;
+            case "profession":
+                integer_flag = false;
+                break;
+            case "hobby":
+                integer_flag = false;
+                break;
+            case "sportTime":
+                integer_flag = true;
+                break;
+            default:
+                integer_flag = true;
+                break;
+        }
 
         ContentValues cv = new ContentValues();
-        if (!content.equals(0)) {
-            cv.put(contentname, content);
+        if(integer_flag){
+            cv.put(key, Integer.valueOf(content));
         }
-        else {
-            return;
-        }
-        db.update(USER_TABLE_NAME, cv, where, whereValue);
-    }
-    private void update_info(String username, String contentname, String content){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String where = "username" + " = ?";
-        String[] whereValue = { username };
-
-        ContentValues cv = new ContentValues();
-        if (!content.equals("")) {
-            cv.put(contentname, content);
-        }
-        else {
-            return;
+        else{
+            cv.put(key, content);
         }
         db.update(USER_TABLE_NAME, cv, where, whereValue);
     }
