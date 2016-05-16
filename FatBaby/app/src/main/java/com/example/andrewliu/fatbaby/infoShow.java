@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress;
+import com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab01;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab02;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab03;
@@ -52,8 +54,11 @@ public class infoShow extends AppCompatActivity {
 
     private Thread thread;
     private ViewPager mViewPager;
-    private FragmentPagerAdapter mAdapter;
+    private FatBabyViewPager mFatBabyViewPager;
+    private FragmentStatePagerAdapter mAdapter;
+    private FragmentStatePagerAdapter mAdapter1;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
+    private List<Fragment> mFragments1 = new ArrayList<Fragment>();
     private StepDetector detector;
     private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
@@ -155,17 +160,19 @@ public class infoShow extends AppCompatActivity {
     }
     private void initViewPager()
     {
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+//        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+        mFatBabyViewPager = (FatBabyViewPager) findViewById(R.id.id_viewpager);
+//        mFatBabyViewPager.setScanScroll(false);
         MainTab01 tab01 = new MainTab01();
         MainTab02 tab02 = new MainTab02();
-//        MainTab03 tab03 = new MainTab03();
+        MainTab03 tab03 = new MainTab03();
         mFragments.add(tab01);
         mFragments.add(tab02);
-//        mFragments.add(tab03);
+        mFragments1.add(tab03);
         /**
          * 初始化Adapter
          */
-        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager())
+        mAdapter = new  FragmentStatePagerAdapter(getSupportFragmentManager())
         {
             @Override
             public int getCount()
@@ -179,7 +186,22 @@ public class infoShow extends AppCompatActivity {
                 return mFragments.get(arg0);
             }
         };
-        mViewPager.setAdapter(mAdapter);
+        mAdapter1 = new  FragmentStatePagerAdapter(getSupportFragmentManager())
+    {
+        @Override
+        public int getCount()
+        {
+            return mFragments1.size();
+        }
+
+        @Override
+        public Fragment getItem(int arg0)
+        {
+            return mFragments1.get(arg0);
+        }
+    };
+        mFatBabyViewPager.setAdapter(mAdapter);
+
 //        mViewPager.setCurrentItem(1);
     }
 
@@ -252,7 +274,10 @@ public class infoShow extends AppCompatActivity {
 
     private void selectItem(int position) {
         if(position > 1){
-            mViewPager.setCurrentItem(1);
+            mFatBabyViewPager.setAdapter(mAdapter1);
+        }
+        else {
+            mFatBabyViewPager.setAdapter(mAdapter);
         }
 
         // update selected item and title, then close the drawer

@@ -16,6 +16,8 @@
    	    android:textSize="30sp"
    	    />
 
-    
+    <include
+		layout="@layout/scroll_text">
 
+	</include>
 </LinearLayout>

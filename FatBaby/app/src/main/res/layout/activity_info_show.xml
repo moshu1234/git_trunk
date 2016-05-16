@@ -46,7 +46,8 @@
             <!--android:background="@drawable/showleft_selector" />-->
     <!--</RelativeLayout>-->
 
-    <android.support.v4.view.ViewPager
+    <view
+        class="com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager"
         android:id="@+id/id_viewpager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -54,7 +55,7 @@
         android:layout_marginTop="0dp"
         android:background="@drawable/baseinfobg">
 
-    </android.support.v4.view.ViewPager>
+    </view>
 
     <include
         layout="@layout/bottom_tab"
