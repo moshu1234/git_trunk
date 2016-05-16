@@ -1,6 +1,7 @@
 package com.example.andrewliu.fatbaby;
 
-import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -187,19 +188,19 @@ public class infoShow extends AppCompatActivity {
             }
         };
         mAdapter1 = new  FragmentStatePagerAdapter(getSupportFragmentManager())
-    {
-        @Override
-        public int getCount()
         {
-            return mFragments1.size();
-        }
+            @Override
+            public int getCount()
+            {
+                return mFragments1.size();
+            }
 
-        @Override
-        public Fragment getItem(int arg0)
-        {
-            return mFragments1.get(arg0);
-        }
-    };
+            @Override
+            public Fragment getItem(int arg0)
+            {
+                return mFragments1.get(arg0);
+            }
+        };
         mFatBabyViewPager.setAdapter(mAdapter);
 
 //        mViewPager.setCurrentItem(1);
@@ -274,10 +275,16 @@ public class infoShow extends AppCompatActivity {
 
     private void selectItem(int position) {
         if(position > 1){
-            mFatBabyViewPager.setAdapter(mAdapter1);
+            if(mAdapter1 != null) {
+                Log.e("bbb","set mAdapter1--------------------------");
+                mFatBabyViewPager.setAdapter(mAdapter1);
+            }
         }
         else {
-            mFatBabyViewPager.setAdapter(mAdapter);
+            if(mAdapter != null) {
+                Log.e("bbb","set mAdapter");
+                mFatBabyViewPager.setAdapter(mAdapter);
+            }
         }
 
         // update selected item and title, then close the drawer
