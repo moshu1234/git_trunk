@@ -62,6 +62,7 @@ public class infoShow extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private ActionBar actionBar;
+    private View tab;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,10 +157,10 @@ public class infoShow extends AppCompatActivity {
     {
         mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
         MainTab01 tab01 = new MainTab01();
-//        MainTab02 tab02 = new MainTab02();
+        MainTab02 tab02 = new MainTab02();
 //        MainTab03 tab03 = new MainTab03();
         mFragments.add(tab01);
-//        mFragments.add(tab02);
+        mFragments.add(tab02);
 //        mFragments.add(tab03);
         /**
          * 初始化Adapter
@@ -225,15 +226,6 @@ public class infoShow extends AppCompatActivity {
             case R.id.favo_p:
                 Toast.makeText(this, "收藏", Toast.LENGTH_SHORT).show();
                 return true;
-            case android.R.id.home:
-                Toast.makeText(this, "open drawer", Toast.LENGTH_SHORT).show();
-//                if(false){
-//                    mDrawerLayout.closeDrawer(mDrawerLayout);
-//                }
-//                else{
-//                    mDrawerLayout.openDrawer(mDrawerLayout);
-//                }
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -259,14 +251,9 @@ public class infoShow extends AppCompatActivity {
     }
 
     private void selectItem(int position) {
-        // update the main content by replacing fragments
-        android.app.Fragment fragment = new PlanetFragment();
-        Bundle args = new Bundle();
-        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-        fragment.setArguments(args);
-
-        FragmentManager fragmentManager = getFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        if(position > 1){
+            mViewPager.setCurrentItem(1);
+        }
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
@@ -298,30 +285,5 @@ public class infoShow extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-    /**
-     * Fragment that appears in the "content_frame", shows a planet
-     */
-    public static class PlanetFragment extends android.app.Fragment {
-        public static final String ARG_PLANET_NUMBER = "planet_number";
-
-        public PlanetFragment() {
-            // Empty constructor required for fragment subclasses
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
-//            int i = getArguments().getInt(ARG_PLANET_NUMBER);
-//            String planet = getResources().getStringArray(R.array.planets_array)[i];
-//
-//            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-//                    "drawable", getActivity().getPackageName());
-//            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-//            getActivity().setTitle(planet);
-//            return rootView;
-            return null;
-        }
     }
 }
