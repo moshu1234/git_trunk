@@ -3,5 +3,5 @@
 
     <item android:drawable="@drawable/ic_preference_first_pressed" android:state_focused="true"></item>
     <item android:drawable="@drawable/ic_preference_first_pressed" android:state_pressed="true"></item>
-	<item android:drawable="@drawable/ic_preference_first_normal"></item>
+    <item android:drawable="@drawable/ic_preference_first_normal"></item>
 </selector>

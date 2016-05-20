@@ -18,6 +18,6 @@
         android_custom:textColor="#9A32CD"
         android_custom:textIsDisplayable="false"
         android_custom:roundWidth="10dip"
-        android_custom:textSize="18sp"/>
+        android_custom:textSize="18sp" />
 
 </FrameLayout>

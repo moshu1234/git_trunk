@@ -35,7 +35,7 @@ public class MainTab01 extends Fragment
 		initProgress(view);
 		init_userinfo(getContext());
 		init_fitnessinfo(getContext());
-		init_weight_tab();
+//		init_weight_tab();
 		return view;
 	}
 	public void setProgressBarProgress(CircleProgressBar pb,int progress,String text){

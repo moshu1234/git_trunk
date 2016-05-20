@@ -43,6 +43,7 @@
         android:clickable="true"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp" />
+
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar3"
         android:layout_width="60dp"
@@ -60,6 +61,7 @@
         android_custom:textSize="10sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp" />
+
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar4"
         android:layout_width="60dp"
@@ -77,6 +79,7 @@
         android_custom:textSize="10sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp" />
+
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar5"
         android:layout_width="60dp"

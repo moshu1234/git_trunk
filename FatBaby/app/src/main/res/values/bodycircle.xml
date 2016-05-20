@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="BodyProgress">
-    <attr name="diffColor" format="color"/>
-        <attr name="broundColor" format="color"/>
-    <attr name="broundProgressColor" format="color"/>
-    <attr name="broundWidth" format="dimension"></attr>
-    <attr name="btextColor" format="color" />
-    <attr name="btextSize" format="dimension" />
-    <attr name="bmax" format="integer"></attr>
-    <attr name="btextIsDisplayable" format="boolean"></attr>
-    <attr name="bstyle">
-        <enum name="bSTROKE" value="0"></enum>
-        <enum name="bFILL" value="1"></enum>
-    </attr>
+        <attr name="diffColor" format="color" />
+        <attr name="broundColor" format="color" />
+        <attr name="broundProgressColor" format="color" />
+        <attr name="broundWidth" format="dimension"></attr>
+        <attr name="btextColor" format="color" />
+        <attr name="btextSize" format="dimension" />
+        <attr name="bmax" format="integer"></attr>
+        <attr name="btextIsDisplayable" format="boolean"></attr>
+        <attr name="bstyle">
+            <enum name="bSTROKE" value="0"></enum>
+            <enum name="bFILL" value="1"></enum>
+        </attr>
     </declare-styleable>
 </resources>

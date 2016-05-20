@@ -4,6 +4,9 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    //**bmob-sdk:3.4.6版本依赖包，用于兼容Android6.0系统**
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.example.andrewliu.fatbaby"
         minSdkVersion 22
@@ -27,4 +30,21 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:design:23.2.1'
+    //以下SDK开发者请根据需要自行选择
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    compile 'cn.bmob.android:bmob-sdk:3.4.6'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    //自`V3.4.3版本`开始，使用`okhttp`优化SDK的网络框架
+    compile 'com.squareup.okio:okio:1.4.0'
+    compile 'com.android.support:support-v4:23.2.1'
+    //注:bmob-sdk:3.4.6需要依赖okhttp（2.4.0）、okio（2.4.0），如果需要兼容Android6.0系统，则还需要添加support-v4（23.2.1）及org.apache.http.legacy包，具体可查看下面注释[1]的解释
+    //bmob-push：Bmob的推送包
+    compile 'cn.bmob.android:bmob-push:0.8'
+    //bmob-im：Bmob的即时通讯包，如果想使用即时通讯服务，则添加以下两个包，注意每个版本的im依赖特定版本的bmob-sdk，而bmob-sdk又需要特定的依赖库，具体可以查看下面注释[2]中的对应关系
+    compile 'cn.bmob.android:bmob-im:1.1.9'
+    compile 'cn.bmob.android:bmob-sdk:3.4.3'
+    //bmob-sms ：Bmob单独为短信服务提供的包
+    compile 'cn.bmob.android:bmob-sms:1.0.1'
+    compile files('/Users/liut1/Documents/Projects/Android/GitSourceCode/git_trunk/FatBaby/libs/mta-sdk-1.6.2.jar')
+    compile files('/Users/liut1/Documents/Projects/Android/GitSourceCode/git_trunk/FatBaby/libs/open_sdk_r5509.jar')
 }

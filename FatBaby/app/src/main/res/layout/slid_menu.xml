@@ -4,20 +4,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/menu"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/baseinfobg" >
-    </LinearLayout>
+        android:background="@drawable/baseinfobg"></LinearLayout>
 
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/backgroud" >
-    </LinearLayout>
+        android:background="@drawable/backgroud"></LinearLayout>
 
 </LinearLayout>

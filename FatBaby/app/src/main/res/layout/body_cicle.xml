@@ -4,6 +4,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress
         android:id="@+id/bodyProgress"
         android:layout_width="wrap_content"

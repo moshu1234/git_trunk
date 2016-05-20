@@ -5,18 +5,19 @@
     android:id="@+id/buttom_tab">
 
     <!--<FrameLayout-->
-        <!--android:id="@+id/frame_content"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@+id/frameMenu"-->
-        <!--android:layout_alignParentTop="true">-->
+    <!--android:id="@+id/frame_content"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_above="@+id/frameMenu"-->
+    <!--android:layout_alignParentTop="true">-->
     <!--</FrameLayout>-->
 
     <FrameLayout
         android:id="@+id/frameMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -34,13 +35,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ldg"/>
+                    android:src="@drawable/ldg" />
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center|bottom"-->
-                    <!--android:text="test1"-->
-                    <!--android:textSize="12sp"/>-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center|bottom"-->
+                <!--android:text="test1"-->
+                <!--android:textSize="12sp"/>-->
             </FrameLayout>
             <!-- 与我相关 -->
 
@@ -48,7 +49,7 @@
                 android:id="@+id/layout_auth"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:layout_weight="1" >
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/image_auth"
@@ -57,94 +58,94 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ldg" />
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center|bottom"-->
-                    <!--android:text="test2"-->
-                    <!--android:textColor="@android:color/black"-->
-                    <!--android:textSize="12sp" />-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center|bottom"-->
+                <!--android:text="test2"-->
+                <!--android:textColor="@android:color/black"-->
+                <!--android:textSize="12sp" />-->
             </FrameLayout>
             <!-- 留白 -->
 
             <!--<FrameLayout-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1" >-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1" >-->
             <!--</FrameLayout>-->
             <!-- 我的空间 -->
 
             <!--<FrameLayout-->
-                <!--android:id="@+id/layout_space"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1" >-->
+            <!--android:id="@+id/layout_space"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1" >-->
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/image_space"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center_vertical|top"-->
-                    <!--android:src="@drawable/ldg" />-->
+            <!--<ImageView-->
+            <!--android:id="@+id/image_space"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical|top"-->
+            <!--android:src="@drawable/ldg" />-->
 
-                <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_gravity="center|bottom"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:text="test3"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:textColor="@android:color/black"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:textSize="12sp" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_gravity="center|bottom"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="test3"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@android:color/black"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="12sp" />&ndash;&gt;-->
             <!--</FrameLayout>-->
 
             <!-- 玩吧 -->
 
             <!--<FrameLayout-->
-                <!--android:id="@+id/layout_more"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1" >-->
+            <!--android:id="@+id/layout_more"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1" >-->
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/image_more"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center_vertical|top"-->
-                    <!--android:src="@drawable/ldg" />-->
+            <!--<ImageView-->
+            <!--android:id="@+id/image_more"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical|top"-->
+            <!--android:src="@drawable/ldg" />-->
 
-                <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_gravity="center|bottom"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:text="test4"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:textColor="@android:color/black"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:textSize="12sp" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_gravity="center|bottom"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="test4"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@android:color/black"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="12sp" />&ndash;&gt;-->
             <!--</FrameLayout>-->
         </LinearLayout>
         <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1px"-->
-            <!--android:background="@android:color/black" >-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1px"-->
+        <!--android:background="@android:color/black" >-->
         <!--</LinearLayout>-->
     </FrameLayout>
     <!-- 中间按钮背景 -->
 
     <!--<ImageView-->
-        <!--android:id="@+id/toggle_btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignTop="@+id/frameMenu"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:src="@drawable/lde"/>-->
+    <!--android:id="@+id/toggle_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignTop="@+id/frameMenu"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/lde"/>-->
 
     <!--&lt;!&ndash; 中间按钮 &ndash;&gt;-->
 
     <!--<ImageView-->
-        <!--android:id="@+id/plus_btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignTop="@+id/frameMenu"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:src="@drawable/lde" />-->
+    <!--android:id="@+id/plus_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignTop="@+id/frameMenu"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:src="@drawable/lde" />-->
 
 </RelativeLayout>

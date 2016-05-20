@@ -1,8 +1,5 @@
 package com.example.andrewliu.fatbaby;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,46 +7,36 @@ import android.os.Message;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Handler;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress;
+import com.example.andrewliu.fatbaby.BmobDataLib.SportsInfo;
 import com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab01;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab02;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab03;
-import com.example.andrewliu.fatbaby.SlidMenu.MenuLeftFragment;
-import com.example.andrewliu.fatbaby.SlidMenu.MenuRightFragment;
 import com.example.andrewliu.fatbaby.SlidMenu.StepCounterService;
 import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
-import com.example.andrewliu.fatbaby.progressbar.CircleProgressBar;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.LogRecord;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.listener.SaveListener;
 
 public class infoShow extends AppCompatActivity {
 
@@ -72,6 +59,10 @@ public class infoShow extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 初始化 Bmob SDK
+        // 使用时请将第二个参数Application ID替换成你在Bmob服务器端创建的Application ID
+        Bmob.initialize(this, "066c9831ba79e2e93cb66f9cc46807ff");
+
         setContentView(R.layout.activity_info_show);
         actionBar = getSupportActionBar();
         // enable ActionBar app icon to behave as action to toggle nav drawer

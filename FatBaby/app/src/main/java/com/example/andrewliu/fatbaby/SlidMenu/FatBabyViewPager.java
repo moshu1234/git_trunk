@@ -3,6 +3,7 @@ package com.example.andrewliu.fatbaby.SlidMenu;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -19,15 +20,19 @@ public class FatBabyViewPager extends ViewPager {
         super(context, attrs);
     }
 
-    public void setScanScroll(boolean isCanScroll) {
-        this.isCanScroll = isCanScroll;
-    }
-
-
     @Override
-    public void scrollTo(int x, int y) {
-        if (isCanScroll) {
-            super.scrollTo(x, y);
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                Log.e("aaaaa","ACTION_MOVE");
+//                getParent().requestDisallowInterceptTouchEvent(true);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                Log.e("aaaaa","ACTION_UP    ACTION_CANCEL");
+//                getParent().requestDisallowInterceptTouchEvent(false);
+                break;
         }
+        return super.onTouchEvent(event);
     }
 }

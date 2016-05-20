@@ -1,98 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:id="@+id/main_tab_01">
-	<include
-		layout="@layout/dayhead"
-		android:id="@+id/dayhead"></include>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_tab_01">
 
-	<TextView
-		android:id="@+id/weight_tv"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="体重"
-		android:layout_marginTop="200dp"
-		android:layout_marginLeft="50dp"
-		android:textSize="20sp"/>
-	<TextView
-		android:id="@+id/weight_ct"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="60kg"
-		android:layout_marginTop="200dp"
-		android:layout_marginLeft="100dp"
-		android:textSize="20sp"/>
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="今天一共走了100步"
-		android:id="@+id/totalSteps"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="100dp" />
-	<include
-		layout="@layout/weight_tab"
-		android:id="@+id/weight_display"
-		android:layout_width="match_parent"
-		android:layout_height="100dp"
-		android:layout_marginTop="250dp"
-		android:layout_marginLeft="30dp">
-	</include>
+    <include
+        layout="@layout/dayhead"
+        android:id="@+id/dayhead"></include>
 
-	<!--<include-->
-		<!--layout="@layout/body_cicle"-->
-		<!--android:id="@+id/today"-->
-		<!--android:layout_width="match_parent"-->
-		<!--android:layout_height="100dp"-->
-		<!--android:layout_centerHorizontal="true"-->
-		<!--android:layout_marginTop="250dp">-->
-	<!--</include>-->
-	<ImageButton
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/start_sport"
-		android:src="@drawable/gmp"
-		android:layout_marginTop="350dp"
-		android:layout_centerHorizontal="true" />
+    <TextView
+        android:id="@+id/weight_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="体重"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="50dp"
+        android:textSize="20sp" />
 
-	<!--<include-->
-		<!--layout="@layout/bottom_tab"-->
-		<!--android:id="@+id/buttom_tab"-->
-		<!--></include>-->
-</RelativeLayout>
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-	<!--android:layout_width="match_parent"-->
-	<!--android:layout_height="match_parent"-->
-	<!--android:background="@drawable/baseinfobg"">-->
-	<!--<include-->
-		<!--android:id="@+id/history"-->
-		<!--layout="@layout/dayhead">-->
-	<!--</include>-->
-	<!--<include-->
-		<!--android:id="@+id/today"-->
-		<!--layout="@layout/body_cicle"-->
-		<!--android:layout_below="@+id/history"-->
-		<!--android:layout_width="fill_parent"-->
-		<!--android:layout_alignParentBottom="true"-->
-		<!--android:layout_height="200dp">-->
+    <TextView
+        android:id="@+id/weight_ct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60kg"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="100dp"
+        android:textSize="20sp" />
 
-	<!--</include>-->
-<!--</RelativeLayout>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:id="@+id/ly_main_weixin"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="fill_parent"-->
-    <!--android:background="#fcfcfc"-->
-    <!--android:orientation="vertical" >-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="今天一共走了100步"
+        android:id="@+id/totalSteps"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
 
-   	<!--<TextView -->
-   	    <!--android:layout_width="fill_parent"-->
-   	    <!--android:layout_height="0dp"-->
-   	    <!--android:layout_weight="1"-->
-   	    <!--android:gravity="center"-->
-   	    <!--android:text="this is first tab !"-->
-   	    <!--android:textColor="#000000"-->
-   	    <!--android:textSize="30sp"-->
-   	    <!--/>-->
+    <!--<include-->
+        <!--layout="@layout/weight_tab"-->
+        <!--android:id="@+id/weight_display"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_marginTop="250dp"-->
+        <!--android:layout_marginLeft="30dp"></include>-->
 
-<!--</LinearLayout>-->
+    <include
+    layout="@layout/body_cicle"
+    android:id="@+id/today"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="250dp">
+    </include>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_sport"
+        android:src="@drawable/gmp"
+        android:layout_marginTop="350dp"
+        android:layout_centerHorizontal="true" />
+
+    <!--<include-->
+    <!--layout="@layout/bottom_tab"-->
+    <!--android:id="@+id/buttom_tab"-->
+    <!--></include>-->
+</RelativeLayout><!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->    <!--android:layout_width="match_parent"-->    <!--android:layout_height="match_parent"-->    <!--android:background="@drawable/baseinfobg"">-->    <!--<include-->        <!--android:id="@+id/history"-->        <!--layout="@layout/dayhead">-->    <!--</include>-->    <!--<include-->        <!--android:id="@+id/today"-->        <!--layout="@layout/body_cicle"-->        <!--android:layout_below="@+id/history"-->        <!--android:layout_width="fill_parent"-->        <!--android:layout_alignParentBottom="true"-->        <!--android:layout_height="200dp">-->
+
+    <!--</include>--><!--</RelativeLayout>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/ly_main_weixin"--><!--android:layout_width="fill_parent"--><!--android:layout_height="fill_parent"--><!--android:background="#fcfcfc"--><!--android:orientation="vertical" >-->
+
+    <!--<TextView --> <!--android:layout_width="fill_parent"--> <!--android:layout_height="0dp"--> <!--android:layout_weight="1"--> <!--android:gravity="center"--> <!--android:text="this is first tab !"--> <!--android:textColor="#000000"--> <!--android:textSize="30sp"--> <!--/>-->
+
+    <!--</LinearLayout>-->

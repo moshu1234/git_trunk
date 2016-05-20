@@ -1,2 +1,2 @@
-include ':app',':SlidingMenu/library'
+include ':app', ':SlidingMenu/library'
 include ':circlerefresh'
