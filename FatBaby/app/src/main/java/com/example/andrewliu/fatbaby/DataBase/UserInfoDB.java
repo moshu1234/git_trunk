@@ -9,6 +9,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,13 +37,9 @@ public class UserInfoDB extends SQLiteOpenHelper {
                 + USER_TABLE_NAME
                 + "("
                 + "id integer primary key autoincrement,"
-                + "username varchar,"
-                + "age integer,"
-                + "gender varchar,"
-                + "height integer,"
-                + "profession varchar,"//student, teacher, IT..
-                + "hobby varchar,"    //hobbies:movie, music, tabble tennis...
-                + "sportTime integer" //target sport time for every day
+                + "objid varchar,"
+                + "openid varchar,"
+                + "access_token varchar"
                 + ")"
         );
     }
@@ -48,36 +48,30 @@ public class UserInfoDB extends SQLiteOpenHelper {
 
     }
     //add user
-    public long insert_userinfo(String username, Integer age, String gender){
+    public long insert_userinfo(String objid, String openid, String access_token){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        if(!username.equals("")){
-            cv.put("username",username);
+        if(!objid.equals("")){
+            cv.put("objid",objid);
         }
-        else{
-            cv.put("username","花花");
+        if(!openid.equals("")){
+            cv.put("openid",openid);
         }
-        if(age > 0){
-            cv.put("age",age);
-        }
-        else{
-            cv.put("age",18);
-        }
-        if(!gender.equals("")){
-            cv.put("gender",gender);
+        if(!access_token.equals("")){
+            cv.put("access_token",access_token);
         }
         long row = db.insert(USER_TABLE_NAME, null, cv);
         return row;
     }
     //删除操作
-    public void delete(String username)
+    public void delete(String objid)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = "username" + " = ?";
-        String[] whereValue ={ username };
+        String where = "objid" + " = ?";
+        String[] whereValue ={ objid };
         db.delete(USER_TABLE_NAME, where, whereValue);
     }
-    public void find(String name){
+    public void find(String objid){
         SQLiteDatabase db = this.getWritableDatabase();
         //get cursor
         Cursor cursor = db.query (USER_TABLE_NAME,null,null,null,null,null,null);
@@ -90,11 +84,11 @@ public class UserInfoDB extends SQLiteOpenHelper {
                 //获得用户名
                 String findName=cursor.getString(1);
 
-                if(name.equals(findName)){
-                    Log.e("aaaaaaaaaaaaa","we've find the user "+name);
-                    Message msg = new Message();
-                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getString(5);
-                    userDBhandler.sendMessage(msg);
+                if(objid.equals(findName)){
+                    Log.e("aaaaaaaaaaaaa","we've find the user "+objid);
+//                    Message msg = new Message();
+//                    msg.obj = cursor.getString(1) + " " + cursor.getString(2) + " " + cursor.getString(3);
+//                    userDBhandler.sendMessage(msg);
                 }
             }
             cursor.close();
@@ -104,47 +98,52 @@ public class UserInfoDB extends SQLiteOpenHelper {
         return context.deleteDatabase(USER_DB_NAME);
     }
 
-    //update info, if the content according to the key is integer, we need to convert integer to string first
-    public void update_userinfo(String username,String key, String content){
+    //update info, string[key][value]
+    public void update_info(String objid, String[] content){
+        Integer ret = 0;
         SQLiteDatabase db = this.getWritableDatabase();
-        String where = "username" + " = ?";
-        String[] whereValue = { username };
-        boolean integer_flag = false;
-        switch (key){
-            case "username":
-                integer_flag = false;
-                break;
-            case "age":
-                integer_flag = true;
-                break;
-            case "gender":
-                integer_flag = false;
-                break;
-            case "height":
-                integer_flag = true;
-                break;
-            case "profession":
-                integer_flag = false;
-                break;
-            case "hobby":
-                integer_flag = false;
-                break;
-            case "sportTime":
-                integer_flag = true;
-                break;
-            default:
-                integer_flag = true;
-                break;
-        }
-
+        String where = "objid" + " = ?";
+        String[] whereValue = { objid };
         ContentValues cv = new ContentValues();
-        if(integer_flag){
-            cv.put(key, Integer.valueOf(content));
+        if(content != null) {
+            for (Integer i = 0; i < content.length; ) {
+                Log.e("aaaa",content[i]);
+                switch (content[i]) {
+                    case "objid":
+
+                        if (!content[i+1].equals("")) {
+                            Log.e("bbb","update objid:"+content[i+1]);
+                            cv.put("objid", content[i+1]);
+                        }
+                        break;
+                    case "openid":
+                        if (!content[i+1].equals("")) {
+                            Log.e("bbb","update openid:"+content[i+1]);
+                            cv.put("openid", content[i+1]);
+                        }
+                        break;
+                    case "access_token":
+                        if (!content[i+1].equals("")) {
+                            Log.e("bbb","update access_token:"+content[i+1]);
+                            cv.put("access_token", content[i+1]);
+                        }
+                        break;
+                    default:
+                        Log.e("userinfodb", "no valid info");
+                        break;
+                }
+                i = i+2;
+
+                ret = db.update(USER_TABLE_NAME, cv, where, whereValue);
+                if (ret < 1) {
+                    cv.put("objid", objid);
+                    db.insert(USER_TABLE_NAME, null, cv);
+                }
+            }
         }
         else{
-            cv.put(key, content);
+            Log.e("aa","no user found in userinfodb");
         }
-        db.update(USER_TABLE_NAME, cv, where, whereValue);
     }
     public void setHandler(Handler handler){
         userDBhandler = handler;

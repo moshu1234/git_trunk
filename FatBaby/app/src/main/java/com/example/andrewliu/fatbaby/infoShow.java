@@ -39,7 +39,6 @@ import cn.bmob.v3.Bmob;
 import cn.bmob.v3.listener.SaveListener;
 
 public class infoShow extends AppCompatActivity {
-
     private Thread thread;
     private ViewPager mViewPager;
     private FatBabyViewPager mFatBabyViewPager;
@@ -207,7 +206,6 @@ public class infoShow extends AppCompatActivity {
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-//            Log.e("aaaaaaaaaa","what="+msg.what);
             TextView textView = (TextView)findViewById(R.id.totalSteps);
             if(textView != null){
                 textView.setText("今天走了" + StepDetector.CURRENT_SETP + "步");
