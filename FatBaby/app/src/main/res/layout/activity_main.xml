@@ -63,8 +63,8 @@
         android:layout_centerVertical="true">
     <Button
         android:background="@drawable/fsf"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/qqlogin"
         android:layout_marginLeft="100dp"
         android:layout_centerHorizontal="true"

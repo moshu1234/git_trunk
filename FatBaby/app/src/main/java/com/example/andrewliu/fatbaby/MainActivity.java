@@ -1,5 +1,6 @@
 package com.example.andrewliu.fatbaby;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Handler;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.andrewliu.fatbaby.BmobDataLib.SportsInfo;
 import com.example.andrewliu.fatbaby.BmobDataLib.UserInfo;
 import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
 import com.tencent.connect.common.Constants;
@@ -27,16 +30,30 @@ import com.tencent.tauth.UiError;
 import org.json.JSONObject;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.listener.SaveListener;
 
 
 public class MainActivity extends AppCompatActivity {
-    private String LogTitle = "MainActivity";
+
+    /**
+     * 一定一个接口
+     */
+    public interface ICoallBack{
+        public void onCallSucess(String s);
+        public void onCallToast(String s);
+    }
+//    ICoallBack iCoallBack=null;
+
+    private String LogTitle = "MAINACTIVITY";
+    private Context mainContext = this;
     public static Tencent mTencent = null;
     private IUiListener baseUiListener;
-
+    public static Integer caseFlag = 0;
+    public static String caseConten = new String();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_main);
@@ -55,8 +72,24 @@ public class MainActivity extends AppCompatActivity {
         // 使用时请将第二个参数Application ID替换成你在Bmob服务器端创建的Application ID
         Bmob.initialize(this, "066c9831ba79e2e93cb66f9cc46807ff");
 
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setOpenid("aaa");
+//        userInfo.setPassword("123456");
+//        userInfo.setName("123456");
+//        userInfo.save(this, new SaveListener() {
+//            @Override
+//            public void onSuccess() {
+//                Log.e(LogTitle,"1");
+//            }
+//
+//            @Override
+//            public void onFailure(int i, String s) {
+//                Log.e(LogTitle,"2");
+//            }
+//        });
+//        userInfo.addUser(this,userInfo);
         login();
-        loginOther();
+        loginOther(this);
     }
     public void login(){
         Button b_login=(Button)findViewById(R.id.login_b);
@@ -67,36 +100,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void loginOther(){
+    public void loginOther(final Context context){
         Button other_login = (Button)findViewById(R.id.qqlogin);
 
         other_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                qqLogin();
+                qqLogin(context);
             }
         });
     }
-    public void qqLogin(){
+    public void qqLogin(final Context context){
 
         baseUiListener = new IUiListener() {
             @Override
             public void onCancel() {
-//                if (shareType != QQShare.SHARE_TO_QQ_TYPE_IMAGE) {
-//                    Util.toastMessage(QQShareActivity.this, "onCancel: ");
-//                }
                 Log.e("FatBaby","qq share type "+ "onCancel");
             }
-            //                {"ret":0,"openid":"D0499A8BFE640614D31A387EB42C5088",
-            // "access_token":"0869F95F1F27D197CC6C7679BD03D89B",
-            // "pay_token":"F6B5A1C7A8BBD62B8A45C3DF78AC6A6C",
-            // "expires_in":7776000,
-            // "pf":"desktop_m_qq-10000144-android-2002-",
-            // "pfkey":"437efa30dbb1197524d9172a26e19ed2",
-            // "msg":"",
-            // "login_cost":637,
-            // "query_authority_cost":371,
-            // "authority_cost":-11545291}
             @Override
             public void onComplete(Object response) {
                 String openid = new String();
@@ -108,11 +128,19 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // TODO Auto-generated method stub
                 Log.e("FatBaby","qq share type "+ "onComplete="+response.toString());
-                //qq user will login directly
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, infoShow.class);
-                MainActivity.this.startActivity(intent);
-//                userCompare(openid);
+                //save openid and key on bmob
+                UserInfo userInfo = new UserInfo();
+                userInfo.queryOpenid(context, openid, new ICoallBack() {
+                    @Override
+                    public void onCallSucess(String s) {
+                        gotoNextPage(s);
+                    }
+
+                    @Override
+                    public void onCallToast(String s) {
+                        myToast(s);
+                    }
+                });
             }
             @Override
             public void onError(UiError e) {
@@ -120,11 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("FatBaby","qq share error "+ e.errorMessage);
             }
         };
-//        if (!mTencent.isSessionValid())
-        {
-//            mTencent.setOpenId(qqObject.getClass());
-            mTencent.login(this, "get_simple_userinfo,add_topic", baseUiListener);
-        }
+        mTencent.login(this, "get_simple_userinfo,add_topic", baseUiListener);
     }
 
     @Override
@@ -137,34 +161,40 @@ public class MainActivity extends AppCompatActivity {
     public void qqLogout(){
         mTencent.logout(this);
     }
-    //match user with server, if true go on
-    public void userCompare(String openid){
-        if(openid != null) {
-            UserInfo userInfo = new UserInfo();
-            userInfo.setHandler(mainHandler);
-            userInfo.userCompare(this, openid);
-        }
-    }
 
     //match user with server, if true go on
     public void userCompare(){
         UserInfo userInfo = new UserInfo();
         TextView user = (TextView)findViewById(R.id.username);
         TextView password = (TextView)findViewById(R.id.password);
-        userInfo.setHandler(mainHandler);
-        userInfo.userCompare(this,user.getText().toString(),password.getText().toString());
+        userInfo.userCompare(this, user.getText().toString(), password.getText().toString(), new ICoallBack() {
+            @Override
+            public void onCallSucess(String s) {
+                gotoNextPage(s);
+            }
+
+            @Override
+            public void onCallToast(String s) {
+                myToast(s);
+            }
+        }) ;
+//        gotoNextPage();
     }
     public Handler mainHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Log.e("aaa","congratuation!!!");
-            if(msg.what == 1){
-                qqLogout();
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, infoShow.class);
-                MainActivity.this.startActivity(intent);
-            }
+            Log.e("aaa","congratuation!!!"+msg.what+":"+msg.obj.toString());
             super.handleMessage(msg);
         }
     };
+    public void myToast(String s){
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+    public void gotoNextPage(String objid){
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, infoShow.class);
+        if (caseConten != null)
+            intent.putExtra("objid", objid);
+        MainActivity.this.startActivity(intent);
+    }
 }

@@ -51,13 +51,13 @@ public class UserInfoDB extends SQLiteOpenHelper {
     public long insert_userinfo(String objid, String openid, String access_token){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        if(!objid.equals("")){
+        if(objid!=null){
             cv.put("objid",objid);
         }
-        if(!openid.equals("")){
+        if(openid!=null){
             cv.put("openid",openid);
         }
-        if(!access_token.equals("")){
+        if(access_token!=null){
             cv.put("access_token",access_token);
         }
         long row = db.insert(USER_TABLE_NAME, null, cv);
