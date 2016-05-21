@@ -72,24 +72,9 @@ public class MainActivity extends AppCompatActivity {
         // 使用时请将第二个参数Application ID替换成你在Bmob服务器端创建的Application ID
         Bmob.initialize(this, "066c9831ba79e2e93cb66f9cc46807ff");
 
-//        UserInfo userInfo = new UserInfo();
-//        userInfo.setOpenid("aaa");
-//        userInfo.setPassword("123456");
-//        userInfo.setName("123456");
-//        userInfo.save(this, new SaveListener() {
-//            @Override
-//            public void onSuccess() {
-//                Log.e(LogTitle,"1");
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s) {
-//                Log.e(LogTitle,"2");
-//            }
-//        });
-//        userInfo.addUser(this,userInfo);
         login();
         loginOther(this);
+        userRegister();
     }
     public void login(){
         Button b_login=(Button)findViewById(R.id.login_b);
@@ -107,6 +92,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 qqLogin(context);
+            }
+        });
+    }
+    public void userRegister(){
+        Button button = (Button)findViewById(R.id.register_b);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,UserRegister.class);
+                MainActivity.this.startActivity(intent);
             }
         });
     }

@@ -307,4 +307,7 @@ public class infoShow extends AppCompatActivity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+    public void getObjID(){
+        
+    }
 }

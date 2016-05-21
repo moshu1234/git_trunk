@@ -52,7 +52,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_marginTop="0dp"
-            android:background="@drawable/baseinfobg">
+            android:background="@color/ColorBackgroud">
 
         </view>
 

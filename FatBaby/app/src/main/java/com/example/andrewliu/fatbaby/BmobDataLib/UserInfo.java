@@ -28,15 +28,19 @@ public class UserInfo extends BmobObject {
     private String user;
     private String password;
     private String name;
+    private String email;
     private String gender;
     private Integer age;
     private Integer height;
     private String profession;
     private String hobby;
 
-//    public void addHandler(Handler handler){
-//        userhandler = handler;
-//    }
+    public String getEmail() {
+        return openid;
+    }
+    public void setEmail(String openid) {
+        this.openid = openid;
+    }
     public String getOpenid() {
 
         return openid;

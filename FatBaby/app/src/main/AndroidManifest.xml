@@ -4,14 +4,13 @@
 
     <!-- 电源管理权限 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -23,12 +22,14 @@
         </activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1105339373" />
             </intent-filter>
         </activity>
@@ -39,10 +40,12 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".infoShow"
-            android:logo="@drawable/left"
-            android:label="Fighting" />
+            android:label="Fighting"
+            android:logo="@drawable/left" />
 
         <service android:name=".SlidMenu.StepCounterService" />
+
+        <activity android:name=".UserRegister"></activity>
     </application>
 
 </manifest>
