@@ -32,6 +32,7 @@ public class UserInfo extends BmobObject {
     private String gender;
     private Integer age;
     private Integer height;
+    private Integer weight;
     private String profession;
     private String hobby;
 
@@ -108,6 +109,14 @@ public class UserInfo extends BmobObject {
         this.height = height;
     }
 
+    public Integer getWeight() {
+
+        return weight;
+    }
+    public void setWeight(Integer weight) {
+
+        this.weight = weight;
+    }
     public void addUser(Context context, final UserInfo userInfo){
         Log.e(LogTitle,"adduser");
         userInfo.save(context, new SaveListener() {

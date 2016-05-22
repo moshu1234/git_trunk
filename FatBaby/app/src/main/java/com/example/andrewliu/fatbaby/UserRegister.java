@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -17,12 +18,22 @@ import android.widget.Toast;
 import com.example.andrewliu.fatbaby.BmobDataLib.UserInfo;
 import com.example.andrewliu.fatbaby.DataBase.UserInfoDB;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindCallback;
 
 public class UserRegister extends AppCompatActivity {
+    private String LogTitle = "USERREGISTER";
+    public interface ICoallBack{
+        public void onCallSucess(String s);
+        public void onCallToast(String s);
+    }
     private Integer max_age = 70;
     private String[] gender_s;
     private String[] age_s;
@@ -30,6 +41,7 @@ public class UserRegister extends AppCompatActivity {
     private Spinner age_sp;
     private ArrayAdapter<String> gender_adp;
     private ArrayAdapter<String> age_adp;
+    private String objid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,50 +114,100 @@ public class UserRegister extends AppCompatActivity {
     public void myToast(String s){
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
-    public Boolean saveRegisterInfo(){
+    public void isUserExisted(final ICoallBack iCoallBack){
         EditText et;
         et = (EditText) findViewById(R.id.user_register);
-        if(et.getText().equals("")){
-            myToast("用户名或密码不能为空");
-            return false;
+        final String user = et.getText().toString();
+        if(TextUtils.isEmpty(user)){
+            iCoallBack.onCallToast("用户名不能为空");
+            return;
         }
         et = (EditText) findViewById(R.id.password_register);
-        if(et.getText().equals("")){
-            myToast("用户名或密码不能为空");
-            return false;
+        if(TextUtils.isEmpty(et.getText().toString())){
+            iCoallBack.onCallToast("密码不能为空");
+            return;
         }
+        BmobQuery query = new BmobQuery("UserInfo");
+        query.findObjects(this, new FindCallback() {
+            @Override
+            public void onSuccess(JSONArray arg0) {
+                //注意：查询的结果是JSONArray,需要自行解析
+                Log.e(LogTitle,"查询成功:"+arg0.length()+":"+arg0.toString());
+                Integer  i = 0;
+                for(i=0;i<arg0.length();i++){
+                    try{
+                        JSONObject object=arg0.getJSONObject(i);
+                        String user_r = object.getString("user");
+                        Log.e(LogTitle,"uer:"+object.getString("user"));
+                        if(user_r!=null && user_r.equals(user)){
+                                Log.e(LogTitle,"user existed:"+user_r);
+                                iCoallBack.onCallToast("用户名已存在，请重新输入");
+                                return;
+                        }else {
+                            Log.e(LogTitle,"keep finding:"+user);
+                        }
+                    }catch (Exception e){
+                        Log.e(LogTitle,"exception");
+                    }
+                }
+                iCoallBack.onCallToast("注册成功！");
+                iCoallBack.onCallSucess("");
+            }
+
+            @Override
+            public void onFailure(int arg0, String arg1) {
+                Log.e(LogTitle,"查询失败:"+arg1);
+            }
+        });
+    }
+    public void saveRegisterInfo(){
+        EditText et;
         UserInfo userInfo = new UserInfo();
 
         et = (EditText) findViewById(R.id.user_register);
         userInfo.setUser(et.getText().toString());
         et = (EditText) findViewById(R.id.password_register);
-        userInfo.setUser(et.getText().toString());
+        userInfo.setPassword(et.getText().toString());
         et = (EditText) findViewById(R.id.name_register);
-        userInfo.setUser(et.getText().toString());
+        userInfo.setName(et.getText().toString());
         et = (EditText) findViewById(R.id.height_register);
-        userInfo.setUser(et.getText().toString());
+        if(TextUtils.isEmpty(et.getText()) == false) {
+            userInfo.setHeight(Integer.valueOf(et.getText().toString()));
+        }
         et = (EditText) findViewById(R.id.weight_register);
-        userInfo.setUser(et.getText().toString());
+        if(TextUtils.isEmpty(et.getText()) == false) {
+            userInfo.setWeight(Integer.valueOf(et.getText().toString()));
+        }
         et = (EditText) findViewById(R.id.email_register);
-        userInfo.setUser(et.getText().toString());
+        userInfo.setEmail(et.getText().toString());
         et = (EditText) findViewById(R.id.profession_register);
-        userInfo.setUser(et.getText().toString());
+        userInfo.setProfession(et.getText().toString());
         et = (EditText) findViewById(R.id.hobby_register);
-        userInfo.setUser(et.getText().toString());
+        userInfo.setHobby(et.getText().toString());
         userInfo.addUser(this,userInfo);
 
-        return true;
+        objid = userInfo.getObjectId();
     }
     public void confirmRegister(){
         Button button = (Button)findViewById(R.id.register_confirm);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(saveRegisterInfo()) {
-                    Intent intent = new Intent();
-                    intent.setClass(UserRegister.this, infoShow.class);
-                    UserRegister.this.startActivity(intent);
-                }
+                isUserExisted(new ICoallBack() {
+                    @Override
+                    public void onCallSucess(String s) {
+                        saveRegisterInfo();
+                        Intent intent = new Intent();
+                        intent.putExtra("objid",objid);
+                        intent.setClass(UserRegister.this, infoShow.class);
+                        UserRegister.this.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCallToast(String s) {
+                        myToast(s);
+                    }
+                });
             }
         });
     }
