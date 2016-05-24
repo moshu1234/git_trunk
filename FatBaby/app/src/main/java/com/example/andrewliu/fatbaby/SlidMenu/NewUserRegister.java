@@ -1,13 +1,13 @@
-package com.example.andrewliu.fatbaby;
+package com.example.andrewliu.fatbaby.SlidMenu;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Adapter;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,7 +16,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.andrewliu.fatbaby.BmobDataLib.UserInfo;
-import com.example.andrewliu.fatbaby.DataBase.UserInfoDB;
+import com.example.andrewliu.fatbaby.MainActivity;
+import com.example.andrewliu.fatbaby.R;
+import com.example.andrewliu.fatbaby.infoShow;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,11 +26,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
 
-public class UserRegister extends AppCompatActivity {
+/**
+ * Created by liut1 on 5/24/16.
+ */
+public class NewUserRegister extends Fragment {
+    private View view;
     private String LogTitle = "USERREGISTER";
     public interface ICoallBack{
         public void onCallSucess(String s);
@@ -43,18 +48,18 @@ public class UserRegister extends AppCompatActivity {
     private ArrayAdapter<String> age_adp;
     private String objid;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_register);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        view = inflater.inflate(R.layout.user_register, container, false);
         init_gender_spinner();
-//        init_age_spinner();
-        init_gender_spinner1();
+        init_age_spinner();
         confirmRegister();
+        return view;
     }
     public void init_gender_spinner(){
         gender_s = getResources().getStringArray(R.array.gender);
-        gender_sp = (Spinner)findViewById(R.id.spinner_gender);
-        gender_adp = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,gender_s);
+        gender_sp = (Spinner)view.findViewById(R.id.spinner_gender);
+        gender_adp = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,gender_s);
         //设置下拉列表的风格
         gender_adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_sp.setAdapter(gender_adp);
@@ -63,19 +68,6 @@ public class UserRegister extends AppCompatActivity {
 
         //设置默认值
         gender_sp.setVisibility(View.VISIBLE);
-    }
-    public void init_gender_spinner1(){
-        age_s = getResources().getStringArray(R.array.gender);
-        age_sp = (Spinner)findViewById(R.id.spinner_age);
-        age_adp = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,age_s);
-        //设置下拉列表的风格
-        age_adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        age_sp.setAdapter(age_adp);
-        //添加事件Spinner事件监听
-        age_sp.setOnItemSelectedListener(new SpinnerSelectedListener());
-
-        //设置默认值
-        age_sp.setVisibility(View.VISIBLE);
     }
     public void init_age_spinner(){
 //        age_s = getResources().getStringArray(R.array.gender);
@@ -86,10 +78,9 @@ public class UserRegister extends AppCompatActivity {
         for(int i=10;i<max_age-10;i++){
             age_list.add(String.valueOf(i));
         }
-        String ss[] = {"10","11","12","13"};
 
-        age_sp = (Spinner)findViewById(R.id.spinner_age);
-        age_adp = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,age_list);
+        age_sp = (Spinner)view.findViewById(R.id.spinner_age);
+        age_adp = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,age_list);
         //设置下拉列表的风格
         age_adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         age_sp.setAdapter(age_adp);
@@ -112,23 +103,23 @@ public class UserRegister extends AppCompatActivity {
         }
     }
     public void myToast(String s){
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
     }
     public void isUserExisted(final ICoallBack iCoallBack){
         EditText et;
-        et = (EditText) findViewById(R.id.user_register);
+        et = (EditText) view.findViewById(R.id.user_register);
         final String user = et.getText().toString();
         if(TextUtils.isEmpty(user)){
             iCoallBack.onCallToast("用户名不能为空");
             return;
         }
-        et = (EditText) findViewById(R.id.password_register);
+        et = (EditText) view.findViewById(R.id.password_register);
         if(TextUtils.isEmpty(et.getText().toString())){
             iCoallBack.onCallToast("密码不能为空");
             return;
         }
         BmobQuery query = new BmobQuery("UserInfo");
-        query.findObjects(this, new FindCallback() {
+        query.findObjects(getContext(), new FindCallback() {
             @Override
             public void onSuccess(JSONArray arg0) {
                 //注意：查询的结果是JSONArray,需要自行解析
@@ -140,9 +131,9 @@ public class UserRegister extends AppCompatActivity {
                         String user_r = object.getString("user");
                         Log.e(LogTitle,"uer:"+object.getString("user"));
                         if(user_r!=null && user_r.equals(user)){
-                                Log.e(LogTitle,"user existed:"+user_r);
-                                iCoallBack.onCallToast("用户名已存在，请重新输入");
-                                return;
+                            Log.e(LogTitle,"user existed:"+user_r);
+                            iCoallBack.onCallToast("用户名已存在，请重新输入");
+                            return;
                         }else {
                             Log.e(LogTitle,"keep finding:"+user);
                         }
@@ -164,32 +155,32 @@ public class UserRegister extends AppCompatActivity {
         EditText et;
         UserInfo userInfo = new UserInfo();
 
-        et = (EditText) findViewById(R.id.user_register);
+        et = (EditText) view.findViewById(R.id.user_register);
         userInfo.setUser(et.getText().toString());
-        et = (EditText) findViewById(R.id.password_register);
+        et = (EditText) view.findViewById(R.id.password_register);
         userInfo.setPassword(et.getText().toString());
-        et = (EditText) findViewById(R.id.name_register);
+        et = (EditText) view.findViewById(R.id.name_register);
         userInfo.setName(et.getText().toString());
-        et = (EditText) findViewById(R.id.height_register);
+        et = (EditText) view.findViewById(R.id.height_register);
         if(TextUtils.isEmpty(et.getText()) == false) {
             userInfo.setHeight(Integer.valueOf(et.getText().toString()));
         }
-        et = (EditText) findViewById(R.id.weight_register);
+        et = (EditText) view.findViewById(R.id.weight_register);
         if(TextUtils.isEmpty(et.getText()) == false) {
             userInfo.setWeight(Integer.valueOf(et.getText().toString()));
         }
-        et = (EditText) findViewById(R.id.email_register);
+        et = (EditText) view.findViewById(R.id.email_register);
         userInfo.setEmail(et.getText().toString());
-        et = (EditText) findViewById(R.id.profession_register);
+        et = (EditText) view.findViewById(R.id.profession_register);
         userInfo.setProfession(et.getText().toString());
-        et = (EditText) findViewById(R.id.hobby_register);
+        et = (EditText) view.findViewById(R.id.hobby_register);
         userInfo.setHobby(et.getText().toString());
-        userInfo.addUser(this,userInfo);
+        userInfo.addUser(getContext(),userInfo);
 
         objid = userInfo.getObjectId();
     }
     public void confirmRegister(){
-        Button button = (Button)findViewById(R.id.register_confirm);
+        Button button = (Button)view.findViewById(R.id.register_confirm);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -199,8 +190,8 @@ public class UserRegister extends AppCompatActivity {
                         saveRegisterInfo();
                         Intent intent = new Intent();
                         intent.putExtra("objid",objid);
-                        intent.setClass(UserRegister.this, infoShow.class);
-                        UserRegister.this.startActivity(intent);
+                        intent.setClass(getContext(), infoShow.class);
+                        getContext().startActivity(intent);
                     }
 
                     @Override

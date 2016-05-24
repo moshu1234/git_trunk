@@ -308,6 +308,6 @@ public class infoShow extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
     public void getObjID(){
-        
+
     }
 }

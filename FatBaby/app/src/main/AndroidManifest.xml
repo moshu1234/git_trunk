@@ -45,7 +45,6 @@
 
         <service android:name=".SlidMenu.StepCounterService" />
 
-        <activity android:name=".UserRegister"></activity>
     </application>
 
 </manifest>
