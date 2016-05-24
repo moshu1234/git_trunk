@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     public Handler mainHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Log.e("aaa","congratuation!!!"+msg.what+":"+msg.obj.toString());
+            Log.e("aaa","congratuation!!!"+msg.what+":"+msg.obj);
             super.handleMessage(msg);
             switch (msg.what){
                 case 1:
@@ -110,9 +110,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case 2:
-                    if(mAdapter_register != null) {
+                    if(mAdapter_bind != null) {
                         mFatBabyViewPager.setAdapter(mAdapter_bind);
                     }
+                    break;
+                case 3:
+                    Log.e(LogTitle,"jump to next page");
+                    Intent intent = new Intent();
+                    intent.putExtra("objid",msg.getData());
+                    intent.setClass(MainActivity.this, infoShow.class);
+                    startActivity(intent);
                     break;
                 default:
                     break;
@@ -125,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
         Login tab01 = new Login();
         tab01.setHandler(mainHandler);
         NewUserRegister tab02 = new NewUserRegister();
+        tab02.setRegisterHandler(mainHandler);
         AccountBind tab03 = new AccountBind();
+        tab03.setBindHandler(mainHandler);
         mFragments_login.add(tab01);
         mFragments_register.add(tab02);
         mFragments_bind.add(tab03);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
+import cn.bmob.v3.listener.GetListener;
 
 /**
  * Created by liut1 on 5/24/16.
@@ -112,7 +114,7 @@ public class Login extends Fragment {
                 queryOpenid(context, openid, new ICoallBack() {
                     @Override
                     public void onCallSucess(String s) {
-                        gotoNextPage(s);
+                        userBindCheck(s);
                     }
 
                     @Override
@@ -162,7 +164,40 @@ public class Login extends Fragment {
     public void myToast(String s){
         Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
     }
+    public void userBindCheck(final String objid){
+        Log.e(LogTitle,"user bind check");
+        BmobQuery<UserInfo> bmobQuery = new BmobQuery<UserInfo>();
+        bmobQuery.getObject(getContext(), objid, new GetListener<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo userInfo) {
+                myToast("查询成功");
+                Log.e(LogTitle,"check success:"+userInfo.getUser()+":"+userInfo.getPassword());
+                if(TextUtils.isEmpty(userInfo.getUser()) == false){
+                    if(TextUtils.isEmpty(userInfo.getPassword()) == false){
+                        gotoNextPage(objid);
+                        //bond already, go to next page
+                        return;
+                    }
+                }
+                //wether user need bind
+                if(userInfo.getBinded() == null || !userInfo.getBinded().equals(1)) {
+                    //no invalid user or password, goto bind page
+                    Message message = new Message();
+                    message.what = 2;
+                    message.obj = "bind";
+                    loginHandler.sendMessage(message);
+                }
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                Log.e(LogTitle,"check fail "+s);
+//                myToast("查询失败"+s);
+            }
+        });
+    }
     public void gotoNextPage(String objid){
+        //TODO:check wether need to go to account bin page
         Intent intent = new Intent();
         intent.setClass(getContext(), infoShow.class);
         if (caseConten != null)
@@ -227,6 +262,7 @@ public class Login extends Fragment {
                         JSONObject object = arg0.getJSONObject(i);
                         Log.e(LogTitle, "query openid:" + object.getString("openid")+":"+openid);
                         if (object.getString("openid").equals(openid)) {
+                            Log.e(LogTitle,"get objid :"+object.getString("objectId"));
                             iCoallBack.onCallSucess(object.getString("objectId"));
                             return;
 

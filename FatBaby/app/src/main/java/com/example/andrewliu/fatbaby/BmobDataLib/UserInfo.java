@@ -1,21 +1,9 @@
 package com.example.andrewliu.fatbaby.BmobDataLib;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
-import com.example.andrewliu.fatbaby.DataBase.UserInfoDB;
-import com.example.andrewliu.fatbaby.MainActivity;
-import com.example.andrewliu.fatbaby.SlidMenu.Login;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
-import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -23,11 +11,11 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by liut1 on 5/18/16.
  */
 public class UserInfo extends BmobObject {
-//    private Handler userhandler;
     private String openid;//qq login id
     private String user;
     private String password;
     private String name;
+    private Integer binded;
     private String email;
     private String gender;
     private Integer age;
@@ -71,6 +59,14 @@ public class UserInfo extends BmobObject {
     public void setName(String name) {
 
         this.name = name;
+    }
+    public Integer getBinded() {
+
+        return binded;
+    }
+    public void setBinded(Integer binded) {
+
+        this.binded = binded;
     }
     public String getGender() {
         return gender;
@@ -123,6 +119,7 @@ public class UserInfo extends BmobObject {
             @Override
             public void onSuccess() {
                 Log.e("USERINFO","添加数据成功，返回objectId为："+userInfo.getObjectId());
+                userInfo.setObjectId(userInfo.getObjectId());
             }
 
             @Override

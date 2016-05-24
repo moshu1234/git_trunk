@@ -2,6 +2,8 @@ package com.example.andrewliu.fatbaby.SlidMenu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,12 +30,14 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by liut1 on 5/24/16.
  */
 public class NewUserRegister extends Fragment {
     private View view;
+    private Handler registerHandler;
     private String LogTitle = "USERREGISTER";
     public interface ICoallBack{
         public void onCallSucess(String s);
@@ -46,7 +50,7 @@ public class NewUserRegister extends Fragment {
     private Spinner age_sp;
     private ArrayAdapter<String> gender_adp;
     private ArrayAdapter<String> age_adp;
-    private String objid;
+    private String objid = new String();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -147,7 +151,9 @@ public class NewUserRegister extends Fragment {
 
             @Override
             public void onFailure(int arg0, String arg1) {
-                Log.e(LogTitle,"查询失败:"+arg1);
+                Log.e(LogTitle,"没有userinfo tab，直接创建:"+arg1);
+                iCoallBack.onCallToast("注册成功！");
+                iCoallBack.onCallSucess("");
             }
         });
     }
@@ -175,7 +181,21 @@ public class NewUserRegister extends Fragment {
         userInfo.setProfession(et.getText().toString());
         et = (EditText) view.findViewById(R.id.hobby_register);
         userInfo.setHobby(et.getText().toString());
-        userInfo.addUser(getContext(),userInfo);
+//        userInfo.addUser(getContext(),userInfo);
+        userInfo.save(getContext(), new SaveListener() {
+            @Override
+            public void onSuccess() {
+                Message message = new Message();
+                message.what = 3;
+                message.obj = objid;
+                registerHandler.sendMessage(message);
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                myToast("创建用户失败"+s);
+            }
+        });
 
         objid = userInfo.getObjectId();
     }
@@ -188,10 +208,6 @@ public class NewUserRegister extends Fragment {
                     @Override
                     public void onCallSucess(String s) {
                         saveRegisterInfo();
-                        Intent intent = new Intent();
-                        intent.putExtra("objid",objid);
-                        intent.setClass(getContext(), infoShow.class);
-                        getContext().startActivity(intent);
                     }
 
                     @Override
@@ -201,5 +217,8 @@ public class NewUserRegister extends Fragment {
                 });
             }
         });
+    }
+    public void setRegisterHandler(Handler handler){
+        registerHandler = handler;
     }
 }
