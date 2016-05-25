@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.GetListener;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by liut1 on 5/24/16.
@@ -177,14 +178,20 @@ public class Login extends Fragment {
                         gotoNextPage(objid);
                         //bond already, go to next page
                         return;
+
                     }
+                }
+                if(userInfo.getBinded() != null && userInfo.getBinded()==1) {
+                    gotoNextPage(objid);
+                    //bond already, go to next page
+                    return;
                 }
                 //wether user need bind
                 if(userInfo.getBinded() == null || !userInfo.getBinded().equals(1)) {
                     //no invalid user or password, goto bind page
                     Message message = new Message();
                     message.what = 2;
-                    message.obj = "bind";
+                    message.obj = objid;
                     loginHandler.sendMessage(message);
                 }
             }
@@ -272,12 +279,21 @@ public class Login extends Fragment {
                     }
                 }
                 //if there is no openid, then add it
-                UserInfo userInfo = new UserInfo();
+                final UserInfo userInfo = new UserInfo();
                 userInfo.setOpenid(openid);
                 userInfo.addUser(context, userInfo);
-                Log.e(LogTitle, "no openid match, we'll add :" + openid + "and send objid:" + userInfo.getObjectId());
+                userInfo.save(context, new SaveListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e(LogTitle, "no openid match, we'll add :" + openid + "and send objid:" + userInfo.getObjectId());
+                        iCoallBack.onCallSucess(userInfo.getObjectId());
+                    }
 
-                iCoallBack.onCallSucess(userInfo.getObjectId());
+                    @Override
+                    public void onFailure(int i, String s) {
+
+                    }
+                });
 
             }
 

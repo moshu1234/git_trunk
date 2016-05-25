@@ -15,7 +15,7 @@ public class UserInfo extends BmobObject {
     private String user;
     private String password;
     private String name;
-    private Integer binded;
+    private Integer binded;//if 1, means binded or user don't want to bind
     private String email;
     private String gender;
     private Integer age;
@@ -39,7 +39,7 @@ public class UserInfo extends BmobObject {
     }
     public String getUser() {
 
-        return name;
+        return user;
     }
     public void setUser(String user) {
         this.user = user;

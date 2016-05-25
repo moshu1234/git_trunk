@@ -7,45 +7,26 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.BmobDataLib.SportsInfo;
-import com.example.andrewliu.fatbaby.BmobDataLib.UserInfo;
 import com.example.andrewliu.fatbaby.SlidMenu.AccountBind;
 import com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager;
 import com.example.andrewliu.fatbaby.SlidMenu.Login;
 import com.example.andrewliu.fatbaby.SlidMenu.NewUserRegister;
-import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
-import com.tencent.connect.common.Constants;
-import com.tencent.connect.share.QQShare;
-import com.tencent.open.utils.Util;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.listener.SaveListener;
 
 
 public class MainActivity extends AppCompatActivity {
 
-//    ICoallBack iCoallBack=null;
     private Thread thread;
     private FatBabyViewPager mFatBabyViewPager;
     private FragmentStatePagerAdapter mAdapter_login;
@@ -54,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private List<Fragment> mFragments_login = new ArrayList<Fragment>();
     private List<Fragment> mFragments_register = new ArrayList<Fragment>();
     private List<Fragment> mFragments_bind = new ArrayList<Fragment>();
+    private Login loginTab;
+    private NewUserRegister newUserRegisterTab;
+    private AccountBind accountBindTab;
 
     private String LogTitle = "MAINACTIVITY";
     private Context mainContext = this;
@@ -111,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     if(mAdapter_bind != null) {
+                        accountBindTab.setObjid(msg.obj.toString());
                         mFatBabyViewPager.setAdapter(mAdapter_bind);
                     }
                     break;
@@ -129,15 +114,15 @@ public class MainActivity extends AppCompatActivity {
     public void initViewPager(){
         mFatBabyViewPager = (FatBabyViewPager) findViewById(R.id.login_viewpager);
 
-        Login tab01 = new Login();
-        tab01.setHandler(mainHandler);
-        NewUserRegister tab02 = new NewUserRegister();
-        tab02.setRegisterHandler(mainHandler);
-        AccountBind tab03 = new AccountBind();
-        tab03.setBindHandler(mainHandler);
-        mFragments_login.add(tab01);
-        mFragments_register.add(tab02);
-        mFragments_bind.add(tab03);
+        loginTab = new Login();
+        loginTab.setHandler(mainHandler);
+        newUserRegisterTab = new NewUserRegister();
+        newUserRegisterTab.setRegisterHandler(mainHandler);
+        accountBindTab = new AccountBind();
+        accountBindTab.setBindHandler(mainHandler);
+        mFragments_login.add(loginTab);
+        mFragments_register.add(newUserRegisterTab);
+        mFragments_bind.add(accountBindTab);
         /**
          * 初始化Adapter
          */
