@@ -153,7 +153,8 @@ public class MainTab01 extends Fragment
 					try {
 						Log.e("Maintab01",""+s);
 						TextView textView = new TextView(getContext());
-						setProgressBarProgress(progressBars.get(finalI),s.getInt("progress"),s.getString("progress")+"%");
+
+						setProgressBarProgress(progressBars.get(finalI),s.getInt("progress"),s.getInt("progress")+"%");
 						switch (finalI) {
 							case 0:
 								textView = (TextView) view.findViewById(R.id.pb_day1);

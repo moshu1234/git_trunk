@@ -13,7 +13,7 @@ public class StepDetector implements SensorEventListener {
 
     public static int CURRENT_SETP = 0;
 
-    public static float SENSITIVITY = 3;
+    public static float SENSITIVITY = 4;
 
     private float mLastValues[] = new float[3 * 2];
     private float mScale[] = new float[2];
