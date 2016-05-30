@@ -3,19 +3,19 @@
     xmlns:android_custom="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     android:clickable="false">
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar1"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="78dp"
         android:clickable="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-
 
         android_custom:roundColor="#99D1D1D1"
         android_custom:roundProgressColor="#AA00CC00"
@@ -23,16 +23,23 @@
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
         android_custom:textSize="10sp" />
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pb_day1"
+            android:text="day1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar2"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignLeft="@+id/roundProgressBar1"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="78dp"
-
 
         android_custom:roundColor="#99D1D1D1"
         android_custom:roundProgressColor="#AA00CC00"
@@ -40,61 +47,82 @@
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
         android_custom:textSize="10sp"
-        android:clickable="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp" />
-
+        android:clickable="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pb_day2"
+            android:text="day2"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar3"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignLeft="@+id/roundProgressBar2"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="78dp"
-
 
         android_custom:roundColor="#99D1D1D1"
         android_custom:roundProgressColor="#AA00CC00"
         android_custom:textColor="#9A32CD"
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
-        android_custom:textSize="10sp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp" />
-
+        android_custom:textSize="10sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pb_day3"
+            android:text="day3"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar4"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_alignLeft="@+id/roundProgressBar3"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="78dp"
-
 
         android_custom:roundColor="#99D1D1D1"
         android_custom:roundProgressColor="#AA00CC00"
         android_custom:textColor="#9A32CD"
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
-        android_custom:textSize="10sp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp" />
-
+        android_custom:textSize="10sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pb_day4"
+            android:text="day4"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
     <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar5"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignLeft="@+id/roundProgressBar4"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="78dp"
-
 
         android_custom:roundColor="#99D1D1D1"
         android_custom:roundProgressColor="#AA00CC00"
         android_custom:textColor="#9A32CD"
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
-        android_custom:textSize="10sp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp" />
+        android_custom:textSize="10sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pb_day5"
+            android:text="day5"/>
+    </LinearLayout>
 </LinearLayout>

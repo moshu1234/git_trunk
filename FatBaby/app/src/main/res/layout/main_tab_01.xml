@@ -8,23 +8,23 @@
         layout="@layout/dayhead"
         android:id="@+id/dayhead"></include>
 
-    <TextView
-        android:id="@+id/weight_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="体重"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="50dp"
-        android:textSize="20sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/weight_tv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="体重"-->
+        <!--android:layout_marginTop="200dp"-->
+        <!--android:layout_marginLeft="50dp"-->
+        <!--android:textSize="20sp" />-->
 
-    <TextView
-        android:id="@+id/weight_ct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="60kg"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="100dp"
-        android:textSize="20sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/weight_ct"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="60kg"-->
+        <!--android:layout_marginTop="200dp"-->
+        <!--android:layout_marginLeft="100dp"-->
+        <!--android:textSize="20sp" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,22 +34,24 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp" />
 
-    <!--<include-->
-        <!--layout="@layout/weight_tab"-->
-        <!--android:id="@+id/weight_display"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:layout_marginTop="250dp"-->
-        <!--android:layout_marginLeft="30dp"></include>-->
-
     <include
-    layout="@layout/body_cicle"
-    android:id="@+id/today"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="250dp">
+        layout="@layout/weight_tab"
+        android:id="@+id/weight_display"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="40dp">
+
     </include>
+
+    <!--<include-->
+    <!--layout="@layout/body_cicle"-->
+    <!--android:id="@+id/today"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="250dp">-->
+    <!--</include>-->
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

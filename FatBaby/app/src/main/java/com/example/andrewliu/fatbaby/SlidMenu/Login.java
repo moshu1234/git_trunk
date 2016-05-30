@@ -66,7 +66,14 @@ public class Login extends Fragment {
         b_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userCompare();
+                Message message = new Message();
+                message.obj = "register";
+                message.what = 3;
+                if(loginHandler == null){
+                    Log.e("login","loginhander is null");
+                }
+                loginHandler.sendMessage(message);
+//                userCompare();
             }
         });
     }

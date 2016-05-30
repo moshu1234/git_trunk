@@ -8,11 +8,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
+
+import org.json.JSONObject;
 
 /**
  * Created by liut1 on 5/13/16.
  */
 public class FitnessInfoDB extends SQLiteOpenHelper {
+    /**
+     * 一定一个接口
+     */
+    public interface FitnessCallback{
+        public void Sucess(JSONObject s);
+        public void fail(String s);
+    }
     private final static String FITNESS_DB_NAME ="fitnessInfo.db";//数据库名
     private final static int FITNESS_VERSION = 1;//版本号
     private final static String FITNESS_TABLE_NAME = "fitnessInfo";
@@ -47,21 +57,21 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         if(!date.equals("")){
-            cv.put("weekday",date);
+            cv.put("date",date);
         }
         else{
             return -1;
         }
-        if(progress > 0){
+        if(progress > -1){
             cv.put("progress",progress);
         }
-        if(running > 0){
+        if(running > -1){
             cv.put("running",running);
         }
-        if(fitness > 0){
+        if(fitness > -1){
             cv.put("fitness",fitness);
         }
-        if(weight > 0){
+        if(weight > -1){
             cv.put("weight",weight);
         }
         cv.put("tommrow",tommrow);
@@ -73,9 +83,24 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
     public void delete(String date)
     {
         //won't delete any data
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(FITNESS_TABLE_NAME,null,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            while(cursor.moveToNext()){
+                String name=cursor.getString(1);
+                if(date.equals(name)){
+                    Log.e("fitnessinfodb","found "+date+", delete it right now");
+
+                    String where = "date" + " = ?";
+                    String[] whereValue = { date };
+                    db.delete(FITNESS_TABLE_NAME, where,whereValue);
+                }
+            }
+            cursor.close();
+        }
         return;
     }
-    public void find(String date){
+    public Boolean find(String date){
         SQLiteDatabase db = this.getWritableDatabase();
         //get cursor
         Cursor cursor = db.query (FITNESS_TABLE_NAME,null,null,null,null,null,null);
@@ -90,9 +115,47 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
 
                 if(date.equals(findName)){
                     Log.e("aaaaaaaaaaaaa","we've find the fitness data "+date);
-                    Message msg = new Message();
-                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6);
-                    fitnessDBhandler.sendMessage(msg);
+//                    Message msg = new Message();
+//                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6);
+//                    fitnessDBhandler.sendMessage(msg);
+                    return true;
+                }
+            }
+            cursor.close();
+        }
+        return false;
+    }
+    public void find(String date,FitnessCallback fitnessCallback){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //get cursor
+        Cursor cursor = db.query (FITNESS_TABLE_NAME,null,null,null,null,null,null);
+        Log.e("Fitness find","cursor");
+        //判断游标是否为空
+        if(cursor.moveToFirst()) {
+            Log.e("Fitness find","moveToFirst");
+            //遍历游标
+            while (cursor.moveToNext()){
+                //获得ID
+                int id = cursor.getInt(0);
+                //获得用户名
+                String findName=cursor.getString(1);
+                Log.e("Fitness find","date:"+findName);
+                if(date.equals(findName)){
+                    Log.e("aaaaaaaaaaaaa","we've find the fitness data "+date);
+//                    Message msg = new Message();
+//                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6);
+//                    fitnessDBhandler.sendMessage(msg);
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("date",cursor.getString(1));
+                        object.put("progress",cursor.getString(2));
+                        object.put("running",cursor.getString(3));
+                        object.put("fitness",cursor.getString(4));
+                        object.put("weight",cursor.getString(5));
+                    }catch (Exception e){
+                        Log.e("fitneesinfodb","exception "+e.getMessage());
+                    }
+                    fitnessCallback.Sucess(object);
                 }
             }
             cursor.close();
