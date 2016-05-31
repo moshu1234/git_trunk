@@ -10,9 +10,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.andrewliu.fatbaby.BabyView.gifView;
 import com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress;
 import com.example.andrewliu.fatbaby.DataBase.FitnessInfoDB;
 import com.example.andrewliu.fatbaby.DataBase.UserInfoDB;
@@ -36,6 +39,7 @@ public class MainTab01 extends Fragment
 	BodyProgress mBodyProgress;
 	private int running, fitness;
 	private int weight;
+	private gifView gif_run,gif_dance,gif_fitness;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -43,8 +47,72 @@ public class MainTab01 extends Fragment
 		view =  inflater.inflate(R.layout.main_tab_01, container, false);
 		test();
 		initProgress(view);
-		init_weight_tab();
+//		init_weight_tab();
+		testGif();
+		setStartSports();
 		return view;
+	}
+	public void setStartSports(){
+		ImageButton ib = (ImageButton)view.findViewById(R.id.start_run);
+		ib.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(gif_fitness.isPaused()==false || gif_dance.isPaused() == false){
+					Toast.makeText(getContext(), "请先暂停其他运动", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				Log.e("maintab01","Start sports now!");
+				if(gif_run.isPaused()) {
+					gif_run.setPaused(false);
+					TextView tv = (TextView) view.findViewById(R.id.start_t);
+					tv.setText("STOP");
+				}else {
+					gif_run.setPaused(true);
+					TextView tv = (TextView) view.findViewById(R.id.start_t);
+					tv.setText("START");
+				}
+			}
+		});
+		ib = (ImageButton)view.findViewById(R.id.start_dance);
+		ib.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(gif_fitness.isPaused()==false || gif_run.isPaused() == false){
+					Toast.makeText(getContext(), "请先暂停其他运动", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				Log.e("maintab01","Start sports now!");
+				if(gif_dance.isPaused()) {
+					gif_dance.setPaused(false);
+					TextView tv = (TextView) view.findViewById(R.id.start_t);
+					tv.setText("STOP");
+				}else {
+					gif_dance.setPaused(true);
+					TextView tv = (TextView) view.findViewById(R.id.start_t);
+					tv.setText("START");
+				}
+			}
+		});
+		ib = (ImageButton)view.findViewById(R.id.start_fitness);
+		ib.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(gif_run.isPaused()==false || gif_dance.isPaused() == false){
+					Toast.makeText(getContext(), "请先暂停其他运动", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				Log.e("maintab01","Start sports now!");
+				if(gif_fitness.isPaused()) {
+					gif_fitness.setPaused(false);
+					TextView tv = (TextView) view.findViewById(R.id.start_t);
+					tv.setText("STOP");
+				}else {
+					gif_fitness.setPaused(true);
+					TextView tv = (TextView) view.findViewById(R.id.start_t);
+					tv.setText("START");
+				}
+			}
+		});
 	}
 	public void setProgressBarProgress(CircleProgressBar pb,int progress,String text){
 		pb.updateProgressText(progress, text);
@@ -67,58 +135,7 @@ public class MainTab01 extends Fragment
 		mBodyProgress=(BodyProgress)view.findViewById(R.id.bodyProgress);
 //		setBodyProgress(mBodyProgress,60,"加油哦");
 	}
-	public void init_weight_tab(){
-		int weight[]={60,0,62,80,90,10,78,90};
-		int i=0;
-		for(i=0;i<weight.length;i++){
-			set_weight_display(weight[i],i);
-		}
-	}
-	public void set_weight_display(int weight,int i){
-		ImageView iv;
-		TextView tv;
-		switch (i){
-			case 1:
-				iv = (ImageView)view.findViewById(R.id.day1_i);
-				tv = (TextView)view.findViewById(R.id.day1_t);
-				break;
-			case 2:
-				iv = (ImageView)view.findViewById(R.id.day2_i);
-				tv = (TextView)view.findViewById(R.id.day2_t);
-				break;
-			case 3:
-				iv = (ImageView)view.findViewById(R.id.day3_i);
-				tv = (TextView)view.findViewById(R.id.day3_t);
-				break;
-			case 4:
-				iv = (ImageView)view.findViewById(R.id.day4_i);
-				tv = (TextView)view.findViewById(R.id.day4_t);
-				break;
-			case 5:
-				iv = (ImageView)view.findViewById(R.id.day5_i);
-				tv = (TextView)view.findViewById(R.id.day5_t);
-				break;
-			case 6:
-				iv = (ImageView)view.findViewById(R.id.day6_i);
-				tv = (TextView)view.findViewById(R.id.day6_t);
-				break;
-			case 7:
-				iv = (ImageView)view.findViewById(R.id.day7_i);
-				tv = (TextView)view.findViewById(R.id.day7_t);
-				break;
-			default:
-				iv = (ImageView)view.findViewById(R.id.day7_i);
-				tv = (TextView)view.findViewById(R.id.day7_t);
-				break;
-		}
-		//set image height
-		ViewGroup.LayoutParams para;
-		para = iv.getLayoutParams();
-		para.height=weight;
-		iv.setLayoutParams(para);
 
-		tv.setText(String.valueOf(weight));
-	}
 	public String getCurrentDate(){
 		Calendar calendar =Calendar.getInstance();
 		int year=calendar.get(calendar.YEAR);
@@ -135,9 +152,13 @@ public class MainTab01 extends Fragment
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 		return format.format(date);
 	}
-	public Integer getCurrentWeek(){
-		Calendar calendar = Calendar.getInstance();
-		return calendar.get(calendar.DAY_OF_WEEK);
+	public String getLastWeek(int last){
+		Calendar calendar=Calendar.getInstance();
+		calendar.add(Calendar.DATE,last);
+		Date date = new Date();
+		date = calendar.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("E");
+		return format.format(date);
 	}
 	public void getFitnessRecords(){
 		Log.e("getFitnessRecords","start to get getFitnessRecords :"+progressBars.size());
@@ -145,31 +166,49 @@ public class MainTab01 extends Fragment
 		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
 		for(int i=0;i<progressBars.size();i++){
 			final String date = getLastDate(0-i-1);
+			final String week_s = getLastWeek(0-i-1);
 			final int finalI = i;
-			Log.e("getFitnessRecords","date:"+date+":"+i);
+			Log.e("getFitnessRecords","date:"+date+":"+i+":week:"+week_s);
 			fitnessInfoDB.find(date, new FitnessInfoDB.FitnessCallback() {
 				@Override
 				public void Sucess(JSONObject s) {
 					try {
 						Log.e("Maintab01",""+s);
 						TextView textView = new TextView(getContext());
-
+						ImageView iv = new ImageView(getContext());
+						TextView tv = new TextView(getContext());
+						TextView week = new TextView(getContext());
 						setProgressBarProgress(progressBars.get(finalI),s.getInt("progress"),s.getInt("progress")+"%");
 						switch (finalI) {
 							case 0:
 								textView = (TextView) view.findViewById(R.id.pb_day1);
+								iv = (ImageView)view.findViewById(R.id.day1_i);
+								tv = (TextView)view.findViewById(R.id.day1_t);
+								week = (TextView)view.findViewById(R.id.week1_t);
 								break;
 							case 1:
 								textView = (TextView) view.findViewById(R.id.pb_day2);
+								iv = (ImageView)view.findViewById(R.id.day2_i);
+								tv = (TextView)view.findViewById(R.id.day2_t);
+								week = (TextView)view.findViewById(R.id.week2_t);
 								break;
 							case 2:
 								textView = (TextView) view.findViewById(R.id.pb_day3);
+								iv = (ImageView)view.findViewById(R.id.day3_i);
+								tv = (TextView)view.findViewById(R.id.day3_t);
+								week = (TextView)view.findViewById(R.id.week3_t);
 								break;
 							case 3:
 								textView = (TextView) view.findViewById(R.id.pb_day4);
+								iv = (ImageView)view.findViewById(R.id.day4_i);
+								tv = (TextView)view.findViewById(R.id.day4_t);
+								week = (TextView)view.findViewById(R.id.week4_t);
 								break;
 							case 4:
 								textView = (TextView) view.findViewById(R.id.pb_day5);
+								iv = (ImageView)view.findViewById(R.id.day5_i);
+								tv = (TextView)view.findViewById(R.id.day5_t);
+								week = (TextView)view.findViewById(R.id.week5_t);
 								break;
 							default:
 								break;
@@ -177,6 +216,17 @@ public class MainTab01 extends Fragment
 						if(textView != null){
 							textView.setText(date.substring(4));
 						}
+						//set weight tab
+						ViewGroup.LayoutParams para;
+						para = iv.getLayoutParams();
+						para.height=s.getInt("weight")*2;
+//						if(para.height > 180){
+//							para.height = para.height - 20;
+//						}
+						iv.setLayoutParams(para);
+						tv.setText(s.getString("weight")+"kg");
+
+						week.setText(week_s);
 					}catch (Exception e){
 						Log.e("MainTab01","exception:"+e.getMessage());
 					}
@@ -194,6 +244,21 @@ public class MainTab01 extends Fragment
 			});
 		}
 
+	}
+	public void testGif(){
+		gif_run = (gifView)view.findViewById(R.id.gif_run);
+		gif_run.setMovieResource(R.drawable.run);
+		gif_run.setPaused(true);
+
+		gif_dance = (gifView)view.findViewById(R.id.gif_dance);
+		gif_dance.setMovieResource(R.drawable.dance);
+		gif_dance.setPaused(true);
+
+		gif_fitness = (gifView)view.findViewById(R.id.gif_fitness);
+		gif_fitness.setMovieResource(R.drawable.fitness);
+		gif_fitness.setPaused(true);
+		TextView tv = (TextView)view.findViewById(R.id.start_t);
+		tv.setText("START");
 	}
 	public void test(){
 		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());

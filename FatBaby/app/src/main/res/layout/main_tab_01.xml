@@ -33,16 +33,97 @@
         android:id="@+id/totalSteps"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
     <include
         layout="@layout/weight_tab"
         android:id="@+id/weight_display"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="40dp">
-
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="100dp">
     </include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <com.example.andrewliu.fatbaby.SlidMenu.FatBabyScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="#0000ff00"
+                        android:id="@+id/start_run"/>
+                    <com.example.andrewliu.fatbaby.BabyView.gifView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/gif_run"/>
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="跑步"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="#0000ff00"
+                        android:id="@+id/start_dance"/>
+                    <com.example.andrewliu.fatbaby.BabyView.gifView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/gif_dance"/>
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="跳操"/>
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="#0000ff00"
+                        android:id="@+id/start_fitness"/>
+                    <com.example.andrewliu.fatbaby.BabyView.gifView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/gif_fitness"/>
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="健身"/>
+                </FrameLayout>
+            </LinearLayout>
+        </com.example.andrewliu.fatbaby.SlidMenu.FatBabyScrollView >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:id="@+id/start_t"/>
+    </LinearLayout>
 
     <!--<include-->
     <!--layout="@layout/body_cicle"-->
@@ -52,13 +133,6 @@
     <!--android:layout_centerHorizontal="true"-->
     <!--android:layout_marginTop="250dp">-->
     <!--</include>-->
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/start_sport"
-        android:src="@drawable/gmp"
-        android:layout_marginTop="350dp"
-        android:layout_centerHorizontal="true" />
 
     <!--<include-->
     <!--layout="@layout/bottom_tab"-->
