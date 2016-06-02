@@ -127,6 +127,7 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
     }
     public void find(String date,FitnessCallback fitnessCallback){
         SQLiteDatabase db = this.getWritableDatabase();
+        Boolean found = false;
         //get cursor
         Cursor cursor = db.query (FITNESS_TABLE_NAME,null,null,null,null,null,null);
         Log.e("Fitness find","cursor");
@@ -155,10 +156,14 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
                     }catch (Exception e){
                         Log.e("fitneesinfodb","exception "+e.getMessage());
                     }
+                    found = true;
                     fitnessCallback.Sucess(object);
                 }
             }
             cursor.close();
+        }
+        if(found == false){
+            fitnessCallback.fail("we don't have this day "+date);
         }
     }
     public boolean deleteDatabase(Context context) {

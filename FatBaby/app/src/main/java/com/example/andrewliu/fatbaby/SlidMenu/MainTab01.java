@@ -1,17 +1,26 @@
 package com.example.andrewliu.fatbaby.SlidMenu;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +49,7 @@ public class MainTab01 extends Fragment
 	private int running, fitness;
 	private int weight;
 	private gifView gif_run,gif_dance,gif_fitness;
-
+	private AlertDialog.Builder alertbBuilder;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -160,7 +169,118 @@ public class MainTab01 extends Fragment
 		SimpleDateFormat format = new SimpleDateFormat("E");
 		return format.format(date);
 	}
+	public void setWeightToday(){
+		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
+		fitnessInfoDB.find(getLastDate(0), new FitnessInfoDB.FitnessCallback() {
+			@Override
+			public void Sucess(JSONObject s) {
+				try {
+					Log.e("setWeightToday","success:"+s);
+					TextView tv = (TextView)view.findViewById(R.id.day6_t);
+					ImageView iv = (ImageView)view.findViewById(R.id.day6_i);
+					//set weight tab
+					ViewGroup.LayoutParams para;
+					para = iv.getLayoutParams();
+					para.height=s.getInt("weight")*para.height/100;
+//						if(para.height > 180){
+//							para.height = para.height - 20;
+//						}
+					iv.setLayoutParams(para);
+					tv.setText(s.getString("weight")+"kg");
+				}catch (Exception e){
+					Log.e("setWeightToday",e.getMessage());
+				}
+			}
+
+			@Override
+			public void fail(String s) {
+				Log.e("setWeightToday","failed");
+			}
+		});
+	}
+	public void historyInfoShow(){
+		CircleProgressBar pb= (CircleProgressBar)view.findViewById(R.id.roundProgressBar1);
+		pb.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Log.e("historyInfoShow","waht a fuck:"+event.getAction());
+				if(event.getAction() == MotionEvent.ACTION_UP) {
+					final EditText et = new EditText(getContext());
+					new AlertDialog.Builder(getContext()).setTitle("体重").setView(
+							et).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							myToast("" + et.getText().toString());
+						}
+					})
+							.setNegativeButton("取消", null).show();
+				}
+
+
+				return false;
+			}
+		});
+		pb = (CircleProgressBar)view.findViewById(R.id.roundProgressBar2);
+		pb.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_UP){
+					final Dialog dialog = new Dialog(getContext());
+					dialog.setContentView(R.layout.dialog_view);
+					Button bt = (Button)dialog.findViewById(R.id.diag_sure);
+					final EditText et = (EditText)dialog.findViewById(R.id.diag_text);
+					bt.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+							myToast(et.getText().toString());
+						}
+					});
+					dialog.show();
+				}
+				return false;
+			}
+		});
+
+	}
+	public void manualUpdateWeight(){
+		ImageView iv = new ImageView(getContext());
+		iv = (ImageView)view.findViewById(R.id.day6_i);
+		iv.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_UP)
+				{
+					final Dialog dialog = new Dialog(getContext());
+					dialog.setContentView(R.layout.dialog_view);
+					Button bt = (Button)dialog.findViewById(R.id.diag_sure);
+					final EditText et = (EditText)dialog.findViewById(R.id.diag_text);
+					bt.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+							myToast(et.getText().toString());
+						}
+					});
+					dialog.show();
+				}
+				return true;
+			}
+		});
+//		Button bt = (Button) view.findViewById(R.id.diag_sure);
+//		bt.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				EditText et = (EditText) view.findViewById(R.id.diag_text);
+//				myToast(et.getText().toString());
+//			}
+//		});
+	}
 	public void getFitnessRecords(){
+		historyInfoShow();
+		manualUpdateWeight();
+		setWeightToday();
 		Log.e("getFitnessRecords","start to get getFitnessRecords :"+progressBars.size());
 
 		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
@@ -178,15 +298,17 @@ public class MainTab01 extends Fragment
 						ImageView iv = new ImageView(getContext());
 						TextView tv = new TextView(getContext());
 						TextView week = new TextView(getContext());
-						setProgressBarProgress(progressBars.get(finalI),s.getInt("progress"),s.getInt("progress")+"%");
+						if(finalI < progressBars.size()) {
+							setProgressBarProgress(progressBars.get(progressBars.size() - finalI - 1), s.getInt("progress"), s.getInt("progress") + "%");
+						}
 						switch (finalI) {
-							case 0:
+							case 4:
 								textView = (TextView) view.findViewById(R.id.pb_day1);
 								iv = (ImageView)view.findViewById(R.id.day1_i);
 								tv = (TextView)view.findViewById(R.id.day1_t);
 								week = (TextView)view.findViewById(R.id.week1_t);
 								break;
-							case 1:
+							case 3:
 								textView = (TextView) view.findViewById(R.id.pb_day2);
 								iv = (ImageView)view.findViewById(R.id.day2_i);
 								tv = (TextView)view.findViewById(R.id.day2_t);
@@ -198,13 +320,13 @@ public class MainTab01 extends Fragment
 								tv = (TextView)view.findViewById(R.id.day3_t);
 								week = (TextView)view.findViewById(R.id.week3_t);
 								break;
-							case 3:
+							case 1:
 								textView = (TextView) view.findViewById(R.id.pb_day4);
 								iv = (ImageView)view.findViewById(R.id.day4_i);
 								tv = (TextView)view.findViewById(R.id.day4_t);
 								week = (TextView)view.findViewById(R.id.week4_t);
 								break;
-							case 4:
+							case 0:
 								textView = (TextView) view.findViewById(R.id.pb_day5);
 								iv = (ImageView)view.findViewById(R.id.day5_i);
 								tv = (TextView)view.findViewById(R.id.day5_t);
@@ -219,7 +341,7 @@ public class MainTab01 extends Fragment
 						//set weight tab
 						ViewGroup.LayoutParams para;
 						para = iv.getLayoutParams();
-						para.height=s.getInt("weight")*2;
+						para.height=s.getInt("weight")*para.height/100;
 //						if(para.height > 180){
 //							para.height = para.height - 20;
 //						}
@@ -301,5 +423,8 @@ public class MainTab01 extends Fragment
 //		fitnessInfoDB.insert_fitnessinfo(getLastDate(-6),80,10,30,60,0);
 //		fitnessInfoDB.insert_fitnessinfo(getLastDate(-7),80,10,30,60,0);
 //		fitnessInfoDB.insert_fitnessinfo(getLastDate(-8),80,10,30,60,0);
+	}
+	public void myToast(String s){
+		Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
 	}
 }
