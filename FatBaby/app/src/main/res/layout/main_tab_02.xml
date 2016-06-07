@@ -1,42 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ly_main_weixin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/foodDBtext"
-        android:text="aaaaaaaaaaaaaaaa"
-        android:inputType="text"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="68dp" />
-
-    <com.tuesda.walker.circlerefresh.CircleRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:AniBackColor="#ff8b90af"
-        app:AniForeColor="#ffffffff"
-        app:CircleSmaller="6"
+    <ListView
+        android:id="@+id/list_mt2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresh_tab02"
-        android:layout_below="@+id/foodDBtext">
-
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/baseinfobg"></ListView>
-    </com.tuesda.walker.circlerefresh.CircleRefreshLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Stop Refreshing"
-        android:id="@+id/stop_refresh"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
+        android:background="@drawable/baseinfobg">
+    </ListView>
 
 </RelativeLayout>

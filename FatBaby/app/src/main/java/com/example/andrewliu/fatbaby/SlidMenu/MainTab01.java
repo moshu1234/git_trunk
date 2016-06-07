@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -49,7 +51,7 @@ public class MainTab01 extends Fragment
 	private int running, fitness;
 	private int weight;
 	private gifView gif_run,gif_dance,gif_fitness;
-	private AlertDialog.Builder alertbBuilder;
+	private Handler mt1Handler;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -426,5 +428,20 @@ public class MainTab01 extends Fragment
 	}
 	public void myToast(String s){
 		Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+	}
+	public void setHandler(Handler handler){
+		mt1Handler = handler;
+	}
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			Message message = new Message();
+			message.what = 2;
+			message.obj = "bottom1";
+			mt1Handler.sendMessage(message);
+		} else if (!isVisibleToUser) {
+			Log.e("===========","bu shi ke jian d");
+		}
 	}
 }

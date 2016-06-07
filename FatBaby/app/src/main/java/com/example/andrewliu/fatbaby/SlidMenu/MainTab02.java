@@ -11,11 +11,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andrewliu.fatbaby.DataBase.FoodCalorieDBHandle;
 import com.example.andrewliu.fatbaby.R;
@@ -23,120 +28,64 @@ import com.tuesda.walker.circlerefresh.CircleRefreshLayout;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainTab02 extends Fragment
 {
-	private ListView mList;
 	private View messageLayout;
-	private CircleRefreshLayout mRefreshLayout;
-	private Button mStop;
-	private FoodCalorieDBHandle foodCalorieDBHandle;
+	private Handler mt2Handler;
+	private ListView lv;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 
 		messageLayout = inflater.inflate(R.layout.main_tab_02, container, false);
-
-		mRefreshLayout = (CircleRefreshLayout) messageLayout.findViewById(R.id.refresh_tab02);
-		mList = (ListView) messageLayout.findViewById(R.id.list);
-		mStop = (Button) messageLayout.findViewById(R.id.stop_refresh);
-		String[] strs = {
-				"The",
-				"Canvas",
-				"class",
-				"holds",
-				"the",
-				"draw",
-				"calls",
-				".",
-				"To",
-				"draw",
-				"something,",
-				"you",
-				"need",
-				"4 basic",
-				"components",
-				"Bitmap",
-		};
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, strs);
-		mList.setAdapter(adapter);
-		mStop.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				EditText editText = (EditText)messageLayout.findViewById(R.id.foodDBtext);
-				foodCalorieDBHandle.findByName(editText.getText().toString());
-				mRefreshLayout.finishRefreshing();
-			}
-		});
-		mRefreshLayout.setOnRefreshListener(
-				new CircleRefreshLayout.OnCircleRefreshListener() {
-					@Override
-					public void refreshing() {
-						// do something when refresh starts
-					}
-
-					@Override
-					public void completeRefresh() {
-						// do something when refresh complete
-					}
-				});
-		//init DB
-		foodCalorieDBHandle = new FoodCalorieDBHandle(getContext());
-//		foodCalorieDBHandle.add("apple",100,100,1,"slack");
-//		foodCalorieDBHandle.add("banana",110,110,1,"slack");
-//		foodCalorieDBHandle.add("hamberger",120,130,1,"main course");
-//		foodCalorieDBHandle.add("pork",150,200,1,"main course");
-//		foodCalorieDBHandle.add("beaf",200,300,1,"main course");
-//		fileRead();
-		foodCalorieDBHandle.setFoodHandler(mt2Handler);
+		initList();
 		return messageLayout;
 	}
-	public Handler mt2Handler = new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			Log.e("mmmmmmmmmmmmmmmmmmm"," "+msg.obj);
+	public void setHandler(Handler handler){
+		mt2Handler = handler;
+	}
+	public void initList(){
+		lv = (ListView)messageLayout.findViewById(R.id.list_mt2);
+		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,     Object>>();/*在数组中存放数据*/
+		for(int i=0;i<10;i++)
+		{
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("setting_pic", R.drawable.hds);//加入图片
+			map.put("setting_title", "用户名");
+			map.put("setting_arrow", R.drawable.right);
+			listItem.add(map);
 		}
-	};
-
-	public void fileRead(){
-		foodCalorieDBHandle.deleteDB(getContext());
-		try {
-			InputStreamReader inputReader = new InputStreamReader( getResources().openRawResource(R.raw.food));
-			BufferedReader bufReader = new BufferedReader(inputReader);
-			String line="";
-			while((line = bufReader.readLine()) != null) {
-//				Log.e("aaaaaa","aaaaaaaaa"+line);
-				String [] temp = null;
-				line = line.trim();
-				temp = line.split("\\s+");
-//				for(String each:temp) {
-//					Log.e("-----",""+each);
-//				}
-				if(temp.length != 3){
-					continue;
-				}
-				Log.e("==========",temp[0]+"-"+temp[1]+"-"+temp[2]);
-				Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]+|\\d+");
-				Matcher m2 = p.matcher(temp[2]);
-				Matcher m3 = p.matcher(temp[1]);
-				Integer cal=0,wei=0;
-				if(m3.find()) {
-					cal = Integer.parseInt(m3.group());
-				}
-				if(m2.find()) {
-					wei = Integer.parseInt(m2.group());
-				}
-//				while ( m.find() ) {
-//					System.out.println( m.group() );
-//				}
-//				Log.e("aaaaaaaa",temp[0]+"-"+cal+"-"+ wei);
-				foodCalorieDBHandle.add(temp[0], cal, wei, 1, "主食");
+		SimpleAdapter mSimpleAdapter = new SimpleAdapter(getContext(),listItem,//需要绑定的数据
+				R.layout.setting_item,//每一行的布局//动态数组中的数据源的键对应到定义布局的View中
+				 new String[] {"setting_pic","setting_title", "setting_arrow"},
+			new int[] {R.id.setting_pic,R.id.setting_title,R.id.setting_arrow}
+			);
+		lv.setAdapter(mSimpleAdapter);
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				myToast("你点击了第"+position+"行"+id);//设置标题栏显示点击的行
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		});
+	}
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			Message message = new Message();
+			message.what = 2;
+			message.obj = "bottom2";
+			mt2Handler.sendMessage(message);
+		} else if (!isVisibleToUser) {
+			Log.e("===========","bu shi ke jian d");
 		}
+	}
+	public void myToast(String s){
+		Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
 	}
 }

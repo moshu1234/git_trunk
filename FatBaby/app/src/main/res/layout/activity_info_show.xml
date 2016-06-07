@@ -56,9 +56,9 @@
 
         </view>
 
-        <include
-            layout="@layout/bottom_tab"
-            android:id="@+id/buttom_tab"></include>
+        <!--<include-->
+            <!--layout="@layout/bottom_tab"-->
+            <!--android:id="@+id/buttom_tab"></include>-->
     </FrameLayout>
 
     <ListView

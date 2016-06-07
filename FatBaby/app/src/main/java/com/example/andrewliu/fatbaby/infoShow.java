@@ -16,10 +16,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.os.Handler;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -138,10 +141,12 @@ public class infoShow extends AppCompatActivity {
 //                        Log.e("aaaaaaaaaaa","flag="+StepCounterService.FLAG);
                         if (StepCounterService.FLAG) {
                             Message msg = new Message();
+                            msg.what = 1;
+                            msg.obj = "step";
                             if (temp != StepDetector.CURRENT_SETP) {
                                 temp = StepDetector.CURRENT_SETP;
                             }
-                            handler.sendMessage(msg);
+                            infoShowHandler.sendMessage(msg);
                         }
                     }
                 }
@@ -155,7 +160,9 @@ public class infoShow extends AppCompatActivity {
         mFatBabyViewPager = (FatBabyViewPager) findViewById(R.id.id_viewpager);
 //        mFatBabyViewPager.setScanScroll(false);
         MainTab01 tab01 = new MainTab01();
+        tab01.setHandler(infoShowHandler);
         MainTab02 tab02 = new MainTab02();
+        tab02.setHandler(infoShowHandler);
         MainTab03 tab03 = new MainTab03();
         mFragments.add(tab01);
         mFragments.add(tab02);
@@ -203,12 +210,14 @@ public class infoShow extends AppCompatActivity {
         Intent service = new Intent(this, StepCounterService.class);
         stopService(service);
     }
-    public Handler handler = new Handler() {
+    public Handler infoShowHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            TextView textView = (TextView)findViewById(R.id.totalSteps);
-            if(textView != null){
-                textView.setText("今天走了" + StepDetector.CURRENT_SETP + "步");
+            if(msg.what == 1) {
+                TextView textView = (TextView) findViewById(R.id.totalSteps);
+                if (textView != null) {
+                    textView.setText("今天走了" + StepDetector.CURRENT_SETP + "步");
+                }
             }
             super.handleMessage(msg);
         }
@@ -306,8 +315,5 @@ public class infoShow extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-    public void getObjID(){
-
     }
 }
