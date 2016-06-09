@@ -49,17 +49,50 @@ public class MainTab02 extends Fragment
 	public void setHandler(Handler handler){
 		mt2Handler = handler;
 	}
+	public void fillSettingList(ArrayList<HashMap<String, Object>> list){
+		//username
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("setting_pic", R.drawable.gsl);//加入图片
+		map.put("setting_title", "用户名");
+		map.put("setting_arrow", R.drawable.fhe);
+		list.add(map);
+		//nickname
+		HashMap<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("setting_pic", R.drawable.hdr);//加入图片
+		map1.put("setting_title", "昵称");
+		map1.put("setting_arrow", R.drawable.fhe);
+		list.add(map1);
+		//password
+		HashMap<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("setting_pic", R.drawable.grc);//加入图片
+		map2.put("setting_title", "密码设置");
+		map2.put("setting_arrow", R.drawable.fhe);
+		list.add(map2);
+		//password
+		HashMap<String, Object> map3 = new HashMap<String, Object>();
+		map3.put("setting_pic", R.drawable.lez);//加入图片
+		map3.put("setting_title", "消息设置");
+		map3.put("setting_arrow", R.drawable.fhe);
+		list.add(map3);
+		//password
+		HashMap<String, Object> map4 = new HashMap<String, Object>();
+		map4.put("setting_pic", R.drawable.lnl);//加入图片
+		map4.put("setting_title", "隐私设置");
+		map4.put("setting_arrow", R.drawable.fhe);
+		list.add(map4);
+	}
 	public void initList(){
 		lv = (ListView)messageLayout.findViewById(R.id.list_mt2);
 		ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,     Object>>();/*在数组中存放数据*/
-		for(int i=0;i<10;i++)
-		{
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("setting_pic", R.drawable.hds);//加入图片
-			map.put("setting_title", "用户名");
-			map.put("setting_arrow", R.drawable.right);
-			listItem.add(map);
-		}
+//		for(int i=0;i<10;i++)
+//		{
+//			HashMap<String, Object> map = new HashMap<String, Object>();
+//			map.put("setting_pic", R.drawable.hds);//加入图片
+//			map.put("setting_title", "用户名");
+//			map.put("setting_arrow", R.drawable.fhe);
+//			listItem.add(map);
+//		}
+		fillSettingList(listItem);
 		SimpleAdapter mSimpleAdapter = new SimpleAdapter(getContext(),listItem,//需要绑定的数据
 				R.layout.setting_item,//每一行的布局//动态数组中的数据源的键对应到定义布局的View中
 				 new String[] {"setting_pic","setting_title", "setting_arrow"},

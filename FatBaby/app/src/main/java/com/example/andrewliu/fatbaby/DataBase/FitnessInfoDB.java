@@ -100,7 +100,7 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
         }
         return;
     }
-    public Boolean find(String date){
+    public JSONObject find(String date){
         SQLiteDatabase db = this.getWritableDatabase();
         //get cursor
         Cursor cursor = db.query (FITNESS_TABLE_NAME,null,null,null,null,null,null);
@@ -118,12 +118,22 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
 //                    Message msg = new Message();
 //                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6);
 //                    fitnessDBhandler.sendMessage(msg);
-                    return true;
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("date",cursor.getString(1));
+                        object.put("progress",cursor.getString(2));
+                        object.put("running",cursor.getString(3));
+                        object.put("fitness",cursor.getString(4));
+                        object.put("weight",cursor.getString(5));
+                    }catch (Exception e){
+                        Log.e("fitneesinfodb","exception "+e.getMessage());
+                    }
+                    return object;
                 }
             }
             cursor.close();
         }
-        return false;
+        return null;
     }
     public void find(String date,FitnessCallback fitnessCallback){
         SQLiteDatabase db = this.getWritableDatabase();

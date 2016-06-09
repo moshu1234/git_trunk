@@ -66,14 +66,14 @@ public class Login extends Fragment {
         b_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message message = new Message();
-                message.obj = "register";
-                message.what = 3;
-                if(loginHandler == null){
-                    Log.e("login","loginhander is null");
-                }
-                loginHandler.sendMessage(message);
-//                userCompare();
+//                Message message = new Message();
+//                message.obj = "register";
+//                message.what = 3;
+//                if(loginHandler == null){
+//                    Log.e("login","loginhander is null");
+//                }
+//                loginHandler.sendMessage(message);
+                userCompare();
             }
         });
     }
@@ -221,6 +221,10 @@ public class Login extends Fragment {
 
 
     public void userCompare(final Context context, final String user, final String password, final Login.ICoallBack iCoallBack){
+        if(TextUtils.isEmpty(user) == true || TextUtils.isEmpty(password) == true)
+        {
+            myToast("请输入用户名和密码");
+        }
         BmobQuery query = new BmobQuery("UserInfo");
         query.findObjects(context, new FindCallback() {
             private UserInfoDB userInfoDB = new UserInfoDB(context);

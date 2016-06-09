@@ -71,7 +71,8 @@
         android_custom:textColor="#9A32CD"
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
-        android_custom:textSize="10sp" />
+        android_custom:textSize="10sp"
+        android:clickable="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,7 +95,8 @@
         android_custom:textColor="#9A32CD"
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
-        android_custom:textSize="10sp" />
+        android_custom:textSize="10sp"
+        android:clickable="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,7 +120,8 @@
         android_custom:textColor="#9A32CD"
         android_custom:textIsDisplayable="true"
         android_custom:roundWidth="10dip"
-        android_custom:textSize="10sp"/>
+        android_custom:textSize="10sp"
+        android:clickable="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -27,7 +27,8 @@
                 android:layout_width="150dp"
                 android:textSize="25sp"
                 android:layout_height="wrap_content"
-                android:text="123456"
+                android:hint="123456"
+                android:textColorHint="#11111111"
                 android:id="@+id/username"/>
         </LinearLayout>
         <LinearLayout
@@ -48,7 +49,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="123456"
+                android:text=""
                 android:inputType="textPassword"
                 android:id="@+id/password"/>
         </LinearLayout>
@@ -59,12 +60,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="登录"
-                android:id="@+id/login_b"/>
+                android:id="@+id/login_b"
+                android:background="#00ff00"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="注册"
-                android:id="@+id/register_b"/>
+                android:id="@+id/register_b"
+                android:background="#00ff55"/>
 
         </LinearLayout>
     </LinearLayout>

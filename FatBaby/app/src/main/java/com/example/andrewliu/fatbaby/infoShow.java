@@ -200,7 +200,7 @@ public class infoShow extends AppCompatActivity {
         };
         mFatBabyViewPager.setAdapter(mAdapter);
 
-//        mViewPager.setCurrentItem(1);
+//        mFatBabyViewPager.setCurrentItem(1);
     }
 
 
@@ -240,6 +240,7 @@ public class infoShow extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.user_p:
                 Toast.makeText(this, "用户", Toast.LENGTH_SHORT).show();
+                mFatBabyViewPager.setCurrentItem(1);
                 return true;
             case R.id.write_p:
                 Toast.makeText(this, "发布", Toast.LENGTH_SHORT).show();

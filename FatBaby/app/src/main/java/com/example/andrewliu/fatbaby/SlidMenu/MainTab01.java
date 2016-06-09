@@ -52,6 +52,7 @@ public class MainTab01 extends Fragment
 	private int weight;
 	private gifView gif_run,gif_dance,gif_fitness;
 	private Handler mt1Handler;
+	private int weight_height = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -61,6 +62,7 @@ public class MainTab01 extends Fragment
 //		init_weight_tab();
 		testGif();
 		setStartSports();
+		displayRemindDialog();
 		return view;
 	}
 	public void setStartSports(){
@@ -146,7 +148,19 @@ public class MainTab01 extends Fragment
 		mBodyProgress=(BodyProgress)view.findViewById(R.id.bodyProgress);
 //		setBodyProgress(mBodyProgress,60,"加油哦");
 	}
-
+	public int getDayInterval(String day1, String day2){
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+		long dif = 0;
+		try {
+			long to = df.parse(day2).getTime();
+			long from = df.parse(day1).getTime();
+			dif = (to - from) / (1000 * 60 * 60 * 24);
+		}catch (Exception e){
+			Log.e("exception",e.getMessage());
+		}
+//		myToast("========days========"+dif);
+		return (int)dif;
+	}
 	public String getCurrentDate(){
 		Calendar calendar =Calendar.getInstance();
 		int year=calendar.get(calendar.YEAR);
@@ -183,10 +197,8 @@ public class MainTab01 extends Fragment
 					//set weight tab
 					ViewGroup.LayoutParams para;
 					para = iv.getLayoutParams();
+					weight_height = para.height;
 					para.height=s.getInt("weight")*para.height/100;
-//						if(para.height > 180){
-//							para.height = para.height - 20;
-//						}
 					iv.setLayoutParams(para);
 					tv.setText(s.getString("weight")+"kg");
 				}catch (Exception e){
@@ -200,51 +212,58 @@ public class MainTab01 extends Fragment
 			}
 		});
 	}
-	public void historyInfoShow(){
-		CircleProgressBar pb= (CircleProgressBar)view.findViewById(R.id.roundProgressBar1);
+	public void displayRemindDialog(){
+		Dialog dialog = new Dialog(getContext());
+		dialog.setContentView(R.layout.dialog_remind);
+		gifView gif = (gifView)dialog.findViewById(R.id.remind_gif);
+		gif.setMovieResource(R.drawable.remind);
+//		gif_run.setPaused(true);
+		int days = getDayInterval(getLastDate(-20),getLastDate(0));
+		dialog.show();
+	}
+	public void setHistoryView(final String date, CircleProgressBar pb) {
 		pb.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Log.e("historyInfoShow","waht a fuck:"+event.getAction());
-				if(event.getAction() == MotionEvent.ACTION_UP) {
-					final EditText et = new EditText(getContext());
-					new AlertDialog.Builder(getContext()).setTitle("体重").setView(
-							et).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-							myToast("" + et.getText().toString());
-						}
-					})
-							.setNegativeButton("取消", null).show();
-				}
-
-
-				return false;
-			}
-		});
-		pb = (CircleProgressBar)view.findViewById(R.id.roundProgressBar2);
-		pb.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+				Log.e("ontouch","cc:"+event.getAction());
 				if(event.getAction() == MotionEvent.ACTION_UP){
 					final Dialog dialog = new Dialog(getContext());
-					dialog.setContentView(R.layout.dialog_view);
-					Button bt = (Button)dialog.findViewById(R.id.diag_sure);
-					final EditText et = (EditText)dialog.findViewById(R.id.diag_text);
-					bt.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-							myToast(et.getText().toString());
+					dialog.setContentView(R.layout.dialog_history_view);
+					FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
+					JSONObject object = fitnessInfoDB.find(date);
+					if(object != null){
+						try {
+							TextView textView = (TextView) dialog.findViewById(R.id.history_weight);
+							textView.setText(object.getString("weight"));
+							textView = (TextView) dialog.findViewById(R.id.history_run);
+							textView.setText(object.getString("running"));
+							textView = (TextView) dialog.findViewById(R.id.history_fitness);
+							textView.setText(object.getString("fitness"));
+							textView = (TextView) dialog.findViewById(R.id.history_progress);
+							textView.setText(object.getString("progress"));
+							textView = (TextView) dialog.findViewById(R.id.history_date);
+							textView.setText(date.substring(4));
+						}catch (Exception e){
+							Log.e("exception",e.getMessage());
 						}
-					});
+					}
 					dialog.show();
 				}
 				return false;
 			}
 		});
-
+	}
+	public void historyInfoShow(){
+		CircleProgressBar pb= (CircleProgressBar)view.findViewById(R.id.roundProgressBar1);
+		setHistoryView(getLastDate(-5),pb);
+		pb = (CircleProgressBar)view.findViewById(R.id.roundProgressBar2);
+		setHistoryView(getLastDate(-4),pb);
+		pb = (CircleProgressBar)view.findViewById(R.id.roundProgressBar3);
+		setHistoryView(getLastDate(-3),pb);
+		pb = (CircleProgressBar)view.findViewById(R.id.roundProgressBar4);
+		setHistoryView(getLastDate(-2),pb);
+		pb = (CircleProgressBar)view.findViewById(R.id.roundProgressBar5);
+		setHistoryView(getLastDate(-1),pb);
 	}
 	public void manualUpdateWeight(){
 		ImageView iv = new ImageView(getContext());
@@ -262,7 +281,25 @@ public class MainTab01 extends Fragment
 						@Override
 						public void onClick(View v) {
 							dialog.dismiss();
-							myToast(et.getText().toString());
+							if(!et.getText().toString().equals("")) {
+								TextView textView = (TextView) view.findViewById(R.id.day6_t);
+								textView.setText(et.getText().toString()+"kg");
+								FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
+								fitnessInfoDB.update_fitness(getLastDate(0), "weight", et.getText().toString());
+								ImageView iv = (ImageView)view.findViewById(R.id.day6_i);
+								ViewGroup.LayoutParams para;
+								para = iv.getLayoutParams();
+								para.height=Integer.valueOf(et.getText().toString())*weight_height/100;
+
+//							myToast(et.getText().toString());
+							}
+						}
+					});
+					bt = (Button)dialog.findViewById(R.id.diag_cancel);
+					bt.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
 						}
 					});
 					dialog.show();
@@ -270,14 +307,6 @@ public class MainTab01 extends Fragment
 				return true;
 			}
 		});
-//		Button bt = (Button) view.findViewById(R.id.diag_sure);
-//		bt.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				EditText et = (EditText) view.findViewById(R.id.diag_text);
-//				myToast(et.getText().toString());
-//			}
-//		});
 	}
 	public void getFitnessRecords(){
 		historyInfoShow();
@@ -386,45 +415,35 @@ public class MainTab01 extends Fragment
 	}
 	public void test(){
 		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
-//		fitnessInfoDB.delete("20160523");
 		Log.e("aaaaa",""+getLastDate(0));
-		if(fitnessInfoDB.find(getLastDate(0)) == false){
+		if(fitnessInfoDB.find(getLastDate(0)) == null){
 			fitnessInfoDB.insert_fitnessinfo(getLastDate(0),80,10,30,60,0);
 		}
 		Log.e("aaaaa",""+getLastDate(-1));
-		if(fitnessInfoDB.find(getLastDate(-1)) == false){
+		if(fitnessInfoDB.find(getLastDate(-1)) == null){
 			fitnessInfoDB.insert_fitnessinfo(getLastDate(-1),70,6,30,59,0);
 		}
 		Log.e("aaaaa",""+getLastDate(-2));
-		if(fitnessInfoDB.find(getLastDate(-2)) == false){
+		if(fitnessInfoDB.find(getLastDate(-2)) == null){
 			fitnessInfoDB.insert_fitnessinfo(getLastDate(-2),0,0,0,60,0);
 		}
 		Log.e("aaaaa",""+getLastDate(-3));
-		if(fitnessInfoDB.find(getLastDate(-3)) == false){
+		if(fitnessInfoDB.find(getLastDate(-3)) == null){
 			fitnessInfoDB.insert_fitnessinfo(getLastDate(-3),100,20,60,60,0);
 		}
 		Log.e("aaaaa",""+getLastDate(-4));
-		if(fitnessInfoDB.find(getLastDate(-4)) == false){
+		if(fitnessInfoDB.find(getLastDate(-4)) == null){
 			Log.e("aaaaa","add"+getLastDate(-4));
 			fitnessInfoDB.insert_fitnessinfo(getLastDate(-4),80,5,60,55,0);
 		}
 		Log.e("aaaaa",""+getLastDate(-5));
-		if(fitnessInfoDB.find(getLastDate(-5)) == false){
+		if(fitnessInfoDB.find(getLastDate(-5)) == null){
 			fitnessInfoDB.insert_fitnessinfo(getLastDate(-5),80,10,30,60,0);
 		}
 		Log.e("aaaaa",""+getLastDate(-6));
-		if(fitnessInfoDB.find(getLastDate(-6)) == false){
+		if(fitnessInfoDB.find(getLastDate(-6)) == null){
 			fitnessInfoDB.insert_fitnessinfo(getLastDate(-6),80,10,30,60,0);
 		}
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(0),80,10,30,60,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-1),70,6,30,59,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-2),85,15,30,58,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-3),0,0,0,60,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-4),100,20,60,60,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-5),80,5,60,55,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-6),80,10,30,60,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-7),80,10,30,60,0);
-//		fitnessInfoDB.insert_fitnessinfo(getLastDate(-8),80,10,30,60,0);
 	}
 	public void myToast(String s){
 		Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
