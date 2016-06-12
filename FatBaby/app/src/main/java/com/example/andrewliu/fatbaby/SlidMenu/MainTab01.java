@@ -53,6 +53,7 @@ public class MainTab01 extends Fragment
 	private gifView gif_run,gif_dance,gif_fitness;
 	private Handler mt1Handler;
 	private int weight_height = 0;
+	private int remindFlag = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -213,6 +214,9 @@ public class MainTab01 extends Fragment
 		});
 	}
 	public void displayRemindDialog(){
+		if(remindFlag==1){
+			return;
+		}
 		Dialog dialog = new Dialog(getContext());
 		dialog.setContentView(R.layout.dialog_remind);
 		gifView gif = (gifView)dialog.findViewById(R.id.remind_gif);
@@ -220,6 +224,7 @@ public class MainTab01 extends Fragment
 //		gif_run.setPaused(true);
 		int days = getDayInterval(getLastDate(-20),getLastDate(0));
 		dialog.show();
+		remindFlag = 1;
 	}
 	public void setHistoryView(final String date, CircleProgressBar pb) {
 		pb.setOnTouchListener(new View.OnTouchListener() {

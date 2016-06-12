@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -34,6 +35,7 @@ import com.example.andrewliu.fatbaby.SlidMenu.MainTab02;
 import com.example.andrewliu.fatbaby.SlidMenu.MainTab03;
 import com.example.andrewliu.fatbaby.SlidMenu.StepCounterService;
 import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
+import com.example.andrewliu.fatbaby.SlidMenu.TabWebview;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,8 +166,10 @@ public class infoShow extends AppCompatActivity {
         MainTab02 tab02 = new MainTab02();
         tab02.setHandler(infoShowHandler);
         MainTab03 tab03 = new MainTab03();
+        TabWebview tabWebview = new TabWebview();
         mFragments.add(tab01);
         mFragments.add(tab02);
+        mFragments.add(tabWebview);
         mFragments1.add(tab03);
         /**
          * 初始化Adapter
@@ -246,7 +250,8 @@ public class infoShow extends AppCompatActivity {
                 Toast.makeText(this, "发布", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.favo_p:
-                Toast.makeText(this, "收藏", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "视频", Toast.LENGTH_SHORT).show();
+                mFatBabyViewPager.setCurrentItem(2);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -273,18 +278,60 @@ public class infoShow extends AppCompatActivity {
     }
 
     private void selectItem(int position) {
-        if(position > 1){
-            if(mAdapter1 != null) {
-                Log.e("bbb","set mAdapter1--------------------------");
-                mFatBabyViewPager.setAdapter(mAdapter1);
-            }
+        if(mFatBabyViewPager == null){
+            return;
         }
-        else {
-            if(mAdapter != null) {
-                Log.e("bbb","set mAdapter");
-                mFatBabyViewPager.setAdapter(mAdapter);
-            }
+        PagerAdapter adapter = mFatBabyViewPager.getAdapter();
+        switch (position){
+            case 0:
+                if(adapter != mAdapter && mAdapter != null){
+                    Log.e("bbb","set mAdapter--------------------------");
+                    mFatBabyViewPager.setAdapter(mAdapter);
+                }
+                break;
+            case 1:
+                if(adapter != mAdapter1 && mAdapter1 != null){
+                    Log.e("bbb","set mAdapter1--------------------------");
+                    mFatBabyViewPager.setAdapter(mAdapter1);
+                }
+            break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                if(adapter == mAdapter && mAdapter != null){
+                    mFatBabyViewPager.setCurrentItem(2);
+                }
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                if(adapter == mAdapter && mAdapter != null){
+                    mFatBabyViewPager.setCurrentItem(1);
+                }
+                break;
+            default:
+                break;
         }
+//        if(position > 1){
+//            if(mAdapter1 != null) {
+//                Log.e("bbb","set mAdapter1--------------------------");
+//                mFatBabyViewPager.setAdapter(mAdapter1);
+//            }
+//        }
+//        else if(position == 4)
+//        {
+//            mFatBabyViewPager.setCurrentItem(2);
+//        }
+//        else {
+//            if(mAdapter != null) {
+//                Log.e("bbb","set mAdapter");
+//                mFatBabyViewPager.setAdapter(mAdapter);
+//            }
+//        }
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
