@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.andrewliu.fatbaby.R;
 
@@ -53,6 +55,7 @@ public class TabWebview extends Fragment {
                 return false;
             }
         });
+        initButton();
         return view;
     }
     //Web视图
@@ -69,5 +72,18 @@ public class TabWebview extends Fragment {
             }
             return true;
         }
+    }
+    public void initButton(){
+        Button button = (Button)view.findViewById(R.id.webview_bt);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editText = (EditText)view.findViewById(R.id.webview_et);
+                String eUrl = editText.getText().toString();
+                if(!eUrl.equals("")){
+                    webView.loadUrl("https://www.baidu.com/s?wd="+eUrl);
+                }
+            }
+        });
     }
 }
