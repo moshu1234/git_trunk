@@ -6,7 +6,7 @@
     tools:context="com.example.andrewliu.fatbaby.MainActivity"
     android:background="@color/ColorBackgroud">
     <view
-        class="com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager"
+        class="com.example.andrewliu.fatbaby.UI.ExtendViews.FatBabyViewPager"
         android:id="@+id/login_viewpager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

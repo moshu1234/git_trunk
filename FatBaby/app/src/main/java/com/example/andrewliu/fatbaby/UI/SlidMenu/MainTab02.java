@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -6,32 +6,17 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.DataBase.FoodCalorieDBHandle;
 import com.example.andrewliu.fatbaby.R;
-import com.tuesda.walker.circlerefresh.CircleRefreshLayout;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainTab02 extends Fragment
 {

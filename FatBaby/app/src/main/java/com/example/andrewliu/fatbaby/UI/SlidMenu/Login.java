@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.BmobDataLib.UserInfo;
+import com.example.andrewliu.fatbaby.DataBase.BmobDataLib.UserInfo;
 import com.example.andrewliu.fatbaby.DataBase.UserInfoDB;
 import com.example.andrewliu.fatbaby.R;
-import com.example.andrewliu.fatbaby.infoShow;
+import com.example.andrewliu.fatbaby.Activities.infoShow;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;

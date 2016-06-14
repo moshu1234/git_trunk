@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.Service;
 
 import android.app.Service;
 import android.content.Context;

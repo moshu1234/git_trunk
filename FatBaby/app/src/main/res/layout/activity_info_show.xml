@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <view
-            class="com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager"
+            class="com.example.andrewliu.fatbaby.UI.ExtendViews.FatBabyViewPager"
             android:id="@+id/id_viewpager"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

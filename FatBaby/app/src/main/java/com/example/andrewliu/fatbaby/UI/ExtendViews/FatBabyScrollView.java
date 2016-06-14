@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.ExtendViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,7 +7,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
 
 /**
  * Created by liut1 on 5/18/16.

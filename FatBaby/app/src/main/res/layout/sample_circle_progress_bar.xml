@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:android_custom="http://schemas.android.com/apk/res-auto">
 
-    <com.example.andrewliu.fatbaby.progressbar.CircleProgressBar
+    <com.example.andrewliu.fatbaby.UI.Gif.progressbar.CircleProgressBar
         android:id="@+id/roundProgressBar21111"
         android:layout_width="80dip"
         android:layout_height="80dip"

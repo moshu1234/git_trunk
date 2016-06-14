@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.BabyView;
+package com.example.andrewliu.fatbaby.UI.Gif;
 
 /**
  * Created by liut1 on 5/31/16.

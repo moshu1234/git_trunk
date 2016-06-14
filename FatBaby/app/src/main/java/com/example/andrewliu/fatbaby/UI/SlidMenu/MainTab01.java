@@ -1,37 +1,27 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.BabyView.gifView;
-import com.example.andrewliu.fatbaby.BodyCirleShow.BodyProgress;
+import com.example.andrewliu.fatbaby.UI.Gif.gifView;
+import com.example.andrewliu.fatbaby.UI.BodyCirleShow.BodyProgress;
 import com.example.andrewliu.fatbaby.DataBase.FitnessInfoDB;
-import com.example.andrewliu.fatbaby.DataBase.UserInfoDB;
 import com.example.andrewliu.fatbaby.R;
-import com.example.andrewliu.fatbaby.progressbar.CircleProgressBar;
+import com.example.andrewliu.fatbaby.UI.progressbar.CircleProgressBar;
 
 import org.json.JSONObject;
 
@@ -39,8 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+
 
 public class MainTab01 extends Fragment
 {

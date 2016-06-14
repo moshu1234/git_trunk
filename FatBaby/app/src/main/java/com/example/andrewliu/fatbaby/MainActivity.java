@@ -2,7 +2,6 @@ package com.example.andrewliu.fatbaby;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -14,10 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.example.andrewliu.fatbaby.SlidMenu.AccountBind;
-import com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager;
-import com.example.andrewliu.fatbaby.SlidMenu.Login;
-import com.example.andrewliu.fatbaby.SlidMenu.NewUserRegister;
+import com.example.andrewliu.fatbaby.Activities.infoShow;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.AccountBind;
+import com.example.andrewliu.fatbaby.UI.ExtendViews.FatBabyViewPager;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.Login;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.NewUserRegister;
 
 import java.util.ArrayList;
 import java.util.List;

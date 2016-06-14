@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
-
 /**
  * Created by Administrator on 2016/4/13 0013.
  */

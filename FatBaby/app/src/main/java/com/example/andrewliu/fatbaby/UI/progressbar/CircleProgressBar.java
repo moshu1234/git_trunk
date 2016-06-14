@@ -1,16 +1,15 @@
-package com.example.andrewliu.fatbaby.progressbar;
+package com.example.andrewliu.fatbaby.UI.progressbar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.example.andrewliu.fatbaby.R;
@@ -151,6 +150,8 @@ public class CircleProgressBar extends View {
         //设置进度是实心还是空心
         paint.setStrokeWidth(roundWidth); //设置圆环的宽度
         paint.setColor(roundProgressColor);  //设置进度的颜色
+        LinearGradient linearGradient = new LinearGradient(0,0,getWidth(),getHeight(),Color.YELLOW,Color.BLUE, Shader.TileMode.CLAMP);
+        paint.setShader(linearGradient);
         RectF oval = new RectF(centre - radius, centre - radius, centre
                 + radius, centre + radius);  //用于定义的圆弧的形状和大小的界限
 

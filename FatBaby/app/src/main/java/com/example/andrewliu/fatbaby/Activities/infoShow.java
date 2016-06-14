@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby;
+package com.example.andrewliu.fatbaby.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,31 +17,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.os.Handler;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.BmobDataLib.SportsInfo;
-import com.example.andrewliu.fatbaby.SlidMenu.FatBabyViewPager;
-import com.example.andrewliu.fatbaby.SlidMenu.MainTab01;
-import com.example.andrewliu.fatbaby.SlidMenu.MainTab02;
-import com.example.andrewliu.fatbaby.SlidMenu.MainTab03;
-import com.example.andrewliu.fatbaby.SlidMenu.StepCounterService;
-import com.example.andrewliu.fatbaby.SlidMenu.StepDetector;
-import com.example.andrewliu.fatbaby.SlidMenu.TabWebview;
+import com.example.andrewliu.fatbaby.R;
+import com.example.andrewliu.fatbaby.UI.ExtendViews.FatBabyViewPager;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.MainTab01;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.MainTab02;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.MainTab03;
+import com.example.andrewliu.fatbaby.Service.StepCounterService;
+import com.example.andrewliu.fatbaby.Service.StepDetector;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.TabWebview;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.ChatListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.listener.SaveListener;
 
 public class infoShow extends AppCompatActivity {
     private Thread thread;
@@ -163,13 +160,17 @@ public class infoShow extends AppCompatActivity {
 //        mFatBabyViewPager.setScanScroll(false);
         MainTab01 tab01 = new MainTab01();
         tab01.setHandler(infoShowHandler);
+        ChatListFragment chatListFragment = new ChatListFragment();
+
         MainTab02 tab02 = new MainTab02();
         tab02.setHandler(infoShowHandler);
         MainTab03 tab03 = new MainTab03();
         TabWebview tabWebview = new TabWebview();
         mFragments.add(tab01);
+        mFragments.add(chatListFragment);
         mFragments.add(tab02);
         mFragments.add(tabWebview);
+
         mFragments1.add(tab03);
         /**
          * 初始化Adapter

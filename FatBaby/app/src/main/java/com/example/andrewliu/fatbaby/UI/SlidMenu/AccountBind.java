@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,10 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.BmobDataLib.UserInfo;
+import com.example.andrewliu.fatbaby.DataBase.BmobDataLib.UserInfo;
 import com.example.andrewliu.fatbaby.R;
 
 import org.json.JSONArray;

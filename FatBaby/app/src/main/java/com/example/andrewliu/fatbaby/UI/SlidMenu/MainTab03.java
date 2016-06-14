@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

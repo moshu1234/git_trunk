@@ -1,14 +1,14 @@
-package com.example.andrewliu.fatbaby.BodyCirleShow;
+package com.example.andrewliu.fatbaby.UI.BodyCirleShow;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -102,8 +102,9 @@ public class BodyProgress extends View {
         paint.setStyle(Paint.Style.STROKE); //设置空心
         paint.setStrokeWidth(roundWidth); //设置圆环的宽度
         paint.setAntiAlias(true);  //消除锯齿
+        LinearGradient linearGradient = new LinearGradient(0,0,getWidth(),getHeight(),Color.YELLOW,Color.GREEN, Shader.TileMode.CLAMP);
+        paint.setShader(linearGradient);
         canvas.drawCircle(centre, centre, radius, paint); //画出圆环
-
 //        Log.e("log", centre + "");
 
         /**

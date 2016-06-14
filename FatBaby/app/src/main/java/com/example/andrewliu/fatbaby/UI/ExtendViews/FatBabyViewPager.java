@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.ExtendViews;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

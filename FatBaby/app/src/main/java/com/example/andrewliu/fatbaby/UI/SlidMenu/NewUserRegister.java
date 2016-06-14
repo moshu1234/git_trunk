@@ -1,6 +1,5 @@
-package com.example.andrewliu.fatbaby.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,10 +16,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.andrewliu.fatbaby.BmobDataLib.UserInfo;
-import com.example.andrewliu.fatbaby.MainActivity;
+import com.example.andrewliu.fatbaby.DataBase.BmobDataLib.UserInfo;
 import com.example.andrewliu.fatbaby.R;
-import com.example.andrewliu.fatbaby.infoShow;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
