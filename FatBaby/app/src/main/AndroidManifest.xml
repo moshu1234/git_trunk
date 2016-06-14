@@ -40,7 +40,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".Activities.infoShow"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:label="Fighting"
             android:logo="@drawable/left"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
