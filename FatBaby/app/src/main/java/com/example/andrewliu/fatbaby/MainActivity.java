@@ -14,10 +14,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.example.andrewliu.fatbaby.Activities.infoShow;
-import com.example.andrewliu.fatbaby.UI.SlidMenu.AccountBind;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.Login.AccountBind;
 import com.example.andrewliu.fatbaby.UI.ExtendViews.FatBabyViewPager;
-import com.example.andrewliu.fatbaby.UI.SlidMenu.Login;
-import com.example.andrewliu.fatbaby.UI.SlidMenu.NewUserRegister;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.Login.Login;
+import com.example.andrewliu.fatbaby.UI.SlidMenu.Login.NewUserRegister;
+import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
             };
             thread.start();
         }
+        StatService.trackCustomEvent(this, "onCreate", "");
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="ColorBackgroud">#55ffcccc</color>
     <color name="colorNull">#00000000</color>
+    <color name="buttonStart">#ff5da2ff</color>
+    <color name="buttonEnd">#805fbbff</color>
 </resources>

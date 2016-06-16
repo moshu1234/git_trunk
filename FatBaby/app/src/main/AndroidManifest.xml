@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <meta-data android:name="TA_APPKEY" android:value="mJZIbV6RGbtttgDA" />
+    <meta-data android:name="InstallChannel" android:value="YOUR_CHANNEL" />
 
     <application android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">

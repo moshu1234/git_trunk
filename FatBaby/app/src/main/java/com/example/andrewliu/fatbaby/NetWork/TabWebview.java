@@ -1,5 +1,6 @@
-package com.example.andrewliu.fatbaby.UI.SlidMenu;
+package com.example.andrewliu.fatbaby.NetWork;
 
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.andrewliu.fatbaby.DataBase.FileService;
 import com.example.andrewliu.fatbaby.R;
 
 import java.util.ArrayList;
@@ -44,13 +46,17 @@ public class TabWebview extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == KeyEvent.KEYCODE_BACK) && webView != null
                         && webView.canGoBack()) {
-                    if (mHistory.size() > 1) {
-                        mHistory.remove(mHistory.size()-1);
-
-                        Log.e("tabwebview","current url:"+mHistory.get(0));
-                        webView.loadUrl(mHistory.get(0));
-                        return true;
-                    }
+                    Log.e("setOnKeyListener","current url:"+mHistory.get(0));
+                    webView.goBack();
+//                    if (mHistory.size() > 1) {
+//                        mHistory.remove(mHistory.size()-1);
+//
+//                        Log.e("tabwebview","current url:"+mHistory.get(0));
+//                        webView.loadUrl(mHistory.get(0));
+//                        url = mHistory.get(0);
+//                        return true;
+//                    }
+                    return true;
                 }
                 return false;
             }
@@ -73,6 +79,23 @@ public class TabWebview extends Fragment {
             return true;
         }
     }
+    public void downloadURL(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("setSize","download url:"+mHistory.get(mHistory.size()-1));
+                MyDownload dl = new MyDownload(mHistory.get(mHistory.size()-1));
+                dl.down2sd("/", "test.html", dl.new downhandler() {
+                    @Override
+                    public void setSize(int size) {
+                        Log.e("setSize","download size:"+size);
+                        return;
+                    }
+                });
+
+            }
+        }).start();
+    }
     public void initButton(){
         Button button = (Button)view.findViewById(R.id.webview_bt);
         button.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +105,18 @@ public class TabWebview extends Fragment {
                 String eUrl = editText.getText().toString();
                 if(!eUrl.equals("")){
                     webView.loadUrl("https://www.baidu.com/s?wd="+eUrl);
+                    Log.e("tabwebview","url:"+eUrl);
+                    mHistory.add(url);
+//                    webView.loadUrl("http://"+eUrl);
+//                    webView.loadUrl("http://q.3g.cnfol.com");
                 }
+            }
+        });
+        Button bt = (Button)view.findViewById(R.id.webview_save);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadURL();
             }
         });
     }
