@@ -14,6 +14,7 @@
         android:id="@+id/dayhead"></include>
 
     <TextView
+        android:background="@drawable/shape_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="目标体重：50KG"
