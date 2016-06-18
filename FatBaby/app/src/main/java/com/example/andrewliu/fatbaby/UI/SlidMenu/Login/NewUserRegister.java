@@ -97,7 +97,7 @@ public class NewUserRegister extends Fragment {
         public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 //            view.setText("你的血型是："+m[arg2]);
             //TODO here need to save gender and age
-            myToast("spinner clicked");
+//            myToast("spinner clicked");
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {

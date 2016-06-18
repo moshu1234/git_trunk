@@ -106,4 +106,5 @@ public class MainTab02 extends Fragment
 	public void myToast(String s){
 		Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
 	}
+
 }

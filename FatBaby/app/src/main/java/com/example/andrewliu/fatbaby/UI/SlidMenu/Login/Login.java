@@ -180,10 +180,10 @@ public class Login extends Fragment {
 //                    Log.e("login","loginhander is null");
 //                }
 //                loginHandler.sendMessage(message);
-                  onClickShareToQQGroup();
+//                  onClickShareToQQGroup();
 //                shareToQzone();
 //                onClickShare();
-//                userCompare();
+                userCompare();
             }
         });
         b_login.setOnTouchListener(new View.OnTouchListener() {

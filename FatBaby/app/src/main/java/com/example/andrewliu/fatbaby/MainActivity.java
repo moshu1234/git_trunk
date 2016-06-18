@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.example.andrewliu.fatbaby.Activities.infoShow;
+import com.example.andrewliu.fatbaby.Activities.myBaseActivities;
+import com.example.andrewliu.fatbaby.Log.MyToast;
 import com.example.andrewliu.fatbaby.UI.SlidMenu.Login.AccountBind;
 import com.example.andrewliu.fatbaby.UI.ExtendViews.FatBabyViewPager;
 import com.example.andrewliu.fatbaby.UI.SlidMenu.Login.Login;
@@ -26,7 +29,7 @@ import java.util.List;
 import cn.bmob.v3.Bmob;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends myBaseActivities {
 
     private Thread thread;
     private FatBabyViewPager mFatBabyViewPager;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private Login loginTab;
     private NewUserRegister newUserRegisterTab;
     private AccountBind accountBindTab;
+    private int backPressCount = 0;
 
     private String LogTitle = "MAINACTIVITY";
     private Context mainContext = this;
@@ -50,25 +54,25 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         initBmob();
-        if (thread == null) {
-
-            thread = new Thread() {// ���߳����ڼ���ǰ����ı仯
-
-                @Override
-                public void run() {
-                    super.run();
-                    int temp = 0;
-                    while (true) {
-                        try {
-                            Thread.sleep(300);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            };
-            thread.start();
-        }
+//        if (thread == null) {
+//
+//            thread = new Thread() {
+//
+//                @Override
+//                public void run() {
+//                    super.run();
+//                    int temp = 0;
+//                    while (true) {
+//                        try {
+//                            Thread.sleep(300);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            };
+//            thread.start();
+//        }
         StatService.trackCustomEvent(this, "onCreate", "");
 
     }
@@ -172,5 +176,21 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mFatBabyViewPager.setAdapter(mAdapter_login);
+    }
+    @Override
+    public void onBackPressed(){
+        PagerAdapter adapter = mFatBabyViewPager.getAdapter();
+        if(adapter != null && adapter == mAdapter_login) {
+            if(backPressCount >= 1){
+                this.finishAll();
+            }else {
+                MyToast myToast = new MyToast();
+                myToast.getShortToastByString(this,"再按一次退出程序");
+                backPressCount++;
+            }
+        }else {
+            mFatBabyViewPager.setAdapter(mAdapter_login);
+            backPressCount = 0;
+        }
     }
 }

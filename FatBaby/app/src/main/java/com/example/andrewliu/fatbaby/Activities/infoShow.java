@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andrewliu.fatbaby.Log.MyToast;
 import com.example.andrewliu.fatbaby.R;
 import com.example.andrewliu.fatbaby.UI.ExtendViews.FatBabyViewPager;
 import com.example.andrewliu.fatbaby.UI.SlidMenu.MainTab01;
@@ -40,7 +41,7 @@ import java.util.List;
 
 import cn.bmob.v3.Bmob;
 
-public class infoShow extends AppCompatActivity {
+public class infoShow extends myBaseActivities {
     private Thread thread;
     private ViewPager mViewPager;
     private FatBabyViewPager mFatBabyViewPager;
@@ -57,6 +58,7 @@ public class infoShow extends AppCompatActivity {
     private CharSequence mTitle;
     private ActionBar actionBar;
     private View tab;
+    private int backPressCount=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -364,5 +366,39 @@ public class infoShow extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    @Override
+    public void onBackPressed(){
+        PagerAdapter adapter = mFatBabyViewPager.getAdapter();
+        if(mFatBabyViewPager.getCurrentItem() == 0){
+            if(backPressCount >= 1) {
+                this.finishAll();
+//                super.onBackPressed();
+            }else {
+                backPressCount++;
+                MyToast myToast = new MyToast();
+                myToast.getShortToastByString(this,"再按一次退出程序");
+            }
+        }else {
+            goBackFragment();
+            backPressCount = 0;
+        }
+        System.out.println("按下了back键   onBackPressed()");
+    }
+    public void goBackFragment(){
+        PagerAdapter adapter = mFatBabyViewPager.getAdapter();
+        if(adapter != null && adapter == mAdapter){
+            int item = mFatBabyViewPager.getCurrentItem();
+            if(item != 0){
+                mFatBabyViewPager.setCurrentItem(item-1);
+            }
+        }else if (adapter != null && adapter == mAdapter1){
+            int item = mFatBabyViewPager.getCurrentItem();
+            if(item != 0){
+                mFatBabyViewPager.setCurrentItem(item-1);
+            }else {
+                mFatBabyViewPager.setAdapter(mAdapter);
+            }
+        }
     }
 }
