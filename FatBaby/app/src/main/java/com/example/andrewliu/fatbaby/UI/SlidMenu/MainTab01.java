@@ -36,7 +36,7 @@ public class MainTab01 extends Fragment
 {
 	private View view;
 	//CircleProgressBar pb1,pb2,pb3,pb4,pb5;
-	List<CircleProgressBar> progressBars = new ArrayList<>();
+	List<CircleProgressBar> progressBars;
 	BodyProgress mBodyProgress;
 	private int running, fitness;
 	private int weight;
@@ -65,7 +65,7 @@ public class MainTab01 extends Fragment
 					Toast.makeText(getContext(), "请先暂停其他运动", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				Log.e("maintab01","Start sports now!");
+//				Log.e("maintab01","Start sports now!");
 				if(gif_run.isPaused()) {
 					gif_run.setPaused(false);
 					TextView tv = (TextView) view.findViewById(R.id.start_t);
@@ -85,7 +85,7 @@ public class MainTab01 extends Fragment
 					Toast.makeText(getContext(), "请先暂停其他运动", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				Log.e("maintab01","Start sports now!");
+//				Log.e("maintab01","Start sports now!");
 				if(gif_dance.isPaused()) {
 					gif_dance.setPaused(false);
 					TextView tv = (TextView) view.findViewById(R.id.start_t);
@@ -105,7 +105,7 @@ public class MainTab01 extends Fragment
 					Toast.makeText(getContext(), "请先暂停其他运动", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				Log.e("maintab01","Start sports now!");
+//				Log.e("maintab01","Start sports now!");
 				if(gif_fitness.isPaused()) {
 					gif_fitness.setPaused(false);
 					TextView tv = (TextView) view.findViewById(R.id.start_t);
@@ -125,6 +125,7 @@ public class MainTab01 extends Fragment
 		bp.updateProgressText(progress, text);
 	}
 	public void initProgress(View view){
+		progressBars = new ArrayList<>();
 		CircleProgressBar pb1=(CircleProgressBar)view.findViewById(R.id.roundProgressBar1);
 		CircleProgressBar pb2=(CircleProgressBar)view.findViewById(R.id.roundProgressBar2);
 		CircleProgressBar pb3=(CircleProgressBar)view.findViewById(R.id.roundProgressBar3);
@@ -135,6 +136,7 @@ public class MainTab01 extends Fragment
 		progressBars.add(pb3);
 		progressBars.add(pb4);
 		progressBars.add(pb5);
+//		Log.e("initProgress","progressBars.size():"+progressBars.size());
 		getFitnessRecords();
 		mBodyProgress=(BodyProgress)view.findViewById(R.id.bodyProgress);
 //		setBodyProgress(mBodyProgress,60,"加油哦");
@@ -182,7 +184,7 @@ public class MainTab01 extends Fragment
 			@Override
 			public void Sucess(JSONObject s) {
 				try {
-					Log.e("setWeightToday","success:"+s);
+//					Log.e("setWeightToday","success:"+s);
 					TextView tv = (TextView)view.findViewById(R.id.day6_t);
 					ImageView iv = (ImageView)view.findViewById(R.id.day6_i);
 					//set weight tab
@@ -220,7 +222,7 @@ public class MainTab01 extends Fragment
 		pb.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Log.e("ontouch","cc:"+event.getAction());
+//				Log.e("ontouch","cc:"+event.getAction());
 				if(event.getAction() == MotionEvent.ACTION_UP){
 					final Dialog dialog = new Dialog(getContext());
 					dialog.setContentView(R.layout.dialog_history_view);
@@ -307,24 +309,27 @@ public class MainTab01 extends Fragment
 		historyInfoShow();
 		manualUpdateWeight();
 		setWeightToday();
-		Log.e("getFitnessRecords","start to get getFitnessRecords :"+progressBars.size());
+//		Log.e("getFitnessRecords","start to get getFitnessRecords :"+progressBars.size());
 
 		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
+		Log.e("maintab1","progressBars.size():"+progressBars.size());
 		for(int i=0;i<progressBars.size();i++){
 			final String date = getLastDate(0-i-1);
 			final String week_s = getLastWeek(0-i-1);
 			final int finalI = i;
-			Log.e("getFitnessRecords","date:"+date+":"+i+":week:"+week_s);
+//			Log.e("getFitnessRecords","date:"+date+":"+i+":week:"+week_s);
 			fitnessInfoDB.find(date, new FitnessInfoDB.FitnessCallback() {
 				@Override
 				public void Sucess(JSONObject s) {
 					try {
-						Log.e("Maintab01",""+s);
+//						Log.e("Maintab01",""+s);
 						TextView textView = new TextView(getContext());
 						ImageView iv = new ImageView(getContext());
 						TextView tv = new TextView(getContext());
 						TextView week = new TextView(getContext());
 						if(finalI < progressBars.size()) {
+							Log.e("maintab1","obj:"+s);
+//							Log.e("maintab1","progress:"+s.getInt("progress"));
 							setProgressBarProgress(progressBars.get(progressBars.size() - finalI - 1), s.getInt("progress"), s.getInt("progress") + "%");
 						}
 						switch (finalI) {
@@ -382,7 +387,7 @@ public class MainTab01 extends Fragment
 
 				@Override
 				public void fail(String s) {
-					Log.e("MainTab01","this day has no record");
+					Log.e("MainTab01",date+":this day has no record");
 					try {
 						setProgressBarProgress(progressBars.get(finalI),0,date);
 					}catch (Exception e){
@@ -410,34 +415,41 @@ public class MainTab01 extends Fragment
 	}
 	public void test(){
 		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
-		Log.e("aaaaa",""+getLastDate(0));
+//		Log.e("aaaaa",""+getLastDate(0));
 		if(fitnessInfoDB.find(getLastDate(0)) == null){
-			fitnessInfoDB.insert_fitnessinfo(getLastDate(0),80,10,30,60,0);
+			int x=(int)(Math.random()*100);
+			fitnessInfoDB.insert_fitnessinfo(getLastDate(0),x,10,30,60,0);
 		}
-		Log.e("aaaaa",""+getLastDate(-1));
+//		Log.e("aaaaa",""+getLastDate(-1));
 		if(fitnessInfoDB.find(getLastDate(-1)) == null){
-			fitnessInfoDB.insert_fitnessinfo(getLastDate(-1),70,6,30,59,0);
+			int x=(int)(Math.random()*100);
+			fitnessInfoDB.insert_fitnessinfo(getLastDate(-1),x,6,30,59,0);
 		}
-		Log.e("aaaaa",""+getLastDate(-2));
+//		Log.e("aaaaa",""+getLastDate(-2));
 		if(fitnessInfoDB.find(getLastDate(-2)) == null){
-			fitnessInfoDB.insert_fitnessinfo(getLastDate(-2),0,0,0,60,0);
+			int x=(int)(Math.random()*100);
+			fitnessInfoDB.insert_fitnessinfo(getLastDate(-2),x,0,0,60,0);
 		}
-		Log.e("aaaaa",""+getLastDate(-3));
+//		Log.e("aaaaa",""+getLastDate(-3));
 		if(fitnessInfoDB.find(getLastDate(-3)) == null){
-			fitnessInfoDB.insert_fitnessinfo(getLastDate(-3),100,20,60,60,0);
+			int x=(int)(Math.random()*100);
+			fitnessInfoDB.insert_fitnessinfo(getLastDate(-3),x,20,60,60,0);
 		}
-		Log.e("aaaaa",""+getLastDate(-4));
+//		Log.e("aaaaa",""+getLastDate(-4));
 		if(fitnessInfoDB.find(getLastDate(-4)) == null){
-			Log.e("aaaaa","add"+getLastDate(-4));
-			fitnessInfoDB.insert_fitnessinfo(getLastDate(-4),80,5,60,55,0);
+//			Log.e("aaaaa","add"+getLastDate(-4));
+			int x=(int)(Math.random()*100);
+			fitnessInfoDB.insert_fitnessinfo(getLastDate(-4),x,5,60,55,0);
 		}
-		Log.e("aaaaa",""+getLastDate(-5));
+//		Log.e("aaaaa",""+getLastDate(-5));
 		if(fitnessInfoDB.find(getLastDate(-5)) == null){
-			fitnessInfoDB.insert_fitnessinfo(getLastDate(-5),80,10,30,60,0);
+			int x=(int)(Math.random()*100);
+			fitnessInfoDB.insert_fitnessinfo(getLastDate(-5),x,10,30,60,0);
 		}
-		Log.e("aaaaa",""+getLastDate(-6));
+//		Log.e("aaaaa",""+getLastDate(-6));
 		if(fitnessInfoDB.find(getLastDate(-6)) == null){
-			fitnessInfoDB.insert_fitnessinfo(getLastDate(-6),80,10,30,60,0);
+			int x=(int)(Math.random()*100);
+			fitnessInfoDB.insert_fitnessinfo(getLastDate(-6),x,10,30,60,0);
 		}
 	}
 	public void myToast(String s){
@@ -455,7 +467,7 @@ public class MainTab01 extends Fragment
 			message.obj = "bottom1";
 			mt1Handler.sendMessage(message);
 		} else if (!isVisibleToUser) {
-			Log.e("===========","bu shi ke jian d");
+//			Log.e("===========","bu shi ke jian d");
 		}
 	}
 }

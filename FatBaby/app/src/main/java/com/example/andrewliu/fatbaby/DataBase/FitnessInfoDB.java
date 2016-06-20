@@ -114,7 +114,7 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
                 String findName=cursor.getString(1);
 
                 if(date.equals(findName)){
-                    Log.e("aaaaaaaaaaaaa","we've find the fitness data "+date);
+//                    Log.e("aaaaaaaaaaaaa","we've find the fitness data "+date);
 //                    Message msg = new Message();
 //                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6);
 //                    fitnessDBhandler.sendMessage(msg);
@@ -140,19 +140,19 @@ public class FitnessInfoDB extends SQLiteOpenHelper {
         Boolean found = false;
         //get cursor
         Cursor cursor = db.query (FITNESS_TABLE_NAME,null,null,null,null,null,null);
-        Log.e("Fitness find","cursor");
+//        Log.e("Fitness find","cursor");
         //判断游标是否为空
         if(cursor.moveToFirst()) {
-            Log.e("Fitness find","moveToFirst");
+//            Log.e("Fitness find","moveToFirst");
             //遍历游标
             while (cursor.moveToNext()){
                 //获得ID
                 int id = cursor.getInt(0);
                 //获得用户名
                 String findName=cursor.getString(1);
-                Log.e("Fitness find","date:"+findName);
+//                Log.e("Fitness find","date:"+findName);
                 if(date.equals(findName)){
-                    Log.e("aaaaaaaaaaaaa","we've find the fitness data "+date);
+//                    Log.e("aaaaaaaaaaaaa","we've find the fitness data "+date);
 //                    Message msg = new Message();
 //                    msg.obj = cursor.getString(1) + " " + cursor.getInt(2) + " " + cursor.getInt(3)+" "+cursor.getInt(4)+" "+cursor.getInt(5)+" "+cursor.getInt(6);
 //                    fitnessDBhandler.sendMessage(msg);
