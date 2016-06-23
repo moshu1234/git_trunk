@@ -12,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +33,6 @@ import com.example.andrewliu.fatbaby.UI.SlidMenu.MainTab03;
 import com.example.andrewliu.fatbaby.Service.StepCounterService;
 import com.example.andrewliu.fatbaby.Service.StepDetector;
 import com.example.andrewliu.fatbaby.NetWork.TabWebview;
-import com.example.andrewliu.fatbaby.UI.SlidMenu.ChatListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +57,7 @@ public class infoShow extends myBaseActivities {
     private ActionBar actionBar;
     private View tab;
     private int backPressCount=0;
+    private String userName;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +66,10 @@ public class infoShow extends myBaseActivities {
         Bmob.initialize(this, "066c9831ba79e2e93cb66f9cc46807ff");
 
         setContentView(R.layout.activity_info_show);
+        Bundle bundle = this.getIntent().getExtras();
+        userName = bundle.getString("user");
+        MyToast myToast = new MyToast();
+        myToast.getShortToastByString(this,userName);
         actionBar = getSupportActionBar();
         // enable ActionBar app icon to behave as action to toggle nav drawer
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -125,7 +128,7 @@ public class infoShow extends myBaseActivities {
         startService(service);
         if (thread == null) {
 
-            thread = new Thread() {// ���߳����ڼ���ǰ����ı仯
+            thread = new Thread() {
 
                 @Override
                 public void run() {
@@ -162,14 +165,14 @@ public class infoShow extends myBaseActivities {
 //        mFatBabyViewPager.setScanScroll(false);
         MainTab01 tab01 = new MainTab01();
         tab01.setHandler(infoShowHandler);
-        ChatListFragment chatListFragment = new ChatListFragment();
+//        ChatListFragment chatListFragment = new ChatListFragment();
 
         MainTab02 tab02 = new MainTab02();
         tab02.setHandler(infoShowHandler);
         MainTab03 tab03 = new MainTab03();
         TabWebview tabWebview = new TabWebview();
         mFragments.add(tab01);
-        mFragments.add(chatListFragment);
+//        mFragments.add(chatListFragment);
         mFragments.add(tab02);
         mFragments.add(tabWebview);
 
@@ -299,6 +302,9 @@ public class infoShow extends myBaseActivities {
                 }
             break;
             case 2:
+                Intent intent = new Intent(this,ActivityIMChat.class);
+                intent.putExtra("user",userName);
+                startActivity(intent);
                 break;
             case 3:
                 break;

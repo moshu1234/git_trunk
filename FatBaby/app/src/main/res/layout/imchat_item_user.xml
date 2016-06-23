@@ -3,20 +3,19 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical|right"
+    android:gravity="center_vertical"
     android:padding="10dp">
 
+    <ImageView
+        android:id="@+id/imchat_item_user_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hlj"/>
     <TextView
-        android:id="@+id/text_item"
+        android:id="@+id/imchat_item_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20sp"
-        android:layout_gravity="center_vertical|right" />
-
-    <ImageView
-        android:id="@+id/icon_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/lda" />
+        android:layout_margin="10dp"/>
 </LinearLayout>

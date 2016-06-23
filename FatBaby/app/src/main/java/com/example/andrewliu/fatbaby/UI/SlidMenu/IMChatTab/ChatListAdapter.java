@@ -1,6 +1,5 @@
-package com.example.andrewliu.fatbaby.UI.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu.IMChatTab;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ import java.util.List;
  */
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyViewHolder>{
     private List<ChatListViewItem> mDatas;
-    private LayoutInflater mInflater;
-//    private List<String> mDatas;
     public ChatListAdapter(List<ChatListViewItem> data){
         mDatas = data;
     }
@@ -35,12 +32,12 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
         MyViewHolder holder;
         if(viewType == 0) {
             holder = new MyViewHolder(LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.chat_item_left, parent,
+                    parent.getContext()).inflate(R.layout.imchat_item_send, parent,
                     false));
         }
         else {
             holder = new MyViewHolder(LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.chat_item_right, parent,
+                    parent.getContext()).inflate(R.layout.imchat_item_recv, parent,
                     false));
         }
         return holder;
@@ -62,11 +59,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
     {
 
         TextView tv;
+        ImageView iv;
 
         public MyViewHolder(View view)
         {
             super(view);
-            tv = (TextView) view.findViewById(R.id.text_item);
+            tv = (TextView) view.findViewById(R.id.imchat_item_text);
+            iv = (ImageView)view.findViewById(R.id.imchat_item_pic);
         }
     }
 }

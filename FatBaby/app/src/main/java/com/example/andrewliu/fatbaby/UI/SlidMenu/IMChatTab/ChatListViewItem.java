@@ -1,4 +1,4 @@
-package com.example.andrewliu.fatbaby.UI.SlidMenu;
+package com.example.andrewliu.fatbaby.UI.SlidMenu.IMChatTab;
 
 import android.graphics.Bitmap;
 

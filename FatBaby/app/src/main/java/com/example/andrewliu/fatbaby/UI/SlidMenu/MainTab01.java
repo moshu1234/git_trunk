@@ -312,7 +312,7 @@ public class MainTab01 extends Fragment
 //		Log.e("getFitnessRecords","start to get getFitnessRecords :"+progressBars.size());
 
 		FitnessInfoDB fitnessInfoDB = new FitnessInfoDB(getContext());
-		Log.e("maintab1","progressBars.size():"+progressBars.size());
+//		Log.e("maintab1","progressBars.size():"+progressBars.size());
 		for(int i=0;i<progressBars.size();i++){
 			final String date = getLastDate(0-i-1);
 			final String week_s = getLastWeek(0-i-1);
@@ -328,7 +328,7 @@ public class MainTab01 extends Fragment
 						TextView tv = new TextView(getContext());
 						TextView week = new TextView(getContext());
 						if(finalI < progressBars.size()) {
-							Log.e("maintab1","obj:"+s);
+//							Log.e("maintab1","obj:"+s);
 //							Log.e("maintab1","progress:"+s.getInt("progress"));
 							setProgressBarProgress(progressBars.get(progressBars.size() - finalI - 1), s.getInt("progress"), s.getInt("progress") + "%");
 						}
@@ -387,7 +387,7 @@ public class MainTab01 extends Fragment
 
 				@Override
 				public void fail(String s) {
-					Log.e("MainTab01",date+":this day has no record");
+//					Log.e("MainTab01",date+":this day has no record");
 					try {
 						setProgressBarProgress(progressBars.get(finalI),0,date);
 					}catch (Exception e){
