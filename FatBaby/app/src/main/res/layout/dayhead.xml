@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_weight="1">
-    <com.example.andrewliu.fatbaby.UI.progressbar.CircleProgressBar
+    <com.example.andrewliu.fatbaby.UI.ExtendViews.CircleProgressBar
         android:id="@+id/roundProgressBar1"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -35,7 +35,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_weight="1">
-    <com.example.andrewliu.fatbaby.UI.progressbar.CircleProgressBar
+    <com.example.andrewliu.fatbaby.UI.ExtendViews.CircleProgressBar
         android:id="@+id/roundProgressBar2"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -60,7 +60,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_weight="1">
-    <com.example.andrewliu.fatbaby.UI.progressbar.CircleProgressBar
+    <com.example.andrewliu.fatbaby.UI.ExtendViews.CircleProgressBar
         android:id="@+id/roundProgressBar3"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -85,7 +85,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_weight="1">
-    <com.example.andrewliu.fatbaby.UI.progressbar.CircleProgressBar
+    <com.example.andrewliu.fatbaby.UI.ExtendViews.CircleProgressBar
         android:id="@+id/roundProgressBar4"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -109,7 +109,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:layout_weight="1">
-    <com.example.andrewliu.fatbaby.UI.progressbar.CircleProgressBar
+    <com.example.andrewliu.fatbaby.UI.ExtendViews.CircleProgressBar
         android:id="@+id/roundProgressBar5"
         android:layout_width="60dp"
         android:layout_height="60dp"

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.andrewliu.fatbaby.R;
+import com.example.andrewliu.fatbaby.UI.ExtendViews.CircleIcon;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
     {
         Log.e("=========","onCreateViewHolder:"+viewType);
         MyViewHolder holder;
-        if(viewType == 0) {
+        if(viewType == 1) {
             holder = new MyViewHolder(LayoutInflater.from(
                     parent.getContext()).inflate(R.layout.imchat_item_send, parent,
                     false));
@@ -47,6 +48,9 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position)
     {
         holder.tv.setText(mDatas.get(position).getText());
+        ViewGroup.LayoutParams params = holder.ci.getLayoutParams();
+        holder.ci.setIconSize(params.width,params.height);
+        holder.ci.setIconID(mDatas.get(position).getIcon());
     }
 
     @Override
@@ -59,13 +63,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyView
     {
 
         TextView tv;
-        ImageView iv;
-
+//        ImageView iv;
+        CircleIcon ci;
         public MyViewHolder(View view)
         {
             super(view);
             tv = (TextView) view.findViewById(R.id.imchat_item_text);
-            iv = (ImageView)view.findViewById(R.id.imchat_item_pic);
+//            iv = (ImageView)view.findViewById(R.id.imchat_item_pic);
+            ci = (CircleIcon) view.findViewById(R.id.imchat_item_pic);
         }
     }
 }

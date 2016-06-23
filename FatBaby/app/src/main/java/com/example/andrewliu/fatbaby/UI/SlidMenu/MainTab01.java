@@ -18,10 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andrewliu.fatbaby.UI.Gif.gifView;
-import com.example.andrewliu.fatbaby.UI.BodyCirleShow.BodyProgress;
+import com.example.andrewliu.fatbaby.UI.ExtendViews.BodyProgress;
 import com.example.andrewliu.fatbaby.DataBase.FitnessInfoDB;
 import com.example.andrewliu.fatbaby.R;
-import com.example.andrewliu.fatbaby.UI.progressbar.CircleProgressBar;
+import com.example.andrewliu.fatbaby.UI.ExtendViews.CircleProgressBar;
 
 import org.json.JSONObject;
 
