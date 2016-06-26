@@ -5,17 +5,25 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/imchat_item_user_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/hlj"/>
+    <FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imchat_item_user_pic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/hlj"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/imchat_item_pic_corner"
+            android:layout_gravity="right|top"/>
+    </FrameLayout>
     <TextView
         android:id="@+id/imchat_item_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20sp"
-        android:layout_margin="10dp"/>
+        android:layout_marginLeft="10dp"/>
 </LinearLayout>

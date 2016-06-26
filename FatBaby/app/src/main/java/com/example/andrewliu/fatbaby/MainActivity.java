@@ -54,25 +54,6 @@ public class MainActivity extends myBaseActivities {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         initBmob();
-//        if (thread == null) {
-//
-//            thread = new Thread() {
-//
-//                @Override
-//                public void run() {
-//                    super.run();
-//                    int temp = 0;
-//                    while (true) {
-//                        try {
-//                            Thread.sleep(300);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            };
-//            thread.start();
-//        }
         StatService.trackCustomEvent(this, "onCreate", "");
 
     }

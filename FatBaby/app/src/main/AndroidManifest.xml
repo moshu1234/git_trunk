@@ -49,6 +49,10 @@
             android:name=".Activities.ActivityIMChat"
             android:label="Fighting"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity
+            android:name=".Activities.ActivityPicBounce"
+            android:label="Fighting"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <service android:name=".Service.StepCounterService" />
         <service android:name=".Service.IMChatService" />

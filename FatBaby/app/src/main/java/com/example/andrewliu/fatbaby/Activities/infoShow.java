@@ -287,6 +287,7 @@ public class infoShow extends myBaseActivities {
         if(mFatBabyViewPager == null){
             return;
         }
+        Intent intent;
         PagerAdapter adapter = mFatBabyViewPager.getAdapter();
         switch (position){
             case 0:
@@ -302,7 +303,7 @@ public class infoShow extends myBaseActivities {
                 }
             break;
             case 2:
-                Intent intent = new Intent(this,ActivityIMChat.class);
+                intent = new Intent(this,ActivityIMChat.class);
                 intent.putExtra("user",userName);
                 startActivity(intent);
                 break;
@@ -316,6 +317,8 @@ public class infoShow extends myBaseActivities {
             case 5:
                 break;
             case 6:
+                intent = new Intent(this,ActivityPicBounce.class);
+                startActivity(intent);
                 break;
             case 7:
                 if(adapter == mAdapter && mAdapter != null){

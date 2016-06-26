@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 public class StepDetector implements SensorEventListener {
 
@@ -22,7 +23,11 @@ public class StepDetector implements SensorEventListener {
     private float mLastExtremes[][] = { new float[3 * 2], new float[3 * 2] };
     private float mLastDiff[] = new float[3 * 2];
     private int mLastMatch = -1;
-
+    private float x,y;
+    public interface StepCoallBack{
+        public void SensorChangeSuccess(float x, float y);
+    }
+    private StepCoallBack callBack;
     public StepDetector(Context context) {
         // TODO Auto-generated constructor stub
         super();
@@ -32,18 +37,9 @@ public class StepDetector implements SensorEventListener {
         mScale[1] = -(h * 0.5f * (1.0f / (SensorManager.MAGNETIC_FIELD_EARTH_MAX)));
     }
 
-    // public void setSensitivity(float sensitivity) {
-    // SENSITIVITY = sensitivity; // 1.97 2.96 4.44 6.66 10.00 15.00 22.50
-    // // 33.75
-    // // 50.62
-    // }
-
-    // public void onSensorChanged(int sensor, float[] values) {
     @Override
     public void onSensorChanged(SensorEvent event) {
-         //Log.i("aaaaaaaaa", "StepDetector");
         Sensor sensor = event.sensor;
-//        Log.i("aaaaaaaaa", "onSensorChanged");
         synchronized (this) {
             if (sensor.getType() == Sensor.TYPE_ORIENTATION) {
             } else {
@@ -53,6 +49,14 @@ public class StepDetector implements SensorEventListener {
                     for (int i = 0; i < 3; i++) {
                         final float v = mYOffset + event.values[i] * mScale[j];
                         vSum += v;
+                    }
+//                    Log.e("========","onSensorChanged");
+                    if(callBack != null){
+
+//                        Log.e("========","onSensorChanged callBack");
+                        x = event.values[0];
+                        y = event.values[1];
+                        callBack.SensorChangeSuccess(x,y);
                     }
                     int k = 0;
                     float v = vSum / 3;
@@ -73,7 +77,6 @@ public class StepDetector implements SensorEventListener {
                             if (isAlmostAsLargeAsPrevious && isPreviousLargeEnough && isNotContra) {
                                 end = System.currentTimeMillis();
                                 if (end - start > 500) {
-//                                    Log.i("StepDetector", "CURRENT_SETP:" + CURRENT_SETP);
                                     CURRENT_SETP++;
                                     mLastMatch = extType;
                                     start = end;
@@ -97,6 +100,15 @@ public class StepDetector implements SensorEventListener {
     }
     public int getCurrentSetp(){
         return CURRENT_SETP;
+    }
+    public float getX(){
+        return this.x;
+    }
+    public float getY(){
+        return this.y;
+    }
+    public void setCallBack(StepCoallBack stepCoallBack){
+        callBack = stepCoallBack;
     }
 }
 

@@ -72,7 +72,7 @@ public class IMChatDialog extends Fragment {
         ChatListViewItem item1 = new ChatListViewItem();
         item1.setType(0);
         item1.setText("hello");
-        item1.setIcon(BitmapFactory.decodeResource(getResources(),R.drawable.icon6));
+        item1.setIcon(BitmapFactory.decodeResource(getResources(),R.drawable.pic5));
 
         ChatListViewItem item2 = new ChatListViewItem();
         item2.setType(1);
@@ -91,7 +91,7 @@ public class IMChatDialog extends Fragment {
         ChatListViewItem item = new ChatListViewItem();
         item.setText(msg);
         item.setType(type);
-        item.setIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon6));
+        item.setIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pic5));
         data.add(item);
         adapter.notifyDataSetChanged();
         recyclerView.smoothScrollToPosition(data.size());
