@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -86,6 +87,33 @@ public class BounceView extends View {
         }
         //设置背景色
 //        setBackgroundColor(Color.WHITE);
+    }
+    public void initBitmap(Bitmap bitmap){
+//        thread.start();
+        //根据指定资源加载图片
+        //获取图片宽度、高度
+        this.bitmap = bitmap;
+        float bitmapWidth = bitmap.getWidth();
+        float bitmapHeight = bitmap.getHeight();
+        int index = 0;
+        for (int y = 0; y <= HEIGHT; y++)
+        {
+            float fy = bitmapHeight * y / HEIGHT;
+            for (int x = 0; x <= WIDTH; x++)
+            {
+                float fx = bitmapWidth * x / WIDTH;
+                    /*
+                     * 初始化orig、verts数组。
+                     * 初始化后，orig、verts两个数组均匀地保存了21 * 21个点的x,y座标
+                     */
+                orig[index * 2 + 0] = verts[index * 2 + 0] = fx;
+                orig[index * 2 + 1] = verts[index * 2 + 1] = fy;
+                index += 1;
+            }
+        }
+        //设置背景色
+//        setBackgroundColor(Color.WHITE);
+        invalidate();
     }
     @Override
     protected void onDraw(Canvas canvas)
@@ -185,4 +213,5 @@ public class BounceView extends View {
             return false;
         }
     });
+
 }

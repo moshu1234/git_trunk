@@ -1,23 +1,30 @@
 package com.example.andrewliu.fatbaby.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.andrewliu.fatbaby.R;
 import com.example.andrewliu.fatbaby.Service.StepDetector;
 import com.example.andrewliu.fatbaby.UI.ExtendViews.BounceView;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,5 +131,49 @@ public class ActivityPicBounce extends myBaseActivities {
                 }
             }
         });
+        bt = (Button)findViewById(R.id.bounce_select);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+		        /* 开启Pictures画面Type设定为image */
+                intent.setType("image/*");
+		        /* 使用Intent.ACTION_GET_CONTENT这个Action */
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+		        /* 取得相片后返回本画面 */
+                startActivityForResult(intent, 1);
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            Log.e("uri", uri.toString());
+            ContentResolver cr = this.getContentResolver();
+            try {
+                Bitmap bitmap1 = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                Bitmap bitmap = resize(bitmap1);
+//                ImageView imageView = (ImageView) findViewById(R.id.bounce_test);
+				/* 将Bitmap设定到ImageView */
+//                imageView.setImageBitmap(bitmap);
+                bounceView.initBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                Log.e("Exception", e.getMessage(),e);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private Bitmap resize(Bitmap bitmap) {
+        float sx,sy;
+        ViewGroup.LayoutParams layoutParams = bounceView.getLayoutParams();
+        Log.e("========","aaa"+layoutParams.width+":"+layoutParams.height);
+        sx = (float) layoutParams.width/(float) bitmap.getWidth();
+        sy = (float) layoutParams.height/(float) bitmap.getHeight();
+        Matrix matrix = new Matrix();
+        matrix.postScale(sx,sy); //长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        return resizeBmp;
     }
 }
